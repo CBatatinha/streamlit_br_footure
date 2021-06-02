@@ -25,6 +25,7 @@ from pandas.io.json import json_normalize
 import math
 from math import hypot
 import requests
+pip install mplsoccer
 from mplsoccer.pitch import Pitch,VerticalPitch
 from matplotlib.patches import Arc
 from scipy.spatial import ConvexHull
