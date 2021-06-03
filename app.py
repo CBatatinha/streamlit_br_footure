@@ -39,7 +39,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 from sklearn.metrics import silhouette_score
-
+import gdown
 #------------------------------------------------------------------------------------------------------- 
 st.title('Footure Brasileirão')
 menu=['Home','Gráficos jogadores (Partida)','Gráficos jogadores (Total)','Gráficos times (Partida)']
@@ -55,7 +55,12 @@ if choice == 'Gráficos jogadores (Partida)':
    lista_temporada=['2020','2021']
    temporada=st.selectbox('Selecione a temporada',lista_temporada)
    if temporada == '2020':
-      df=pd.read_csv('csvs/brasileiro_2020_tabelao.csv')
+      org_2020= "https://drive.google.com/file/d/1-14BD_oWbQhuT3fNiC5P3cwJjqsAkX7S/view?usp=sharing"
+      file_id = original_url.split('/')[-2]
+      url_2020='https://drive.google.com/uc?export=download&id=' + file_id
+      gdown.download(dwn_url,'br2020.csv',quiet=True)
+      df = pd.read_csv('br2020.csv',encoding = "utf-8-sig")
+#       df=pd.read_csv('csvs/brasileiro_2020_tabelao.csv')
    if temporada == '2021':
       df=pd.read_csv('csvs/brasileirao_2021_tabelao.csv')
    nav1,nav2 = st.beta_columns(2)
