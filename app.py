@@ -56,9 +56,9 @@ if choice == 'Gráficos jogadores (Partida)':
    temporada=st.selectbox('Selecione a temporada',lista_temporada)
    if temporada == '2020':
       org_2020= "https://drive.google.com/file/d/1-14BD_oWbQhuT3fNiC5P3cwJjqsAkX7S/view?usp=sharing"
-      file_id = original_url.split('/')[-2]
+      file_id = org_2020.split('/')[-2]
       url_2020='https://drive.google.com/uc?export=download&id=' + file_id
-      gdown.download(dwn_url,'br2020.csv',quiet=True)
+      gdown.download(url_2020,'br2020.csv',quiet=True)
       df = pd.read_csv('br2020.csv',encoding = "utf-8-sig")
 #       df=pd.read_csv('csvs/brasileiro_2020_tabelao.csv')
    if temporada == '2021':
