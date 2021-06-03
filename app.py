@@ -49,24 +49,24 @@ if choice == 'Home':
                 'Navegue pelas abas no menu para obter os gráficos de interesse.  \n'
                 'Temporada 2021 tem 10 jogos.  \n'
                 '**Obs: Passes mais valiosos ainda não ta disponivel ** ')
+
 org_2020= "https://drive.google.com/file/d/1-14BD_oWbQhuT3fNiC5P3cwJjqsAkX7S/view?usp=sharing"
-file_id = org_2020.split('/')[-2]
-url_2020='https://drive.google.com/uc?export=download&id=' + file_id
+file_id_1= org_2020.split('/')[-2]
+url_2020='https://drive.google.com/uc?export=download&id=' + file_id_1
 gdown.download(url_2020,'br2020.csv',quiet=True)
+org_2021= "https://drive.google.com/file/d/1o_FqfT_hzU3gFzr7WFHpZZ9Sv5a1ZgDo/view?usp=sharing"
+file_id_2= org_2020.split('/')[-2]
+url_2021='https://drive.google.com/uc?export=download&id=' + file_id_2
+gdown.download(url_2021,'br2021.csv',quiet=True)
 
 if choice == 'Gráficos jogadores (Partida)':
    st.subheader('Plote os gráficos individuais dos jogadores em uma partida do campeonato')
    lista_temporada=['2020','2021']
    temporada=st.selectbox('Selecione a temporada',lista_temporada)
    if temporada == '2020':
-#       org_2020= "https://drive.google.com/file/d/1-14BD_oWbQhuT3fNiC5P3cwJjqsAkX7S/view?usp=sharing"
-#       file_id = org_2020.split('/')[-2]
-#       url_2020='https://drive.google.com/uc?export=download&id=' + file_id
-#       gdown.download(url_2020,'br2020.csv',quiet=True)
       df = pd.read_csv('br2020.csv',encoding = "utf-8-sig")
-#       df=pd.read_csv('csvs/brasileiro_2020_tabelao.csv')
    if temporada == '2021':
-      df=pd.read_csv('csvs/brasileirao_2021_tabelao.csv')
+      df = pd.read_csv('br2021.csv',encoding = "utf-8-sig")
    nav1,nav2 = st.beta_columns(2)
    with nav1:
         home_team=st.selectbox('Time da casa',sorted(list(df['hometeam'].unique())))
@@ -633,9 +633,8 @@ if choice == 'Gráficos jogadores (Total)':
    temporada=st.selectbox('Selecione a temporada',lista_temporada)
    if temporada == '2020':
       df = pd.read_csv('br2020.csv',encoding = "utf-8-sig")
-#       df=pd.read_csv('csvs/brasileiro_2020_tabelao.csv')
    if temporada == '2021':
-      df=pd.read_csv('csvs/brasileirao_2021_tabelao.csv')
+      df = pd.read_csv('br2021.csv',encoding = "utf-8-sig")
    team=st.selectbox('Escolha o time',sorted(list(df['hometeam'].unique())))
    match=df[((df['hometeam']==team) & (df['hometeamid']==df.teamId)) | ((df['awayteam']==team) & (df['awayteamid']==df.teamId))].reset_index(drop=True)
    jogador=st.selectbox('Escolha o jogador',list(match['name'].unique()))
@@ -1162,10 +1161,9 @@ if choice == 'Gráficos times (Partida)':
   lista_temporada=['2020','2021']
   temporada=st.selectbox('Selecione a temporada',lista_temporada)
   if temporada == '2020':
-      df = pd.read_csv('br2020.csv',encoding = "utf-8-sig")
-#       df=pd.read_csv('csvs/brasileiro_2020_tabelao.csv')
+    df = pd.read_csv('br2020.csv',encoding = "utf-8-sig")
   if temporada == '2021':
-    df=pd.read_csv('csvs/brasileirao_2021_tabelao.csv')
+    df = pd.read_csv('br2021.csv',encoding = "utf-8-sig")
   nav1,nav2 = st.beta_columns(2)
   with nav1:
       home_team=st.selectbox('Time da casa',sorted(list(df['hometeam'].unique())))
