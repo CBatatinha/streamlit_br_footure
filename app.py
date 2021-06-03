@@ -1827,14 +1827,14 @@ if choice == 'Gráficos times (Partida)':
 
       
       total=(len(allbox))
-      font = ImageFont.truetype('Camber-Rg.ttf',60)
+      font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
       msg = f'{team}: {total}'
       draw = ImageDraw.Draw(arte)
       w, h = draw.textsize(msg,spacing=20,font=font)
       draw.text((330,500),msg, fill='white',spacing= 20,font=font)
 
 
-      font = ImageFont.truetype('Camber-RgItalic.ttf',40)
+      font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
       msg = f'*Apenas considerando passes simples e cruzamentos'
       draw = ImageDraw.Draw(arte)
       draw.text((330,2450),msg, fill='white',spacing= 30,font=font)
