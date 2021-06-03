@@ -147,7 +147,7 @@ if choice == 'Gráficos jogadores (Partida)':
           w,h = im.size
           im = im.resize((int(w*2.5),int(h*2.5)))
           im = im.copy()
-          arte.paste(im,(2500,100),im)
+          arte.paste(im,(2500,100))
 
         arte.save(f'content/quadro_calor_{jogador}.png',quality=95,facecolor='#2C2B2B')
         st.image(f'content/quadro_calor_{jogador}.png')
