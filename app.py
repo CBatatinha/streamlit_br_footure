@@ -987,7 +987,7 @@ if choice == 'Gráficos jogadores (Total)':
       w, h = draw.textsize(msg,spacing=20,font=font)
       draw.text((330,500),msg, fill='white',spacing= 20,font=font)
 
-      im = Image.open('Artes/Arquivos/legenda-acerto-erro.png')
+      im = Image.open('Arquivos/legenda-acerto-erro.png')
       w,h = im.size
       im = im.resize((int(w/5),int(h/5)))
       im = im.copy()
