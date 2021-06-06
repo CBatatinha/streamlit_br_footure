@@ -50,22 +50,30 @@ if choice == 'Home':
                 'Temporada 2021 tem 10 jogos.  \n'
                 '**Obs: Passes mais valiosos ainda não ta disponivel ** ')
 
-org_2020= "https://drive.google.com/file/d/1-14BD_oWbQhuT3fNiC5P3cwJjqsAkX7S/view?usp=sharing"
-file_id_1= org_2020.split('/')[-2]
-url_2020='https://drive.google.com/uc?export=download&id=' + file_id_1
-gdown.download(url_2020,'br2020.csv',quiet=True)
-org_2021= "https://drive.google.com/file/d/1o_FqfT_hzU3gFzr7WFHpZZ9Sv5a1ZgDo/view?usp=sharing"
-file_id_2= org_2020.split('/')[-2]
-url_2021='https://drive.google.com/uc?export=download&id=' + file_id_2
-gdown.download(url_2021,'br2021.csv',quiet=True)
+# org_2020= "https://drive.google.com/file/d/1-14BD_oWbQhuT3fNiC5P3cwJjqsAkX7S/view?usp=sharing"
+# file_id_1= org_2020.split('/')[-2]
+# url_2020='https://drive.google.com/uc?export=download&id=' + file_id_1
+# gdown.download(url_2020,'br2020.csv',quiet=True)
+# org_2021= "https://drive.google.com/file/d/1o_FqfT_hzU3gFzr7WFHpZZ9Sv5a1ZgDo/view?usp=sharing"
+# file_id_2= org_2020.split('/')[-2]
+# url_2021='https://drive.google.com/uc?export=download&id=' + file_id_2
+# gdown.download(url_2021,'br2021.csv',quiet=True)
 
 if choice == 'Gráficos jogadores (Partida)':
    st.subheader('Plote os gráficos individuais dos jogadores em uma partida do campeonato')
    lista_temporada=['2020','2021']
    temporada=st.selectbox('Selecione a temporada',lista_temporada)
-   if temporada == '2020':
+   if temporada == '2020':   
+      org_2020= "https://drive.google.com/file/d/1-14BD_oWbQhuT3fNiC5P3cwJjqsAkX7S/view?usp=sharing"
+      file_id_1= org_2020.split('/')[-2]
+      url_2020='https://drive.google.com/uc?export=download&id=' + file_id_1
+      gdown.download(url_2020,'br2020.csv',quiet=True)
       df = pd.read_csv('br2020.csv',encoding = "utf-8-sig")
    if temporada == '2021':
+      org_2021= "https://drive.google.com/file/d/1o_FqfT_hzU3gFzr7WFHpZZ9Sv5a1ZgDo/view?usp=sharing"
+      file_id_2= org_2020.split('/')[-2]
+      url_2021='https://drive.google.com/uc?export=download&id=' + file_id_2
+      gdown.download(url_2021,'br2021.csv',quiet=True)
       df = pd.read_csv('br2021.csv',encoding = "utf-8-sig")
    nav1,nav2 = st.beta_columns(2)
    with nav1:
