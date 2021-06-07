@@ -40,6 +40,8 @@ from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 from sklearn.metrics import silhouette_score
 import gdown
+import base64
+import os
 #------------------------------------------------------------------------------------------------------- 
 st.title('Footure Brasileirão')
 menu=['Home','Gráficos jogadores (Partida)','Gráficos jogadores (Total)','Gráficos times (Partida)']
@@ -58,6 +60,13 @@ org_2021= "https://drive.google.com/file/d/1o_FqfT_hzU3gFzr7WFHpZZ9Sv5a1ZgDo/vie
 file_id_2= org_2021.split('/')[-2]
 url_2021='https://drive.google.com/uc?export=download&id=' + file_id_2
 gdown.download(url_2021,'br2021.csv',quiet=True)
+
+def get_binary_file_downloader_html(bin_file, file_label='File'):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    bin_str = base64.b64encode(data).decode()
+    href = f'<a href="data:application/octet-stream;base64,{bin_str}" download="{os.path.basename(bin_file)}">Download {file_label}</a>'
+    return href
 
 if choice == 'Gráficos jogadores (Partida)':
    st.subheader('Plote os gráficos individuais dos jogadores em uma partida do campeonato')
@@ -168,6 +177,7 @@ if choice == 'Gráficos jogadores (Partida)':
 
         arte.save(f'content/quadro_calor_{jogador}.png',quality=95,facecolor='#2C2B2B')
         st.image(f'content/quadro_calor_{jogador}.png')
+        st.markdown(get_binary_file_downloader_html(f'content/quadro_calor_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
       heatmap(df_jogador)
    if grafico == 'Recepções':
       def recepcao(df):
@@ -252,6 +262,7 @@ if choice == 'Gráficos jogadores (Partida)':
 
           arte.save(f'content/quadro_recep_{jogador}.png',quality=95,facecolor='#2C2B2B')
           st.image(f'content/quadro_recep_{jogador}.png')
+          st.markdown(get_binary_file_downloader_html(f'content/quadro_recep_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
       recepcao(match)
    if grafico == 'Passes':
       tipos_passe=['Passe Simples','Infiltrado','Chave','Cruzamento','Assistência','Escanteio','Falta','Progressivo']
@@ -362,6 +373,7 @@ if choice == 'Gráficos jogadores (Partida)':
 
           arte.save(f'content/quadro_{lista_passes}_{jogador}.png',quality=95,facecolor='#2C2B2B')
           st.image(f'content/quadro_{lista_passes}_{jogador}.png')
+          st.markdown(get_binary_file_downloader_html(f'content/quadro_{lista_passes}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
       if 'Passe Simples' in lista_passes:
           passe_certo=df_jogador[(df_jogador['type_displayName']=='Pass')&(df_jogador['events']=='Pass')&(df_jogador['outcomeType_displayName']=='Successful')].reset_index(drop=True)
           passe_errado=df_jogador[(df_jogador['type_displayName']=='Pass')&(df_jogador['events']=='Pass')&(df_jogador['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
@@ -505,7 +517,8 @@ if choice == 'Gráficos jogadores (Partida)':
 
 
       arte.save(f'content/quadro_{grafico}_{jogador}.png',quality=95,facecolor='#2C2B2B')
-      st.image(f'content/quadro_{grafico}_{jogador}.png')       
+      st.image(f'content/quadro_{grafico}_{jogador}.png')
+      st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
    if grafico == 'Passes mais frequentes':
       df_passe_plot= df_jogador[(df_jogador.events.isin(['Pass','cross']))&
          (df_jogador.outcomeType_displayName=='Successful')].reset_index(drop=True)
@@ -634,7 +647,8 @@ if choice == 'Gráficos jogadores (Partida)':
 
 
       arte.save(f'content/quadro_{grafico}_{jogador}.png',quality=95,facecolor='#2C2B2B')
-      st.image(f'content/quadro_{grafico}_{jogador}.png')  
+      st.image(f'content/quadro_{grafico}_{jogador}.png')
+      st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
 if choice == 'Gráficos jogadores (Total)':
    st.subheader('Plote os gráficos individuais dos jogadores em todas as partidas')
    lista_temporada=['2020','2021']
@@ -727,6 +741,7 @@ if choice == 'Gráficos jogadores (Total)':
 
         arte.save(f'content/quadro_calor_{jogador}.png',quality=95,facecolor='#2C2B2B')
         st.image(f'content/quadro_calor_{jogador}.png')
+        st.markdown(get_binary_file_downloader_html(f'content/quadro_calor_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
       heatmap(df_jogador)
    if grafico == 'Recepções':
       def recepcao(df):
@@ -806,6 +821,7 @@ if choice == 'Gráficos jogadores (Total)':
 
           arte.save(f'content/quadro_recep_{jogador}.png',quality=95,facecolor='#2C2B2B')
           st.image(f'content/quadro_recep_{jogador}.png')
+          st.markdown(get_binary_file_downloader_html(f'content/quadro_recep_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
       recepcao(match)
    if grafico == 'Passes':
       tipos_passe=['Simples','Infiltrado','Chave','Cruzamento','Assistência','Escanteio','Falta','Progressivo']
@@ -903,6 +919,7 @@ if choice == 'Gráficos jogadores (Total)':
 
           arte.save(f'content/quadro_{lista_passes}_{jogador}.png',quality=95,facecolor='#2C2B2B')
           st.image(f'content/quadro_{lista_passes}_{jogador}.png')
+          st.markdown(get_binary_file_downloader_html(f'content/quadro_{lista_passe}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
       if 'Simples' in lista_passes:
           passe_certo=df_jogador[(df_jogador['type_displayName']=='Pass')&(df_jogador['events']=='Pass')&(df_jogador['outcomeType_displayName']=='Successful')].reset_index(drop=True)
           passe_errado=df_jogador[(df_jogador['type_displayName']=='Pass')&(df_jogador['events']=='Pass')&(df_jogador['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
@@ -1040,7 +1057,8 @@ if choice == 'Gráficos jogadores (Total)':
         arte.paste(im,(2500,100))
 
       arte.save(f'content/quadro_{grafico}_{jogador}.png',quality=95,facecolor='#2C2B2B')
-      st.image(f'content/quadro_{grafico}_{jogador}.png')     
+      st.image(f'content/quadro_{grafico}_{jogador}.png')
+      st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
    if grafico == 'Passes mais frequentes':
       df_passe_plot= df_jogador[(df_jogador.events.isin(['Pass','cross']))&
          (df_jogador.outcomeType_displayName=='Successful')].reset_index(drop=True)
@@ -1164,6 +1182,7 @@ if choice == 'Gráficos jogadores (Total)':
 
       arte.save(f'content/quadro_{grafico}_{jogador}.png',quality=95,facecolor='#2C2B2B')
       st.image(f'content/quadro_{grafico}_{jogador}.png')
+      st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
 if choice == 'Gráficos times (Partida)':
   st.subheader('Plote os gráficos do time em uma partida do campeonato')
   lista_temporada=['2020','2021']
@@ -1452,6 +1471,7 @@ if choice == 'Gráficos times (Partida)':
 
       arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
       st.image(f'content/quadro_{grafico}_{team}.png')
+      st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
     mapa_de_passes(df_team)
   if grafico == 'Posição Defensiva':
     def pos_defensiva(df):
@@ -1561,6 +1581,7 @@ if choice == 'Gráficos times (Partida)':
       draw.text(((330,2500)),msg, fill='white',spacing= 20,font=font)
       arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
       st.image(f'content/quadro_{grafico}_{team}.png')
+      st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
     pos_defensiva(df_team)
   if grafico == 'Cruzamentos':
     def passes(df1,df2):
@@ -1663,6 +1684,7 @@ if choice == 'Gráficos times (Partida)':
 
         arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
         st.image(f'content/quadro_{grafico}_{team}.png')
+        st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
     passe_certo=df_team[(df_team['type_displayName']=='Pass')&(df_team['events']=='cross')&(df_team['outcomeType_displayName']=='Successful')].reset_index(drop=True)
     passe_errado=df_team[(df_team['type_displayName']=='Pass')&(df_team['events']=='cross')&(df_team['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
     passes(passe_certo,passe_errado)
@@ -1767,6 +1789,7 @@ if choice == 'Gráficos times (Partida)':
 
         arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
         st.image(f'content/quadro_{grafico}_{team}.png')
+        st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
     df_team=df_team[(df_team['type_displayName']=='Pass')].reset_index(drop=True)
     df_team['dist1'] = np.sqrt((105-df_team.x)**2 + (34-df_team.y)**2)
     df_team['dist2'] = np.sqrt((105-df_team.endX)**2 + (34-df_team.endY)**2)
@@ -1876,6 +1899,7 @@ if choice == 'Gráficos times (Partida)':
 
       arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
       st.image(f'content/quadro_{grafico}_{team}.png')
+      st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
     box_entry(df_team)
   if grafico == 'Retomadas de Bola':
     def recovery(df):
@@ -1962,6 +1986,7 @@ if choice == 'Gráficos times (Partida)':
 
       arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
       st.image(f'content/quadro_{grafico}_{team}.png')
+      st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
     recovery(df_team)
   if grafico == 'Ações Defensivas':
     tipos_defesa=['Desarme','Interceptação','Corte','Bloqueio','Aéreo','Duelo']
@@ -2061,6 +2086,7 @@ if choice == 'Gráficos times (Partida)':
 
     arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
     st.image(f'content/quadro_{grafico}_{team}.png')
+    st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
   if grafico == 'Passes mais frequentes':
     df_passe_plot= df_team[(df_team.events.isin(['Pass','cross']))&
          (df_team.outcomeType_displayName=='Successful')].reset_index(drop=True)
@@ -2184,6 +2210,7 @@ if choice == 'Gráficos times (Partida)':
 
     arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
     st.image(f'content/quadro_{grafico}_{team}.png')
+    st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
   if grafico == 'PPDA':
     def PPDAcalculator(Df,min1,min2):
       home = Df[(Df.teamId==Df.hometeamid)&(Df.expandedMinute>=min1)&
@@ -2307,6 +2334,7 @@ if choice == 'Gráficos times (Partida)':
 
       arte.save(f'content/quadro_{grafico}_{home_team}_{away_team}.png',quality=95,facecolor='#2C2B2B')
       st.image(f'content/quadro_{grafico}_{home_team}_{away_team}.png')
+      st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{home_team}_{away_team}.png', 'Imagem'), unsafe_allow_html=True)
     PPDAplotter(match)
     
   if grafico == 'Posse':
@@ -2445,4 +2473,5 @@ if choice == 'Gráficos times (Partida)':
         arte.paste(fot,(2350,100),fot)
         arte.save(f'content/quadro_{grafico}_{home_team}_{away_team}.png',quality=95,facecolor='#2C2B2B')
         st.image(f'content/quadro_{grafico}_{home_team}_{away_team}.png')
+        st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{home_team}_{away_team}.png', 'Imagem'), unsafe_allow_html=True)
     possplotter(match)
