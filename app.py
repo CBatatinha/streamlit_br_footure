@@ -49,7 +49,7 @@ choice=st.sidebar.selectbox('Menu',menu)
 if choice == 'Home':
    st.markdown('Ferramenta criada pelo departamento de análise de dados do Footure PRO para visualizações  \n'
                 'Navegue pelas abas no menu para obter os gráficos de interesse.  \n'
-                'Temporada 2021 tem 10 jogos.  \n'
+                'Temporada 2021 tem até a 2° rodada.  \n'
                 '**Obs: Passes mais valiosos ainda não ta disponivel ** ')
 
 org_2020= "https://drive.google.com/file/d/1-14BD_oWbQhuT3fNiC5P3cwJjqsAkX7S/view?usp=sharing"
