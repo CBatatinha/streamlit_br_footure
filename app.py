@@ -60,6 +60,15 @@ org_2021= "https://drive.google.com/file/d/1o_FqfT_hzU3gFzr7WFHpZZ9Sv5a1ZgDo/vie
 file_id_2= org_2021.split('/')[-2]
 url_2021='https://drive.google.com/uc?export=download&id=' + file_id_2
 gdown.download(url_2021,'br2021.csv',quiet=True)
+org_america= "https://drive.google.com/file/d/1o_FqfT_hzU3gFzr7WFHpZZ9Sv5a1ZgDo/view?usp=sharing"
+file_id_america= org_america.split('/')[-2]
+url_america='https://drive.google.com/uc?export=download&id=' + file_id_america
+gdown.download(url_america,'america2021.csv',quiet=True)
+
+org_euro= "https://drive.google.com/file/d/1o_FqfT_hzU3gFzr7WFHpZZ9Sv5a1ZgDo/view?usp=sharing"
+file_id_euro= org_euro.split('/')[-2]
+url_euro='https://drive.google.com/uc?export=download&id=' + file_id_euro
+gdown.download(url_euro,'euro2021.csv',quiet=True)
 
 def get_binary_file_downloader_html(bin_file, file_label='File'):
     with open(bin_file, 'rb') as f:
@@ -70,20 +79,34 @@ def get_binary_file_downloader_html(bin_file, file_label='File'):
 
 if choice == 'Gráficos jogadores (Partida)':
    st.subheader('Plote os gráficos individuais dos jogadores em uma partida do campeonato')
-   lista_temporada=['2020','2021']
+   lista_temporada=['2020','2021','Euro 2021','Copa America 2021']
    temporada=st.selectbox('Selecione a temporada',lista_temporada)
    if temporada == '2020':   
-#       org_2020= "https://drive.google.com/file/d/1-14BD_oWbQhuT3fNiC5P3cwJjqsAkX7S/view?usp=sharing"
-#       file_id_1= org_2020.split('/')[-2]
-#       url_2020='https://drive.google.com/uc?export=download&id=' + file_id_1
-#       gdown.download(url_2020,'br2020.csv',quiet=True)
       df = pd.read_csv('br2020.csv',encoding = "utf-8-sig")
    if temporada == '2021':
-#       org_2021= "https://drive.google.com/file/d/1o_FqfT_hzU3gFzr7WFHpZZ9Sv5a1ZgDo/view?usp=sharing"
-#       file_id_2= org_2020.split('/')[-2]
-#       url_2021='https://drive.google.com/uc?export=download&id=' + file_id_2
-#       gdown.download(url_2021,'br2021.csv',quiet=True)
       df = pd.read_csv('br2021.csv',encoding = "utf-8-sig")
+   if temporada == '2021':
+      df = pd.read_csv('br2021.csv',encoding = "utf-8-sig")
+   if temporada == 'Euro 2021':
+      df = pd.read_csv('euro2021.csv',encoding = "utf-8-sig")
+      teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
+                   'Italy':'Itália','Switzerland':'Suíça','Turkey':'Turquia','Wales':'Gales','Belgium':'Bélgica','Denmark':'Dinamarca',
+                   'Finland':'Finlândia','Russia':'Rússia','Netherlands':'Holanda','North Macedonia':'Macedônia do norte',
+                   'Ukraine':'Ucrânia','Poland':'Polônia','Slovakia':'Eslováquia','Spain':'Espanha','Sweden':'Suécia',
+                   'Croatia':'Croácia','Czech Republic':'Rep. Tcheca','England':'Inglaterra','Scotland':'Escócia',
+                   'France':'França','Germany':'Alemanha','Hungary':'Hungria'}
+      df['hometeam']=df['hometeam'].map(teams_dict)
+      df['awayteam']=df['awayteam'].map(teams_dict)
+   if temporada == 'Copa America 2021':
+      df = pd.read_csv('america2021.csv',encoding = "utf-8-sig")
+      teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
+                   'Italy':'Itália','Switzerland':'Suíça','Turkey':'Turquia','Wales':'Gales','Belgium':'Bélgica','Denmark':'Dinamarca',
+                   'Finland':'Finlândia','Russia':'Rússia','Netherlands':'Holanda','North Macedonia':'Macedônia do norte',
+                   'Ukraine':'Ucrânia','Poland':'Polônia','Slovakia':'Eslováquia','Spain':'Espanha','Sweden':'Suécia',
+                   'Croatia':'Croácia','Czech Republic':'Rep. Tcheca','England':'Inglaterra','Scotland':'Escócia',
+                   'France':'França','Germany':'Alemanha','Hungary':'Hungria'}
+      df['hometeam']=df['hometeam'].map(teams_dict)
+      df['awayteam']=df['awayteam'].map(teams_dict)
    nav1,nav2 = st.beta_columns(2)
    with nav1:
         home_team=st.selectbox('Time da casa',sorted(list(df['hometeam'].unique())))
@@ -651,12 +674,34 @@ if choice == 'Gráficos jogadores (Partida)':
       st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
 if choice == 'Gráficos jogadores (Total)':
    st.subheader('Plote os gráficos individuais dos jogadores em todas as partidas')
-   lista_temporada=['2020','2021']
+   lista_temporada=['2020','2021','Euro 2021','Copa America 2021']
    temporada=st.selectbox('Selecione a temporada',lista_temporada)
-   if temporada == '2020':
+   if temporada == '2020':   
       df = pd.read_csv('br2020.csv',encoding = "utf-8-sig")
    if temporada == '2021':
       df = pd.read_csv('br2021.csv',encoding = "utf-8-sig")
+   if temporada == '2021':
+      df = pd.read_csv('br2021.csv',encoding = "utf-8-sig")
+   if temporada == 'Euro 2021':
+      df = pd.read_csv('euro2021.csv',encoding = "utf-8-sig")
+      teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
+                   'Italy':'Itália','Switzerland':'Suíça','Turkey':'Turquia','Wales':'Gales','Belgium':'Bélgica','Denmark':'Dinamarca',
+                   'Finland':'Finlândia','Russia':'Rússia','Netherlands':'Holanda','North Macedonia':'Macedônia do norte',
+                   'Ukraine':'Ucrânia','Poland':'Polônia','Slovakia':'Eslováquia','Spain':'Espanha','Sweden':'Suécia',
+                   'Croatia':'Croácia','Czech Republic':'Rep. Tcheca','England':'Inglaterra','Scotland':'Escócia',
+                   'France':'França','Germany':'Alemanha','Hungary':'Hungria'}
+      df['hometeam']=df['hometeam'].map(teams_dict)
+      df['awayteam']=df['awayteam'].map(teams_dict)
+   if temporada == 'Copa America 2021':
+      df = pd.read_csv('america2021.csv',encoding = "utf-8-sig")
+      teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
+                   'Italy':'Itália','Switzerland':'Suíça','Turkey':'Turquia','Wales':'Gales','Belgium':'Bélgica','Denmark':'Dinamarca',
+                   'Finland':'Finlândia','Russia':'Rússia','Netherlands':'Holanda','North Macedonia':'Macedônia do norte',
+                   'Ukraine':'Ucrânia','Poland':'Polônia','Slovakia':'Eslováquia','Spain':'Espanha','Sweden':'Suécia',
+                   'Croatia':'Croácia','Czech Republic':'Rep. Tcheca','England':'Inglaterra','Scotland':'Escócia',
+                   'France':'França','Germany':'Alemanha','Hungary':'Hungria'}
+      df['hometeam']=df['hometeam'].map(teams_dict)
+      df['awayteam']=df['awayteam'].map(teams_dict)
    team=st.selectbox('Escolha o time',sorted(list(df['hometeam'].unique())))
    match=df[((df['hometeam']==team) & (df['hometeamid']==df.teamId)) | ((df['awayteam']==team) & (df['awayteamid']==df.teamId))].reset_index(drop=True)
    jogador=st.selectbox('Escolha o jogador',list(match['name'].unique()))
@@ -1185,12 +1230,34 @@ if choice == 'Gráficos jogadores (Total)':
       st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
 if choice == 'Gráficos times (Partida)':
   st.subheader('Plote os gráficos do time em uma partida do campeonato')
-  lista_temporada=['2020','2021']
+  lista_temporada=['2020','2021','Euro 2021','Copa America 2021']
   temporada=st.selectbox('Selecione a temporada',lista_temporada)
-  if temporada == '2020':
-    df = pd.read_csv('br2020.csv',encoding = "utf-8-sig")
+  if temporada == '2020':   
+     df = pd.read_csv('br2020.csv',encoding = "utf-8-sig")
   if temporada == '2021':
-    df = pd.read_csv('br2021.csv',encoding = "utf-8-sig")
+     df = pd.read_csv('br2021.csv',encoding = "utf-8-sig")
+  if temporada == '2021':
+     df = pd.read_csv('br2021.csv',encoding = "utf-8-sig")
+  if temporada == 'Euro 2021':
+     df = pd.read_csv('euro2021.csv',encoding = "utf-8-sig")
+     teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
+                   'Italy':'Itália','Switzerland':'Suíça','Turkey':'Turquia','Wales':'Gales','Belgium':'Bélgica','Denmark':'Dinamarca',
+                   'Finland':'Finlândia','Russia':'Rússia','Netherlands':'Holanda','North Macedonia':'Macedônia do norte',
+                   'Ukraine':'Ucrânia','Poland':'Polônia','Slovakia':'Eslováquia','Spain':'Espanha','Sweden':'Suécia',
+                   'Croatia':'Croácia','Czech Republic':'Rep. Tcheca','England':'Inglaterra','Scotland':'Escócia',
+                   'France':'França','Germany':'Alemanha','Hungary':'Hungria'}
+     df['hometeam']=df['hometeam'].map(teams_dict)
+     df['awayteam']=df['awayteam'].map(teams_dict)
+  if temporada == 'Copa America 2021':
+     df = pd.read_csv('america2021.csv',encoding = "utf-8-sig")
+     teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
+                   'Italy':'Itália','Switzerland':'Suíça','Turkey':'Turquia','Wales':'Gales','Belgium':'Bélgica','Denmark':'Dinamarca',
+                   'Finland':'Finlândia','Russia':'Rússia','Netherlands':'Holanda','North Macedonia':'Macedônia do norte',
+                   'Ukraine':'Ucrânia','Poland':'Polônia','Slovakia':'Eslováquia','Spain':'Espanha','Sweden':'Suécia',
+                   'Croatia':'Croácia','Czech Republic':'Rep. Tcheca','England':'Inglaterra','Scotland':'Escócia',
+                   'France':'França','Germany':'Alemanha','Hungary':'Hungria'}
+     df['hometeam']=df['hometeam'].map(teams_dict)
+     df['awayteam']=df['awayteam'].map(teams_dict)
   nav1,nav2 = st.beta_columns(2)
   with nav1:
       home_team=st.selectbox('Time da casa',sorted(list(df['hometeam'].unique())))
