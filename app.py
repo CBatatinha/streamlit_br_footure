@@ -43,13 +43,14 @@ import gdown
 import base64
 import os
 #------------------------------------------------------------------------------------------------------- 
-st.title('Footure Brasileirão')
+st.title('Footure Brasileirão v1.2')
 menu=['Home','Gráficos jogadores (Partida)','Gráficos jogadores (Total)','Gráficos times (Partida)']
 choice=st.sidebar.selectbox('Menu',menu)
 if choice == 'Home':
    st.markdown('Ferramenta criada pelo departamento de análise de dados do Footure PRO para visualizações  \n'
                 'Navegue pelas abas no menu para obter os gráficos de interesse.  \n'
                 'Temporada 2021 tem até a 2° rodada.  \n'
+                'Euro já disponível.  \n'
                 '**Obs: Passes mais valiosos ainda não ta disponivel ** ')
 
 org_2020= "https://drive.google.com/file/d/1-14BD_oWbQhuT3fNiC5P3cwJjqsAkX7S/view?usp=sharing"
@@ -65,7 +66,7 @@ file_id_america= org_america.split('/')[-2]
 url_america='https://drive.google.com/uc?export=download&id=' + file_id_america
 gdown.download(url_america,'america2021.csv',quiet=True)
 
-org_euro= "https://drive.google.com/file/d/1o_FqfT_hzU3gFzr7WFHpZZ9Sv5a1ZgDo/view?usp=sharing"
+org_euro= "https://drive.google.com/file/d/1hIepn0XBk6prx-bxdQN0TkqKvwDlvbrr/view?usp=sharing"
 file_id_euro= org_euro.split('/')[-2]
 url_euro='https://drive.google.com/uc?export=download&id=' + file_id_euro
 gdown.download(url_euro,'euro2021.csv',quiet=True)
