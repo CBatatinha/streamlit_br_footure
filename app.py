@@ -95,7 +95,7 @@ if choice == 'Gráficos jogadores (Partida)':
                    'Finland':'Finlândia','Russia':'Rússia','Netherlands':'Holanda','North Macedonia':'Macedônia do norte',
                    'Ukraine':'Ucrânia','Poland':'Polônia','Slovakia':'Eslováquia','Spain':'Espanha','Sweden':'Suécia',
                    'Croatia':'Croácia','Czech Republic':'Rep. Tcheca','England':'Inglaterra','Scotland':'Escócia',
-                   'France':'França','Germany':'Alemanha','Hungary':'Hungria','Austria':'Áustria'}
+                   'France':'França','Germany':'Alemanha','Hungary':'Hungria','Austria':'Áustria','Portugal':'Portugal'}
       df['hometeam']=df['hometeam'].map(teams_dict)
       df['awayteam']=df['awayteam'].map(teams_dict)
    if temporada == 'Copa America 2021':
@@ -690,7 +690,7 @@ if choice == 'Gráficos jogadores (Total)':
                    'Finland':'Finlândia','Russia':'Rússia','Netherlands':'Holanda','North Macedonia':'Macedônia do norte',
                    'Ukraine':'Ucrânia','Poland':'Polônia','Slovakia':'Eslováquia','Spain':'Espanha','Sweden':'Suécia',
                    'Croatia':'Croácia','Czech Republic':'Rep. Tcheca','England':'Inglaterra','Scotland':'Escócia',
-                   'France':'França','Germany':'Alemanha','Hungary':'Hungria','Austria':'Áustria'}
+                   'France':'França','Germany':'Alemanha','Hungary':'Hungria','Austria':'Áustria','Portugal':'Portugal'}
       df['hometeam']=df['hometeam'].map(teams_dict)
       df['awayteam']=df['awayteam'].map(teams_dict)
    if temporada == 'Copa America 2021':
@@ -1246,7 +1246,7 @@ if choice == 'Gráficos times (Partida)':
                    'Finland':'Finlândia','Russia':'Rússia','Netherlands':'Holanda','North Macedonia':'Macedônia do norte',
                    'Ukraine':'Ucrânia','Poland':'Polônia','Slovakia':'Eslováquia','Spain':'Espanha','Sweden':'Suécia',
                    'Croatia':'Croácia','Czech Republic':'Rep. Tcheca','England':'Inglaterra','Scotland':'Escócia',
-                   'France':'França','Germany':'Alemanha','Hungary':'Hungria','Austria':'Áustria'}
+                   'France':'França','Germany':'Alemanha','Hungary':'Hungria','Austria':'Áustria','Portugal':'Portugal'}
      df['hometeam']=df['hometeam'].map(teams_dict)
      df['awayteam']=df['awayteam'].map(teams_dict)
   if temporada == 'Copa America 2021':
