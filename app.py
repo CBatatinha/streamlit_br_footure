@@ -2465,7 +2465,7 @@ if choice == 'Gráficos times (Partida)':
        msg = f'{home_team}- {away_team}'
        draw = ImageDraw.Draw(arte)
        w, h = draw.textsize(msg,spacing=20,font=font)
-       draw.text((330,350),msg, fill='white',spacing= 20,font=font)
+       draw.text((430,350),msg, fill='white',spacing= 20,font=font)
 
        font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
        msg = f'{team}'
