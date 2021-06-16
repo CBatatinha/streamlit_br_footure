@@ -2445,8 +2445,8 @@ if choice == 'Gráficos times (Partida)':
            wedge = mpatches.Wedge((34, 105), rads[j], angs[j], angs[j]+20, color = cmap(cols[j]),
                                      ec = '#f7e9ec')
            ax.add_patch(wedge)
-       plt.savefig(f'content/sonar_{jogador}.png',dpi=300,facecolor=cor_fundo)
-       im=Image.open(f'content/sonar_{jogador}.png')
+       plt.savefig(f'content/sonar_{team}.png',dpi=300,facecolor=cor_fundo)
+       im=Image.open(f'content/sonar_{team}.png')
        tamanho_arte = (3000, 2740)
        arte = Image.new('RGB',tamanho_arte,cor_fundo)
        W,H = arte.size
