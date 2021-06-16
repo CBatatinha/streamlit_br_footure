@@ -27,6 +27,10 @@ from math import hypot
 import requests
 from mplsoccer.pitch import Pitch,VerticalPitch
 from matplotlib.patches import Arc
+import matplotlib.path as mpath
+import matplotlib.lines as mlines
+import matplotlib.patches as mpatches
+from matplotlib.collections import PatchCollection
 from scipy.spatial import ConvexHull
 from scipy import stats
 from sklearn.preprocessing import MinMaxScaler
