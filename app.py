@@ -1227,7 +1227,7 @@ if choice == 'Gráficos jogadores (Total)':
         draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
         arte.save(f'content/quadro_{grafico}_{jogador}.png',quality=95,facecolor='#2C2B2B')
         st.image(f'content/quadro_{grafico}_{jogador}.png')
-      sosonarinverso(df_jogador)
+      sonarinverso(df_jogador)
    if grafico == 'Passes mais frequentes':
       df_passe_plot= df_jogador[(df_jogador.events.isin(['Pass','cross']))&
          (df_jogador.outcomeType_displayName=='Successful')].reset_index(drop=True)
