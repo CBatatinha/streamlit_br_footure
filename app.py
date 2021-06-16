@@ -711,7 +711,7 @@ if choice == 'Gráficos jogadores (Total)':
    match=df[((df['hometeam']==team) & (df['hometeamid']==df.teamId)) | ((df['awayteam']==team) & (df['awayteamid']==df.teamId))].reset_index(drop=True)
    jogador=st.selectbox('Escolha o jogador',list(match['name'].unique()))
    df_jogador=match[(match['name']==jogador)].reset_index(drop=True)
-   lista_graficos=['Heatmap','Recepções','Passes','Ações Defensivas','Passes mais frequentes']
+   lista_graficos=['Heatmap','Recepções','Passes','Ações Defensivas','Passes mais frequentes','Sonar Inverso de chutes']
    grafico=st.selectbox('Escolha o gráfico',lista_graficos)
    if grafico == 'Heatmap':
       def heatmap(df):
@@ -1109,6 +1109,125 @@ if choice == 'Gráficos jogadores (Total)':
       arte.save(f'content/quadro_{grafico}_{jogador}.png',quality=95,facecolor='#2C2B2B')
       st.image(f'content/quadro_{grafico}_{jogador}.png')
       st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
+   if grafico == 'Sonar Inverso de chutes':
+      def sonarinverso(df):
+        shots=df[df['events']=='Shot'].reset_index(drop=True)
+        def sonarplotter(dataframe):
+            df = dataframe[['x','y']].reset_index(drop=True)
+            # df['Y'] = df['Y']*68
+            # df['X'] = df['X']*105
+            df['distance'] = np.sqrt((df['x']-105)**2+(df['y']-34)**2)
+            df['angle'] = np.degrees(np.arctan2(105-df['x'],34-df['y'])) + 180
+
+            angs = [180,200,220,240,260,280,300,320,340]
+            rads = []
+            density = []
+
+            for angle in angs:
+                angdf = df[(df.angle > angle)&(df.angle<=angle+20)]
+                median_dist = angdf.distance.median()
+                rads.append(median_dist)
+                density.append(len(angdf))
+            md = min(density)
+            Md = max(density)
+            density = [(i - md)/(Md - md) for i in density]
+
+            return (angs, rads, density, df)
+
+        cor_fundo = '#2c2b2b'
+        fig, ax = plt.subplots(figsize=(15,10))
+        pitch = VerticalPitch(pitch_type='uefa', figsize=(15,10),pitch_color=cor_fundo,half=True,
+                        stripe=False, line_zorder=1)
+        pitch.draw(ax=ax)
+
+        from matplotlib.colors import ListedColormap, LinearSegmentedColormap
+
+        cmaplist = [cor_fundo, '#F43B87']
+        cmap = LinearSegmentedColormap.from_list("", cmaplist)
+
+
+
+        angs, rads, cols, sdf = sonarplotter(shots)
+
+        for j in range(9):
+            wedge = mpatches.Wedge((34, 105), rads[j], angs[j], angs[j]+20, color = cmap(cols[j]),
+                                      ec = '#f7e9ec')
+            ax.add_patch(wedge)
+        plt.savefig(f'content/sonar_{jogador}.png',dpi=300,facecolor=cor_fundo)
+        im=Image.open(f'content/sonar_{jogador}.png')
+        tamanho_arte = (3000, 2740)
+        arte = Image.new('RGB',tamanho_arte,cor_fundo)
+        W,H = arte.size
+        w,h= im.size
+        im = im.resize((int(w/1.5),int(h/1.5)))
+        im = im.copy()
+        arte.paste(im,(-250,700))
+
+        font = ImageFont.truetype('Camber/Camber-Bd.ttf',150)
+        msg = f'Sonar inverso de chutes'
+        draw = ImageDraw.Draw(arte)
+        w, h = draw.textsize(msg,spacing=20,font=font)
+        draw.text((430,100),msg, fill='white',spacing= 20,font=font)
+
+        font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
+        msg = f'{team}'
+        draw = ImageDraw.Draw(arte)
+        w, h = draw.textsize(msg,spacing=20,font=font)
+        draw.text((430,350),msg, fill='white',spacing= 20,font=font)
+
+        font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
+        msg = f'{jogador}'
+        draw = ImageDraw.Draw(arte)
+        w, h = draw.textsize(msg,spacing=20,font=font)
+        draw.text((430,500),msg, fill='white',spacing= 20,font=font)
+
+        ontarget=shots[~(shots['type_displayName']=='MissedShots')].reset_index(drop=True)
+        target=len(ontarget)
+        total = len(shots)
+        gols=shots[shots['type_displayName']=='Goal'].reset_index(drop=True)
+        if gols.empty == True:
+          gols=0
+
+        font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
+        msg = f'Chutes no alvo: {target}/{total} | Gols: {gols} '
+        draw = ImageDraw.Draw(arte)
+        w, h = draw.textsize(msg,spacing=20,font=font)
+        draw.text((430,650),msg, fill='white',spacing= 20,font=font)
+
+        fot =Image.open('Logos/Copy of pro_branco.png')
+        w,h = fot.size
+        fot = fot.resize((int(w/2),int(h/2)))
+        fot = fot.copy()
+        arte.paste(fot,(2350,2200),fot)
+
+        times_csv=pd.read_csv('csvs/_times-id (whoscored) - times-id - _times-id (whoscored) - times-id.csv')
+        logo_url = times_csv[times_csv['Time'] == team].reset_index(drop=True)['Logo'][0]
+        try:
+          r = requests.get(logo_url)
+          im_bt = r.content
+          image_file = io.BytesIO(im_bt)
+          im = Image.open(image_file)
+          w,h = im.size
+          im = im.resize((int(w*2.5),int(h*2.5)))
+          im = im.copy()
+          arte.paste(im,(2500,100),im)
+        except:
+          r = requests.get(logo_url)
+          im_bt = r.content
+          image_file = io.BytesIO(im_bt)
+          im = Image.open(image_file)
+          w,h = im.size
+          im = im.resize((int(w*2.5),int(h*2.5)))
+          im = im.copy()
+          arte.paste(im,(2500,100))
+
+        font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+        msg = f'*Penâltis, cobranças de falta e gol contra não incluídos'
+        draw = ImageDraw.Draw(arte)
+        draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
+        arte.save(f'content/quadro_{grafico}_{jogador}.png',quality=95,facecolor='#2C2B2B')
+        st.image(f'content/quadro_{grafico}_{jogador}.png')
+      sosonarinverso(df_jogador)
    if grafico == 'Passes mais frequentes':
       df_passe_plot= df_jogador[(df_jogador.events.isin(['Pass','cross']))&
          (df_jogador.outcomeType_displayName=='Successful')].reset_index(drop=True)
