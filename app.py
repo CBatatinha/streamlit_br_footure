@@ -1189,7 +1189,7 @@ if choice == 'Gráficos jogadores (Total)':
           gols=0
 
         font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
-        msg = f'Chutes no alvo: {target} / {total}   |   Gols:  {gols} '
+        msg = f'Chutes no alvo: {target} / {total}   |   Gols:  {len(gols)} '
         draw = ImageDraw.Draw(arte)
         w, h = draw.textsize(msg,spacing=20,font=font)
         draw.text((430,650),msg, fill='white',spacing= 20,font=font)
@@ -2481,7 +2481,7 @@ if choice == 'Gráficos times (Partida)':
          gols=0
 
        font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
-       msg = f'Chutes no alvo: {target} / {total}   |   Gols:  {gols} '
+       msg = f'Chutes no alvo: {target} / {total}   |   Gols:  {len(gols)} '
        draw = ImageDraw.Draw(arte)
        w, h = draw.textsize(msg,spacing=20,font=font)
        draw.text((430,650),msg, fill='white',spacing= 20,font=font)
