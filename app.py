@@ -1225,6 +1225,11 @@ if choice == 'Gráficos jogadores (Total)':
           arte.paste(im,(2500,100))
 
         font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+        msg = f'*Quanto mais forte a cor, mais chutes no local'
+        draw = ImageDraw.Draw(arte)
+        draw.text((430,2540),msg, fill='white',spacing= 30,font=font) 
+         
+        font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
         msg = f'*Penâltis, cobranças de falta e gol contra não incluídos'
         draw = ImageDraw.Draw(arte)
         draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
@@ -2515,7 +2520,12 @@ if choice == 'Gráficos times (Partida)':
          im = im.resize((int(w*2.5),int(h*2.5)))
          im = im.copy()
          arte.paste(im,(2500,100))
-         
+       
+       font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+       msg = f'*Quanto mais forte a cor, mais chutes no local'
+       draw = ImageDraw.Draw(arte)
+       draw.text((430,2540),msg, fill='white',spacing= 30,font=font) 
+      
        font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
        msg = f'*Penâltis, cobranças de falta e gol contra não incluídos'
        draw = ImageDraw.Draw(arte)
