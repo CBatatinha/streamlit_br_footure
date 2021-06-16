@@ -1185,8 +1185,14 @@ if choice == 'Gráficos jogadores (Total)':
         draw.text((430,500),msg, fill='white',spacing= 20,font=font)
 
         ontarget=shots[~(shots['type_displayName']=='MissedShots')].reset_index(drop=True)
-        target=len(ontarget)
-        total = len(shots)
+        try:
+         target=len(ontarget)
+        except:
+         target=0
+        try:
+         total = len(shots)
+        except:
+         total=0
         gols=shots[shots['type_displayName']=='Goal'].reset_index(drop=True)
         if gols.empty == True:
           gols=0
@@ -2482,8 +2488,14 @@ if choice == 'Gráficos times (Partida)':
        draw.text((430,500),msg, fill='white',spacing= 20,font=font)
 
        ontarget=shots[~(shots['type_displayName']=='MissedShots')].reset_index(drop=True)
-       target=len(ontarget)
-       total = len(shots)
+       try:
+         target=len(ontarget)
+       except:
+         target=0
+       try:
+         total = len(shots)
+       except:
+         total=0
        gols=shots[shots['type_displayName']=='Goal'].reset_index(drop=True)
        if gols.empty == True:
          gols=0
