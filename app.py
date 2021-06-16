@@ -709,7 +709,7 @@ if choice == 'Gráficos jogadores (Total)':
       df['awayteam']=df['awayteam'].map(teams_dict)
    home=list(df['hometeam'].unique())
    away=list(df['awayteam'].unique())
-   time_unico=home.append(away)
+   time_unico=list(set(home) | set(away))
    team=st.selectbox('Escolha o time',sorted(time_unico))
    match=df[((df['hometeam']==team) & (df['hometeamid']==df.teamId)) | ((df['awayteam']==team) & (df['awayteamid']==df.teamId))].reset_index(drop=True)
    jogador=st.selectbox('Escolha o jogador',list(match['name'].unique()))
