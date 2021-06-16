@@ -2403,62 +2403,197 @@ if choice == 'Gráficos times (Partida)':
     arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
     st.image(f'content/quadro_{grafico}_{team}.png')
     st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
-   if grafico == 'Sonar Inverso de chutes':
-      def sonarinverso(df):
-        shots=df[df['events']=='Shot'].reset_index(drop=True)
-        def sonarplotter(dataframe):
-            df = dataframe[['x','y']].reset_index(drop=True)
+  if grafico == 'Sonar Inverso de chutes':
+     def sonarinverso(df):
+       shots=df[df['events']=='Shot'].reset_index(drop=True)
+       def sonarplotter(dataframe):
+           df = dataframe[['x','y']].reset_index(drop=True)
             # df['Y'] = df['Y']*68
             # df['X'] = df['X']*105
-            df['distance'] = np.sqrt((df['x']-105)**2+(df['y']-34)**2)
-            df['angle'] = np.degrees(np.arctan2(105-df['x'],34-df['y'])) + 180
+           df['distance'] = np.sqrt((df['x']-105)**2+(df['y']-34)**2)
+           df['angle'] = np.degrees(np.arctan2(105-df['x'],34-df['y'])) + 180
 
-            angs = [180,200,220,240,260,280,300,320,340]
-            rads = []
-            density = []
+           angs = [180,200,220,240,260,280,300,320,340]
+           rads = []
+           density = []
 
-            for angle in angs:
-                angdf = df[(df.angle > angle)&(df.angle<=angle+20)]
-                median_dist = angdf.distance.median()
-                rads.append(median_dist)
-                density.append(len(angdf))
-            md = min(density)
-            Md = max(density)
-            density = [(i - md)/(Md - md) for i in density]
+           for angle in angs:
+               angdf = df[(df.angle > angle)&(df.angle<=angle+20)]
+               median_dist = angdf.distance.median()
+               rads.append(median_dist)
+               density.append(len(angdf))
+           md = min(density)
+           Md = max(density)
+           density = [(i - md)/(Md - md) for i in density]
 
-            return (angs, rads, density, df)
-
-        cor_fundo = '#2c2b2b'
-        fig, ax = plt.subplots(figsize=(15,10))
-        pitch = VerticalPitch(pitch_type='uefa', figsize=(15,10),pitch_color=cor_fundo,half=True,
+           return (angs, rads, density, df)
+       cor_fundo = '#2c2b2b'
+       fig, ax = plt.subplots(figsize=(15,10))
+       pitch = VerticalPitch(pitch_type='uefa', figsize=(15,10),pitch_color=cor_fundo,half=True,
                         stripe=False, line_zorder=1)
-        pitch.draw(ax=ax)
+       pitch.draw(ax=ax)
 
-        from matplotlib.colors import ListedColormap, LinearSegmentedColormap
+       from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
-        cmaplist = [cor_fundo, '#F43B87']
-        cmap = LinearSegmentedColormap.from_list("", cmaplist)
+       cmaplist = [cor_fundo, '#F43B87']
+       cmap = LinearSegmentedColormap.from_list("", cmaplist)
 
 
+       angs, rads, cols, sdf = sonarplotter(shots)
 
-        angs, rads, cols, sdf = sonarplotter(shots)
+       for j in range(9):
+           wedge = mpatches.Wedge((34, 105), rads[j], angs[j], angs[j]+20, color = cmap(cols[j]),
+                                     ec = '#f7e9ec')
+           ax.add_patch(wedge)
+       plt.savefig(f'content/sonar_{jogador}.png',dpi=300,facecolor=cor_fundo)
+       im=Image.open(f'content/sonar_{jogador}.png')
+       tamanho_arte = (3000, 2740)
+       arte = Image.new('RGB',tamanho_arte,cor_fundo)
+       W,H = arte.size
+       w,h= im.size
+       im = im.resize((int(w/1.5),int(h/1.5)))
+       im = im.copy()
+       arte.paste(im,(-250,700))
 
-        for j in range(9):
-            wedge = mpatches.Wedge((34, 105), rads[j], angs[j], angs[j]+20, color = cmap(cols[j]),
-                                      ec = '#f7e9ec')
-            ax.add_patch(wedge)
-        plt.savefig(f'content/sonar_{jogador}.png',dpi=300,facecolor=cor_fundo)
-        im=Image.open(f'content/sonar_{jogador}.png')
+       font = ImageFont.truetype('Camber/Camber-Bd.ttf',150)       
+       msg = f'Sonar Inverso de Chutes'
+       draw = ImageDraw.Draw(arte)
+       w, h = draw.textsize(msg,spacing=20,font=font)
+       draw.text((430,100),msg, fill='white',spacing= 20,font=font)
+         
+       font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
+       msg = f'{home_team}- {away_team}'
+       draw = ImageDraw.Draw(arte)
+       w, h = draw.textsize(msg,spacing=20,font=font)
+       draw.text((330,350),msg, fill='white',spacing= 20,font=font)
+
+       font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
+       msg = f'{team}'
+       draw = ImageDraw.Draw(arte)
+       w, h = draw.textsize(msg,spacing=20,font=font)
+       draw.text((430,500),msg, fill='white',spacing= 20,font=font)
+
+       ontarget=shots[~(shots['type_displayName']=='MissedShots')].reset_index(drop=True)
+       target=len(ontarget)
+       total = len(shots)
+       gols=shots[shots['type_displayName']=='Goal'].reset_index(drop=True)
+       if gols.empty == True:
+         gols=0
+
+       font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
+       msg = f'Chutes no alvo: {target} / {total}   |   Gols:  {gols} '
+       draw = ImageDraw.Draw(arte)
+       w, h = draw.textsize(msg,spacing=20,font=font)
+       draw.text((430,650),msg, fill='white',spacing= 20,font=font)
+
+       fot =Image.open('Logos/Copy of pro_branco.png')
+       w,h = fot.size
+       fot = fot.resize((int(w/2),int(h/2)))
+       fot = fot.copy()
+       arte.paste(fot,(2350,2200),fot)
+
+       times_csv=pd.read_csv('csvs/_times-id (whoscored) - times-id - _times-id (whoscored) - times-id.csv')
+       logo_url = times_csv[times_csv['Time'] == team].reset_index(drop=True)['Logo'][0]
+       try:
+         r = requests.get(logo_url)
+         im_bt = r.content
+         image_file = io.BytesIO(im_bt)
+         im = Image.open(image_file)
+         w,h = im.size
+         im = im.resize((int(w*2.5),int(h*2.5)))
+         im = im.copy()
+         arte.paste(im,(2500,100),im)
+       except:
+         r = requests.get(logo_url)
+         im_bt = r.content
+         image_file = io.BytesIO(im_bt)
+         im = Image.open(image_file)
+         w,h = im.size
+         im = im.resize((int(w*2.5),int(h*2.5)))
+         im = im.copy()
+         arte.paste(im,(2500,100))
+         
+       font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+       msg = f'*Penâltis, cobranças de falta e gol contra não incluídos'
+       draw = ImageDraw.Draw(arte)
+       draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
+       arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
+       st.image(f'content/quadro_{grafico}_{team}.png')
+       st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
+     sonarinverso(df_jogador)  
+  if grafico == 'PPDA':
+      def PPDAcalculator(Df,min1,min2):
+        home = Df[(Df.teamId==Df.hometeamid)&(Df.expandedMinute>=min1)&
+                  (Df.expandedMinute<=min2)]
+        away = Df[(Df.teamId==Df.awayteamid)&(Df.expandedMinute>=min1)&
+                   (Df.expandedMinute<=min2)]
+        homedef = len(home.query("(type_displayName in ['Tackle','Interception','Challenge'])&\
+                                         (x>42)"))
+        homepass = len(home.query("(type_displayName=='Pass')&(x<63)&\
+                         (outcomeType_displayName=='Successful')"))
+        homefouls = len(home.query("(type_displayName=='Foul')&\
+                 (outcomeType_displayName=='Unsuccessful')&(x>42)"))
+        awaydef = len(away.query("(type_displayName in ['Tackle','Interception','Challenge'])&\
+                                         (x>42)"))
+        awaypass = len(away.query("(type_displayName=='Pass')&(x<63)&\
+                             (outcomeType_displayName=='Successful')"))
+        awayfouls = len(away.query("(type_displayName=='Foul')&\
+                             (outcomeType_displayName=='Unsuccessful')&(x>42)"))
+        PPDAhome = round(awaypass/(homedef+homefouls)) if (homedef+homefouls)>0 else 0
+        PPDAaway = round(homepass/(awaydef+awayfouls)) if (awaydef+awayfouls)>0 else 0
+        return PPDAhome, PPDAaway
+
+      def PPDAplotter(Df):
+        df = Df.copy()
+        homeppda = []
+        awayppda = []
+        for i in range(0,int(match.expandedMinute.max())-30):
+            min1 = i
+            min2 = 30+i
+            hppda,appda = PPDAcalculator(df,min1,min2)
+            homeppda.append(hppda)
+            awayppda.append(appda)
+        homeppda = np.array(homeppda)
+        awayppda = np.array(awayppda)
+        fig,ax = plt.subplots(figsize=(15,10))
+        cor_fundo='#2c2b2b'
+        fig.set_facecolor(cor_fundo)
+        ax.set_facecolor(cor_fundo)
+        home_color = '#00ADB9'
+        away_color = '#FFA966'
+        ax.plot(homeppda,home_color,lw=4,ls='-',zorder=2)
+        n_lines = 10
+        diff_linewidth = 1.05
+        alpha_value = 0.1
+        ax.set_xticklabels([''])
+        ax.set_ylabel("PPDA",fontsize=20,color='#edece9')
+        ax.set_xlabel("Tempo (Média móvel de 30 min)",fontsize=20,color='#edece9')
+        ax.yaxis.label.set_color('#edece9')
+        ax.tick_params(axis='y', colors='#edece9')
+        ax.plot(awayppda,away_color,lw=4,ls='-',zorder=2)
+        ax.tick_params(axis='x', colors='#222222')
+        spines = ['top','right','bottom','left']
+        for s in spines:
+            ax.spines[s].set_color('#edece9')
+        ax.set_ylim(ax.get_ylim()[::-1])
+         # maxminutes = df.expandedMinute.max()    
+         # plt.text(s=f"{df.hometeam.unique()[0]} PPDA : "+
+         #                 str(PPDAcalculator(df,0,maxminutes)[0])+'\n'+
+         #             f"{df.awayteam.unique()[0]} PPDA: "+
+         #                 str(PPDAcalculator(df,0,maxminutes)[1])+'\n',x = 0.25, y = 0.97,fontweight='bold',fontsize=20,color='#edece9')
+         # plt.tight_layout()
+        plt.savefig(f'content/PPDA_{home_team}_{away_team}.png',dpi=300,facecolor=cor_fundo)
+        im=Image.open(f'content/PPDA_{home_team}_{away_team}.png')
         tamanho_arte = (3000, 2740)
         arte = Image.new('RGB',tamanho_arte,cor_fundo)
         W,H = arte.size
         w,h= im.size
         im = im.resize((int(w/1.5),int(h/1.5)))
         im = im.copy()
-        arte.paste(im,(-250,700))
+        arte.paste(im,(50,700))
 
         font = ImageFont.truetype('Camber/Camber-Bd.ttf',150)
-        msg = f'Sonar Inverso de Chutes'
+        msg = f'PPDA'
         draw = ImageDraw.Draw(arte)
         w, h = draw.textsize(msg,spacing=20,font=font)
         draw.text((430,100),msg, fill='white',spacing= 20,font=font)
@@ -2467,187 +2602,51 @@ if choice == 'Gráficos times (Partida)':
         msg = f'{home_team}- {away_team}'
         draw = ImageDraw.Draw(arte)
         w, h = draw.textsize(msg,spacing=20,font=font)
-        draw.text((330,350),msg, fill='white',spacing= 20,font=font)
+        draw.text((430,300),msg, fill='white',spacing= 20,font=font)
+
+        maxminutes = df.expandedMinute.max()
+        h_media = str(PPDAcalculator(df,0,maxminutes)[0])
+        a_media = str(PPDAcalculator(df,0,maxminutes)[1])
 
         font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
-        msg = f'{team}'
+        msg = f'PPDA {home_team}: {h_media} - PPDA {away_team}: {a_media} '
         draw = ImageDraw.Draw(arte)
         w, h = draw.textsize(msg,spacing=20,font=font)
         draw.text((430,500),msg, fill='white',spacing= 20,font=font)
 
-        ontarget=shots[~(shots['type_displayName']=='MissedShots')].reset_index(drop=True)
-        target=len(ontarget)
-        total = len(shots)
-        gols=shots[shots['type_displayName']=='Goal'].reset_index(drop=True)
-        if gols.empty == True:
-          gols=0
+        im = Image.open('Arquivos/legenda-linha.png')
+        w,h = im.size
+        im = im.resize((int(w/5),int(h/5)))
+        im = im.copy()
+        arte.paste(im,(1300,800))
 
-        font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
-        msg = f'Chutes no alvo: {target} / {total}   |   Gols:  {gols} '
+        font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+        msg = f'Mandante'
         draw = ImageDraw.Draw(arte)
-        w, h = draw.textsize(msg,spacing=20,font=font)
-        draw.text((430,650),msg, fill='white',spacing= 20,font=font)
+        draw.text((1500,840),msg, fill='white',spacing= 30,font=font)
 
-        fot =Image.open('Logos/Copy of pro_branco.png')
+
+        font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+        msg = f'Visitante'
+        draw = ImageDraw.Draw(arte)
+        draw.text((1870,840),msg, fill='white',spacing= 30,font=font)
+
+         
+        fot =Image.open('Logos/Copy of pro_branco.png')   
         w,h = fot.size
         fot = fot.resize((int(w/2),int(h/2)))
         fot = fot.copy()
-        arte.paste(fot,(2350,2200),fot)
-
-        times_csv=pd.read_csv('csvs/_times-id (whoscored) - times-id - _times-id (whoscored) - times-id.csv')
-        logo_url = times_csv[times_csv['Time'] == team].reset_index(drop=True)['Logo'][0]
-        try:
-          r = requests.get(logo_url)
-          im_bt = r.content
-          image_file = io.BytesIO(im_bt)
-          im = Image.open(image_file)
-          w,h = im.size
-          im = im.resize((int(w*2.5),int(h*2.5)))
-          im = im.copy()
-          arte.paste(im,(2500,100),im)
-        except:
-          r = requests.get(logo_url)
-          im_bt = r.content
-          image_file = io.BytesIO(im_bt)
-          im = Image.open(image_file)
-          w,h = im.size
-          im = im.resize((int(w*2.5),int(h*2.5)))
-          im = im.copy()
-          arte.paste(im,(2500,100))
+        arte.paste(fot,(2350,100),fot)
 
         font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-        msg = f'*Penâltis, cobranças de falta e gol contra não incluídos'
+        msg = f'*Quanto menor o PPDA, maior intensidade na pressão alta'
         draw = ImageDraw.Draw(arte)
         draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
-        arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
-        st.image(f'content/quadro_{grafico}_{team}.png')
-        st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
-      sonarinverso(df_jogador)  
-   if grafico == 'PPDA':
-       def PPDAcalculator(Df,min1,min2):
-         home = Df[(Df.teamId==Df.hometeamid)&(Df.expandedMinute>=min1)&
-                   (Df.expandedMinute<=min2)]
-         away = Df[(Df.teamId==Df.awayteamid)&(Df.expandedMinute>=min1)&
-                   (Df.expandedMinute<=min2)]
-         homedef = len(home.query("(type_displayName in ['Tackle','Interception','Challenge'])&\
-                                         (x>42)"))
-         homepass = len(home.query("(type_displayName=='Pass')&(x<63)&\
-                         (outcomeType_displayName=='Successful')"))
-         homefouls = len(home.query("(type_displayName=='Foul')&\
-                 (outcomeType_displayName=='Unsuccessful')&(x>42)"))
-         awaydef = len(away.query("(type_displayName in ['Tackle','Interception','Challenge'])&\
-                                         (x>42)"))
-         awaypass = len(away.query("(type_displayName=='Pass')&(x<63)&\
-                             (outcomeType_displayName=='Successful')"))
-         awayfouls = len(away.query("(type_displayName=='Foul')&\
-                             (outcomeType_displayName=='Unsuccessful')&(x>42)"))
-         PPDAhome = round(awaypass/(homedef+homefouls)) if (homedef+homefouls)>0 else 0
-         PPDAaway = round(homepass/(awaydef+awayfouls)) if (awaydef+awayfouls)>0 else 0
-         return PPDAhome, PPDAaway
 
-       def PPDAplotter(Df):
-         df = Df.copy()
-         homeppda = []
-         awayppda = []
-         for i in range(0,int(match.expandedMinute.max())-30):
-             min1 = i
-             min2 = 30+i
-             hppda,appda = PPDAcalculator(df,min1,min2)
-             homeppda.append(hppda)
-             awayppda.append(appda)
-         homeppda = np.array(homeppda)
-         awayppda = np.array(awayppda)
-         fig,ax = plt.subplots(figsize=(15,10))
-         cor_fundo='#2c2b2b'
-         fig.set_facecolor(cor_fundo)
-         ax.set_facecolor(cor_fundo)
-         home_color = '#00ADB9'
-         away_color = '#FFA966'
-         ax.plot(homeppda,home_color,lw=4,ls='-',zorder=2)
-         n_lines = 10
-         diff_linewidth = 1.05
-         alpha_value = 0.1
-         ax.set_xticklabels([''])
-         ax.set_ylabel("PPDA",fontsize=20,color='#edece9')
-         ax.set_xlabel("Tempo (Média móvel de 30 min)",fontsize=20,color='#edece9')
-         ax.yaxis.label.set_color('#edece9')
-         ax.tick_params(axis='y', colors='#edece9')
-         ax.plot(awayppda,away_color,lw=4,ls='-',zorder=2)
-         ax.tick_params(axis='x', colors='#222222')
-         spines = ['top','right','bottom','left']
-         for s in spines:
-             ax.spines[s].set_color('#edece9')
-         ax.set_ylim(ax.get_ylim()[::-1])
-         # maxminutes = df.expandedMinute.max()    
-         # plt.text(s=f"{df.hometeam.unique()[0]} PPDA : "+
-         #                 str(PPDAcalculator(df,0,maxminutes)[0])+'\n'+
-         #             f"{df.awayteam.unique()[0]} PPDA: "+
-         #                 str(PPDAcalculator(df,0,maxminutes)[1])+'\n',x = 0.25, y = 0.97,fontweight='bold',fontsize=20,color='#edece9')
-         # plt.tight_layout()
-         plt.savefig(f'content/PPDA_{home_team}_{away_team}.png',dpi=300,facecolor=cor_fundo)
-         im=Image.open(f'content/PPDA_{home_team}_{away_team}.png')
-         tamanho_arte = (3000, 2740)
-         arte = Image.new('RGB',tamanho_arte,cor_fundo)
-         W,H = arte.size
-         w,h= im.size
-         im = im.resize((int(w/1.5),int(h/1.5)))
-         im = im.copy()
-         arte.paste(im,(50,700))
-
-         font = ImageFont.truetype('Camber/Camber-Bd.ttf',150)
-         msg = f'PPDA'
-         draw = ImageDraw.Draw(arte)
-         w, h = draw.textsize(msg,spacing=20,font=font)
-         draw.text((430,100),msg, fill='white',spacing= 20,font=font)
-
-         font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
-         msg = f'{home_team}- {away_team}'
-         draw = ImageDraw.Draw(arte)
-         w, h = draw.textsize(msg,spacing=20,font=font)
-         draw.text((430,300),msg, fill='white',spacing= 20,font=font)
-
-         maxminutes = df.expandedMinute.max()
-         h_media = str(PPDAcalculator(df,0,maxminutes)[0])
-         a_media = str(PPDAcalculator(df,0,maxminutes)[1])
-
-         font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
-         msg = f'PPDA {home_team}: {h_media} - PPDA {away_team}: {a_media} '
-         draw = ImageDraw.Draw(arte)
-         w, h = draw.textsize(msg,spacing=20,font=font)
-         draw.text((430,500),msg, fill='white',spacing= 20,font=font)
-
-         im = Image.open('Arquivos/legenda-linha.png')
-         w,h = im.size
-         im = im.resize((int(w/5),int(h/5)))
-         im = im.copy()
-         arte.paste(im,(1300,800))
-
-         font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-         msg = f'Mandante'
-         draw = ImageDraw.Draw(arte)
-         draw.text((1500,840),msg, fill='white',spacing= 30,font=font)
-
-
-         font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-         msg = f'Visitante'
-         draw = ImageDraw.Draw(arte)
-         draw.text((1870,840),msg, fill='white',spacing= 30,font=font)
-
-         fot =Image.open('Logos/Copy of pro_branco.png')
-         w,h = fot.size
-         fot = fot.resize((int(w/2),int(h/2)))
-         fot = fot.copy()
-         arte.paste(fot,(2350,100),fot)
-
-         font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-         msg = f'*Quanto menor o PPDA, maior intensidade na pressão alta'
-         draw = ImageDraw.Draw(arte)
-         draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
-
-         arte.save(f'content/quadro_{grafico}_{home_team}_{away_team}.png',quality=95,facecolor='#2C2B2B')
-         st.image(f'content/quadro_{grafico}_{home_team}_{away_team}.png')
-         st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{home_team}_{away_team}.png', 'Imagem'), unsafe_allow_html=True)
-       PPDAplotter(match)
+        arte.save(f'content/quadro_{grafico}_{home_team}_{away_team}.png',quality=95,facecolor='#2C2B2B')
+        st.image(f'content/quadro_{grafico}_{home_team}_{away_team}.png')
+        st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{home_team}_{away_team}.png', 'Imagem'), unsafe_allow_html=True)
+      PPDAplotter(match)
     
   if grafico == 'Posse':
     def possession_calc(Df, min1, min2):
