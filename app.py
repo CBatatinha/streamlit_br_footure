@@ -672,13 +672,13 @@ if choice == 'Gráficos jogadores (Partida)':
          arte.paste(im,(330,2400))
 
          font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-         msg = f'Gol'
+         msg = f'No alvo'
          draw = ImageDraw.Draw(arte)
          draw.text((600,2450),msg, fill='white',spacing= 30,font=font)
 
 
          font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-         msg = f'No alvo'
+         msg = f'Gol'
          draw = ImageDraw.Draw(arte)
          draw.text((920,2450),msg, fill='white',spacing= 30,font=font)
          if (penalti == False) & (falta == False):
@@ -1393,13 +1393,13 @@ if choice == 'Gráficos jogadores (Total)':
          arte.paste(im,(330,2400))
 
          font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-         msg = f'Gol'
+         msg = f'No alvo'
          draw = ImageDraw.Draw(arte)
          draw.text((600,2450),msg, fill='white',spacing= 30,font=font)
 
 
          font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-         msg = f'No alvo'
+         msg = f'Gol'
          draw = ImageDraw.Draw(arte)
          draw.text((920,2450),msg, fill='white',spacing= 30,font=font)
          if (penalti == False) & (falta == False):
@@ -2985,13 +2985,13 @@ if choice == 'Gráficos times (Partida)':
          arte.paste(im,(330,2400))
 
          font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-         msg = f'Gol'
+         msg = f'No alvo'
          draw = ImageDraw.Draw(arte)
          draw.text((600,2450),msg, fill='white',spacing= 30,font=font)
 
 
          font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-         msg = f'No alvo'
+         msg = f'Gol'
          draw = ImageDraw.Draw(arte)
          draw.text((920,2450),msg, fill='white',spacing= 30,font=font)
          if (penalti == False) & (falta == False):
