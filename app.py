@@ -711,7 +711,7 @@ if choice == 'Gráficos jogadores (Partida)':
          arte.save(f'content/quadro_{grafico}_{jogador}.png',quality=95,facecolor='#2C2B2B')
          st.image(f'content/quadro_{grafico}_{jogador}.png')
          st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
-       chutes(df_jogador,penalti,falta)  
+      chutes(df_jogador,penalti,falta)  
    if grafico == 'Passes mais frequentes':
       df_passe_plot= df_jogador[(df_jogador.events.isin(['Pass','cross']))&
          (df_jogador.outcomeType_displayName=='Successful')].reset_index(drop=True)
