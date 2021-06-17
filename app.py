@@ -3016,7 +3016,7 @@ if choice == 'Gráficos times (Partida)':
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
          arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
          st.image(f'content/quadro_{grafico}_{team}.png')
-         st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jteam}.png', 'Imagem'), unsafe_allow_html=True)
+         st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
       chutes(df_team,penalti,falta) 
   if grafico == 'PPDA':
       def PPDAcalculator(Df,min1,min2):
