@@ -1193,12 +1193,14 @@ if choice == 'Gráficos jogadores (Total)':
          total = len(shots)
         except:
          total=0
-        gols=shots[shots['type_displayName']=='Goal'].reset_index(drop=True)
-        if gols.empty == True:
-          gols=0
+#         gols=shots[shots['type_displayName']=='Goal'].reset_index(drop=True)
+        goal=shots[shots['type_displayName']=='Goal'].reset_index(drop=True)
+        gols=len(goal)
+#         if gols.empty == True:
+#           gols=0
 
         font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
-        msg = f'Chutes no alvo: {target} / {total}   |   Gols:  {len(gols)} '
+        msg = f'Chutes no alvo: {target} / {total}   |   Gols:  {gols} '
         draw = ImageDraw.Draw(arte)
         w, h = draw.textsize(msg,spacing=20,font=font)
         draw.text((430,650),msg, fill='white',spacing= 20,font=font)
