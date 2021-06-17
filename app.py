@@ -460,7 +460,7 @@ if choice == 'Gráficos jogadores (Partida)':
       plt.scatter(data=defesa_certo, x='x',y='y',color='#00FF79',zorder=zo+1)
       plt.scatter(data=defesa_errado, x='x',y='y',color='#FD2B2C',zorder=zo+1)
       defensivo=df_jogador[(df_jogador['type_displayName'].isin(defesa))].reset_index(drop=True)
-      plt.axvline(x=defensivo['x'].mean(),ymin=0.05, ymax=0.95, color='#7AB5B7', linestyle='--',lw=2)
+      plt.axvline(x=defensivo['x'].median(),ymin=0.05, ymax=0.95, color='#7AB5B7', linestyle='--',lw=2)
       plt.savefig(f'content/defesa_{jogador}.png',dpi=300,facecolor=cor_fundo)
       im = Image.open(f'content/defesa_{jogador}.png')
       cor_fundo = '#2c2b2b'
@@ -1031,7 +1031,7 @@ if choice == 'Gráficos jogadores (Total)':
       plt.scatter(data=defesa_certo, x='x',y='y',color='#00FF79',zorder=zo+1)
       plt.scatter(data=defesa_errado, x='x',y='y',color='#FD2B2C',zorder=zo+1)
       defensivo=df_jogador[(df_jogador['type_displayName'].isin(defesa))].reset_index(drop=True)
-      plt.axvline(x=defensivo['x'].mean(),ymin=0.05, ymax=0.95, color='#7AB5B7', linestyle='--',lw=2)
+      plt.axvline(x=defensivo['x'].median(),ymin=0.05, ymax=0.95, color='#7AB5B7', linestyle='--',lw=2)
       plt.savefig(f'content/defesa_{jogador}.png',dpi=300,facecolor=cor_fundo)
       im = Image.open(f'content/defesa_{jogador}.png')
       cor_fundo = '#2c2b2b'
@@ -2211,9 +2211,9 @@ if choice == 'Gráficos times (Partida)':
     pitch.draw(ax=ax)
     zo=12
     plt.scatter(data=defesa_certo, x='x',y='y',color='#00FF79',zorder=zo+1)
-    plt.scatter(data=defesa_errado, x='y',y='x',color='#FD2B2C',zorder=zo+1)
+    plt.scatter(data=defesa_errado, x='x',y='y',color='#FD2B2C',zorder=zo+1)
     defensivo=df_team[(df_team['type_displayName'].isin(defesa))].reset_index(drop=True)
-    plt.axvline(x=defensivo['x'].mean(),ymin=0.05, ymax=0.95, color='#7AB5B7', linestyle='--',lw=2)
+    plt.axvline(x=defensivo['x'].median(),ymin=0.05, ymax=0.95, color='#7AB5B7', linestyle='--',lw=2)
     plt.show()
     plt.savefig(f'content/defesa_{team}.png',dpi=300,facecolor=cor_fundo)
     im = Image.open(f'content/defesa_{team}.png')
