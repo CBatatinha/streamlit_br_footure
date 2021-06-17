@@ -650,6 +650,12 @@ if choice == 'Gráficos jogadores (Partida)':
          fot = fot.resize((int(w/2),int(h/2)))
          fot = fot.copy()
          arte.paste(fot,(2350,2200),fot)
+         
+         if df_jogador['hometeamid'][0]==df_jogador['teamId'][0]:
+           team=(df_jogador['hometeam'][0])
+         else:
+           team=(df_jogador['awayteam'][0])
+
 
          times_csv=pd.read_csv('csvs/_times-id (whoscored) - times-id - _times-id (whoscored) - times-id.csv')
          logo_url = times_csv[times_csv['Time'] == team].reset_index(drop=True)['Logo'][0]
