@@ -120,7 +120,7 @@ if choice == 'Gráficos jogadores (Partida)':
    match=df[(df['hometeam']==home_team)&(df['awayteam']==away_team)].reset_index(drop=True)
    jogador=st.selectbox('Escolha o jogador',list(match['name'].unique()))
    df_jogador=match[(match['name']==jogador)].reset_index(drop=True)
-   lista_graficos=['Heatmap','Recepções','Passes','Ações Defensivas','Passes mais frequentes']
+   lista_graficos=['Heatmap','Recepções','Passes','Ações Defensivas','Passes mais frequentes','Finalizações']
    grafico=st.selectbox('Escolha o gráfico',lista_graficos)
    if grafico == 'Heatmap':
       def heatmap(df):
@@ -561,6 +561,157 @@ if choice == 'Gráficos jogadores (Partida)':
       arte.save(f'content/quadro_{grafico}_{jogador}.png',quality=95,facecolor='#2C2B2B')
       st.image(f'content/quadro_{grafico}_{jogador}.png')
       st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
+   if grafico == 'Finalizações':
+      col1,col2= st.beta_columns(2)
+      with col1:
+         penalti=st.checkbox('Pênalti')
+      with col2:
+         falta=st.checkbox('Falta')
+      def chutes(df,penalti=False,falta=False):
+         shots=df[df['events']=='Shot'].reset_index(drop=True)
+         goal=shots[shots['type_displayName']=='Goal'].reset_index(drop=True)
+         shot_off=shots[(shots['type_displayName']=='MissedShots')].reset_index(drop=True)
+         shot_on=shots[(shots['type_displayName'].isin(['SavedShot','ShotOnPost']))].reset_index(drop=True)
+         cor_fundo = '#2c2b2b'
+         fig, ax = plt.subplots(figsize=(15,10))
+         pitch = VerticalPitch(pitch_type='uefa', figsize=(15,10),pitch_color=cor_fundo,half=True,
+                        stripe=False, line_zorder=1)
+         pitch.draw(ax=ax)
+         plt.scatter(data=goal, x='y',y='x',color='#00FF79',zorder=13,ec='white',lw=2,s=400)
+         plt.scatter(data=shot_off, x='y',y='x',color=cor_fundo,zorder=11,ec='white',lw=2,s=400)
+         plt.scatter(data=shot_on, x='y',y='x',color='#FEA300',zorder=12,ec='white',lw=2,s=400)
+         penalty=pd.DataFrame()
+         penalty_on=pd.DataFrame()
+         penalty_off=pd.DataFrame()
+         fk=pd.DataFrame()
+         fk_on=pd.DataFrame()
+         fk_off=pd.DataFrame()
+         if penalti == True:
+           penalty=df[(df['events']=='Penalty')&(df['type_displayName']=='Goal')].reset_index(drop=True)
+           penalty_on=df[(df['events']=='Penalty')&(df['type_displayName']=='SavedShot')].reset_index(drop=True)
+           penalty_off=df[(df['events']=='Penalty')&(df['type_displayName']=='MissedShots')].reset_index(drop=True)
+           plt.scatter(data=penalty, x='y',y='x',color='#00FF79',zorder=13,ec='white',lw=2,s=400)
+           plt.scatter(data=penalty_off, x='y',y='x',color=cor_fundo,zorder=11,ec='white',lw=2,s=400)
+           plt.scatter(data=penalty_on, x='y',y='x',color='#FEA300',zorder=12,ec='white',lw=2,s=400)
+         if falta == True:
+           fk=df[(df['events']=='Freekick')&(df['type_displayName']=='Goal')].reset_index(drop=True)
+           fk_on=df[(df['events']=='Freekick')&(df['type_displayName']=='SavedShot')].reset_index(drop=True)
+           fk_off=df[(df['events']=='Freekick')&(df['type_displayName']=='MissedShots')].reset_index(drop=True)
+           plt.scatter(data=fk, x='y',y='x',color='#00FF79',zorder=13,ec='white',lw=2,s=400)
+           plt.scatter(data=fk_off, x='y',y='x',color=cor_fundo,zorder=11,ec='white',lw=2,s=400)
+           plt.scatter(data=fk_on, x='y',y='x',color='#FEA300',zorder=12,ec='white',lw=2,s=400)
+         plt.savefig(f'content/finalizações_{jogador}.png',dpi=300,facecolor=cor_fundo)
+         im=Image.open(f'/content/finalizações_{jogador}.png')
+         tamanho_arte = (3000, 2740)
+         arte = Image.new('RGB',tamanho_arte,cor_fundo)
+         W,H = arte.size
+         w,h= im.size
+         im = im.resize((int(w/1.5),int(h/1.5)))
+         im = im.copy()
+         arte.paste(im,(-250,700))
+
+         font = ImageFont.truetype('Camber/Camber-Bd.ttf',150)
+         msg = f'Finalizações'
+         draw = ImageDraw.Draw(arte)
+         w, h = draw.textsize(msg,spacing=20,font=font)
+         draw.text((430,100),msg, fill='white',spacing= 20,font=font)
+
+         font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
+         msg = f'{home_team}- {away_team}'
+         draw = ImageDraw.Draw(arte)
+         w, h = draw.textsize(msg,spacing=20,font=font)
+         draw.text((430,350),msg, fill='white',spacing= 20,font=font)
+
+         font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
+         msg = f'{jogador}'
+         draw = ImageDraw.Draw(arte)
+         w, h = draw.textsize(msg,spacing=20,font=font)
+         draw.text((430,500),msg, fill='white',spacing= 20,font=font)
+
+         try:
+           target=len(goal)+len(penalty)+len(fk)+len(shot_on)+len(penalty_on)+len(fk_on)
+         except:
+           target=0
+         try:
+           total = len(goal)+len(penalty)+len(fk)+len(shot_on)+len(penalty_on)+len(fk_on)+len(shot_off)+len(penalty_off)+len(fk_off)
+         except:
+           total=0
+      #         gols=shots[shots['type_displayName']=='Goal'].reset_index(drop=True)
+         gols=len(goal)+len(penalty)+len(fk)
+
+         font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
+         msg = f'Chutes no alvo: {target}/{total} | Gols: {gols} '
+         draw = ImageDraw.Draw(arte)
+         w, h = draw.textsize(msg,spacing=20,font=font)
+         draw.text((430,650),msg, fill='white',spacing= 20,font=font)
+
+         fot =Image.open('Logos/Copy of pro_branco.png')
+         w,h = fot.size
+         fot = fot.resize((int(w/2),int(h/2)))
+         fot = fot.copy()
+         arte.paste(fot,(2350,2200),fot)
+
+         times_csv=pd.read_csv('csvs/_times-id (whoscored) - times-id - _times-id (whoscored) - times-id.csv')
+         logo_url = times_csv[times_csv['Time'] == team].reset_index(drop=True)['Logo'][0]
+         try:
+           r = requests.get(logo_url)
+           im_bt = r.content
+           image_file = io.BytesIO(im_bt)
+           im = Image.open(image_file)
+           w,h = im.size
+           im = im.resize((int(w*2.5),int(h*2.5)))
+           im = im.copy()
+           arte.paste(im,(2500,100),im)
+         except:
+           r = requests.get(logo_url)
+           im_bt = r.content
+           image_file = io.BytesIO(im_bt)
+           im = Image.open(image_file)
+           w,h = im.size
+           im = im.resize((int(w*2.5),int(h*2.5)))
+           im = im.copy()
+           arte.paste(im,(2500,100))
+
+         im = Image.open('Arquivos/legenda-assist.png')
+         w,h = im.size
+         im = im.resize((int(w/5),int(h/5)))
+         im = im.copy()
+         arte.paste(im,(330,2400))
+
+         font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+         msg = f'Gol'
+         draw = ImageDraw.Draw(arte)
+         draw.text((600,2450),msg, fill='white',spacing= 30,font=font)
+
+
+         font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+         msg = f'No alvo'
+         draw = ImageDraw.Draw(arte)
+         draw.text((920,2450),msg, fill='white',spacing= 30,font=font)
+         if (penalti == False) & (falta == False):
+           font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+           msg = f'*Penâltis e cobranças de falta não incluídos'
+           draw = ImageDraw.Draw(arte)
+           draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
+         if (penalti == True) & (falta == False):
+           font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+           msg = f'*Cobranças de falta não incluídos'
+           draw = ImageDraw.Draw(arte)
+           draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
+         if (penalti == False) & (falta == True):
+           font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+           msg = f'*Cobranças de falta não incluídos'
+           draw = ImageDraw.Draw(arte)
+           draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
+         if (penalti == True) & (falta == True):
+           font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+           msg = f'*Penâltis e cobranças de falta incluídos'
+           draw = ImageDraw.Draw(arte)
+           draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
+         arte.save(f'content/quadro_{grafico}_{jogador}.png',quality=95,facecolor='#2C2B2B')
+         st.image(f'content/quadro_{grafico}_{jogador}.png')
+         st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
+       chutes(df_jogador,penalti,falta)  
    if grafico == 'Passes mais frequentes':
       df_passe_plot= df_jogador[(df_jogador.events.isin(['Pass','cross']))&
          (df_jogador.outcomeType_displayName=='Successful')].reset_index(drop=True)
