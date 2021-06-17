@@ -601,7 +601,7 @@ if choice == 'Gráficos jogadores (Partida)':
            plt.scatter(data=fk_off, x='y',y='x',color=cor_fundo,zorder=11,ec='white',lw=2,s=400)
            plt.scatter(data=fk_on, x='y',y='x',color='#FEA300',zorder=12,ec='white',lw=2,s=400)
          plt.savefig(f'content/finalizações_{jogador}.png',dpi=300,facecolor=cor_fundo)
-         im=Image.open(f'/content/finalizações_{jogador}.png')
+         im=Image.open(f'content/finalizações_{jogador}.png')
          tamanho_arte = (3000, 2740)
          arte = Image.new('RGB',tamanho_arte,cor_fundo)
          W,H = arte.size
