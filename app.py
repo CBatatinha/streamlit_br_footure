@@ -53,9 +53,9 @@ choice=st.sidebar.selectbox('Menu',menu)
 if choice == 'Home':
    st.markdown('Ferramenta criada pelo departamento de análise de dados do Footure PRO para visualizações  \n'
                 'Navegue pelas abas no menu para obter os gráficos de interesse.  \n'
-                'Temporada 2021 tem até a 2° rodada.  \n'
+                'Temporada 2021 tem até a 4° rodada.  \n'
                 'Euro já disponível.  \n'
-                '**Obs: Passes mais valiosos ainda não ta disponivel ** ')
+                '**Obs: Finalizações tá online ** ')
 
 org_2020= "https://drive.google.com/file/d/1-14BD_oWbQhuT3fNiC5P3cwJjqsAkX7S/view?usp=sharing"
 file_id_1= org_2020.split('/')[-2]
@@ -1712,7 +1712,7 @@ if choice == 'Gráficos times (Partida)':
   team=st.selectbox('Escolha o time',[home_team,away_team])
   df_team=match[((match['hometeam']==team) & (match['hometeamid']==match.teamId)) | ((match['awayteam']==team) & (match['awayteamid']==match.teamId))].reset_index(drop=True)
   lista_graficos=['Mapa de Passes','Posição Defensiva','Cruzamentos','Progressivos','Ações Defensivas','Passes mais frequentes',
-                  'Entradas na Área','PPDA','Posse','Passes valiosos','Retomadas de Bola','Sonar Inverso de chutes']
+                  'Entradas na Área','PPDA','Posse','Retomadas de Bola','Sonar Inverso de chutes','Finalizações']
   grafico=st.selectbox('Escolha o gráfico',lista_graficos)
   if grafico == 'Mapa de Passes':
     def mapa_de_passes(df):
