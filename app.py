@@ -449,6 +449,11 @@ if choice == 'Gráficos jogadores (Partida)':
       dct_defense={'Desarme':'Tackle','Interceptação':'Interception','Corte':'Clearance',
                    'Bloqueio':'BlockedPass','Aéreo':'Aerial','Duelo':'Challenge'}
       defesa=[dct_defense[k] for k in lista_defesa]
+      col1,col2= st.beta_columns(2)
+      with col1:
+         cobertura=st.checkbox('Cobertura Defensiva')
+      with col2:
+         linha_mediana=st.checkbox('Linha mediana')
       defesa_certo=df_jogador[(df_jogador['type_displayName'].isin(defesa))&(df_jogador['outcomeType_displayName']=='Successful')].reset_index(drop=True)
       defesa_errado=df_jogador[(df_jogador['type_displayName'].isin(defesa))&(df_jogador['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
       cor_fundo = '#2c2b2b'
@@ -457,10 +462,19 @@ if choice == 'Gráficos jogadores (Partida)':
                       stripe=False, line_zorder=2)
       pitch.draw(ax=ax)
       zo=12
+      defense = defesa_certo[(np.abs(stats.zscore(defesa_certo[['x','y']])) < .75)]
+      defpoints = defense[['x','y']].values
+      hull = ConvexHull(defense[['x','y']])
+      if cobertura == True:
+          for simplex in hull.simplices:
+          #Draw a black line between each
+              plt.plot(defpoints[simplex, 0], defpoints[simplex, 1], 'r-',color='#00FF79')
+          plt.fill(defpoints[hull.vertices,0], defpoints[hull.vertices,1],c='#00FF79', alpha=0.1,hatch='/')
       plt.scatter(data=defesa_certo, x='x',y='y',color='#00FF79',zorder=zo+1)
       plt.scatter(data=defesa_errado, x='x',y='y',color='#FD2B2C',zorder=zo+1)
       defensivo=df_jogador[(df_jogador['type_displayName'].isin(defesa))].reset_index(drop=True)
-      plt.axvline(x=defensivo['x'].median(),ymin=0.05, ymax=0.95, color='#7AB5B7', linestyle='--',lw=2)
+      if linha_mediana == True:
+         plt.axvline(x=defensivo['x'].median(),ymin=0.05, ymax=0.95, color='#7AB5B7', linestyle='--',lw=2)
       plt.savefig(f'content/defesa_{jogador}.png',dpi=300,facecolor=cor_fundo)
       im = Image.open(f'content/defesa_{jogador}.png')
       cor_fundo = '#2c2b2b'
@@ -1020,6 +1034,11 @@ if choice == 'Gráficos jogadores (Total)':
       dct_defense={'Desarme':'Tackle','Interceptação':'Interception','Corte':'Clearance',
                    'Bloqueio':'BlockedPass','Aéreo':'Aerial','Duelo':'Challenge'}
       defesa=[dct_defense[k] for k in lista_defesa]
+      col1,col2= st.beta_columns(2)
+      with col1:
+         cobertura=st.checkbox('Cobertura Defensiva')
+      with col2:
+         linha_mediana=st.checkbox('Linha mediana')
       defesa_certo=df_jogador[(df_jogador['type_displayName'].isin(defesa))&(df_jogador['outcomeType_displayName']=='Successful')].reset_index(drop=True)
       defesa_errado=df_jogador[(df_jogador['type_displayName'].isin(defesa))&(df_jogador['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
       cor_fundo = '#2c2b2b'
@@ -1028,10 +1047,19 @@ if choice == 'Gráficos jogadores (Total)':
                       stripe=False, line_zorder=2)
       pitch.draw(ax=ax)
       zo=12
+      defense = defesa_certo[(np.abs(stats.zscore(defesa_certo[['x','y']])) < .75)]
+      defpoints = defense[['x','y']].values
+      hull = ConvexHull(defense[['x','y']])
+      if cobertura == True:
+          for simplex in hull.simplices:
+          #Draw a black line between each
+              plt.plot(defpoints[simplex, 0], defpoints[simplex, 1], 'r-',color='#00FF79')
+          plt.fill(defpoints[hull.vertices,0], defpoints[hull.vertices,1],c='#00FF79', alpha=0.1,hatch='/')
       plt.scatter(data=defesa_certo, x='x',y='y',color='#00FF79',zorder=zo+1)
       plt.scatter(data=defesa_errado, x='x',y='y',color='#FD2B2C',zorder=zo+1)
       defensivo=df_jogador[(df_jogador['type_displayName'].isin(defesa))].reset_index(drop=True)
-      plt.axvline(x=defensivo['x'].median(),ymin=0.05, ymax=0.95, color='#7AB5B7', linestyle='--',lw=2)
+      if linha_mediana == True:
+         plt.axvline(x=defensivo['x'].median(),ymin=0.05, ymax=0.95, color='#7AB5B7', linestyle='--',lw=2)
       plt.savefig(f'content/defesa_{jogador}.png',dpi=300,facecolor=cor_fundo)
       im = Image.open(f'content/defesa_{jogador}.png')
       cor_fundo = '#2c2b2b'
@@ -2202,6 +2230,11 @@ if choice == 'Gráficos times (Partida)':
     dct_defense={'Desarme':'Tackle','Interceptação':'Interception','Corte':'Clearance',
                   'Bloqueio':'BlockedPass','Aéreo':'Aerial','Duelo':'Challenge'}
     defesa=[dct_defense[k] for k in lista_defesa]
+    col1,col2= st.beta_columns(2)
+    with col1:
+       cobertura=st.checkbox('Cobertura Defensiva')
+    with col2:
+       linha_mediana=st.checkbox('Linha mediana')
     defesa_certo=df_team[(df_team['type_displayName'].isin(defesa))&(df_team['outcomeType_displayName']=='Successful')].reset_index(drop=True)
     defesa_errado=df_team[(df_team['type_displayName'].isin(defesa))&(df_team['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
     cor_fundo = '#2c2b2b'
@@ -2210,10 +2243,19 @@ if choice == 'Gráficos times (Partida)':
                     stripe=False, line_zorder=2)
     pitch.draw(ax=ax)
     zo=12
+    defense = defesa_certo[(np.abs(stats.zscore(defesa_certo[['x','y']])) < .75)]
+    defpoints = defense[['x','y']].values
+    hull = ConvexHull(defense[['x','y']])
+    if cobertura == True:
+        for simplex in hull.simplices:
+        #Draw a black line between each
+            plt.plot(defpoints[simplex, 0], defpoints[simplex, 1], 'r-',color='#00FF79')
+        plt.fill(defpoints[hull.vertices,0], defpoints[hull.vertices,1],c='#00FF79', alpha=0.1,hatch='/')
     plt.scatter(data=defesa_certo, x='x',y='y',color='#00FF79',zorder=zo+1)
     plt.scatter(data=defesa_errado, x='x',y='y',color='#FD2B2C',zorder=zo+1)
     defensivo=df_team[(df_team['type_displayName'].isin(defesa))].reset_index(drop=True)
-    plt.axvline(x=defensivo['x'].median(),ymin=0.05, ymax=0.95, color='#7AB5B7', linestyle='--',lw=2)
+    if linha_mediana == True:
+         plt.axvline(x=defensivo['x'].median(),ymin=0.05, ymax=0.95, color='#7AB5B7', linestyle='--',lw=2)
     plt.show()
     plt.savefig(f'content/defesa_{team}.png',dpi=300,facecolor=cor_fundo)
     im = Image.open(f'content/defesa_{team}.png')
