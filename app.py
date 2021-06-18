@@ -3270,7 +3270,7 @@ if choice == 'Gráficos times (Partida)':
          actions = pd.concat([actions,dribbles], ignore_index=True, sort=False)
          actions = actions.sort_values(['period_value','action_id']).reset_index(drop=True)
          actions['action_id'] = range(len(actions))
-#          return actions
+         return actions
      gamedf=match
      match['name'] = gamedf['name'].fillna(value='')
      match['action_id'] = range(len(gamedf))
