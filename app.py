@@ -3309,7 +3309,7 @@ if choice == 'Gráficos times (Partida)':
 
      arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
      st.image(f'content/quadro_{grafico}_{team}.png')
-     st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
+     st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
   if grafico == 'PPDA':
       def PPDAcalculator(Df,min1,min2):
         home = Df[(Df.teamId==Df.hometeamid)&(Df.expandedMinute>=min1)&
