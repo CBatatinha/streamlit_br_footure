@@ -788,7 +788,7 @@ if choice == 'Gráficos jogadores (Partida)':
          draw.text((920,2450),msg, fill='white',spacing= 30,font=font)
          if (penalti == False) & (falta == False):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-           msg = f'*Penâltis e cobranças de falta não incluídos'
+           msg = f'*Pênaltis e cobranças de falta não incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
          elif (penalti == True) & (falta == False):
@@ -798,12 +798,12 @@ if choice == 'Gráficos jogadores (Partida)':
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
          elif (penalti == False) & (falta == True):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-           msg = f'*Cobranças de falta não incluídos'
+           msg = f'*Pênaltis não incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
          elif (penalti == True) & (falta == True):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-           msg = f'*Penâltis e cobranças de falta incluídos'
+           msg = f'*Pênaltis e cobranças de falta incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
          arte.save(f'content/quadro_{grafico}_{jogador}.png',quality=95,facecolor='#2C2B2B')
@@ -1940,7 +1940,7 @@ if choice == 'Gráficos jogadores (Total)':
          draw.text((920,2450),msg, fill='white',spacing= 30,font=font)
          if (penalti == False) & (falta == False):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-           msg = f'*Penâltis e cobranças de falta não incluídos'
+           msg = f'*Pênaltis e cobranças de falta não incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
          elif (penalti == True) & (falta == False):
@@ -1950,12 +1950,12 @@ if choice == 'Gráficos jogadores (Total)':
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
          elif (penalti == False) & (falta == True):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-           msg = f'*Cobranças de falta não incluídos'
+           msg = f'*Pênaltis não incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
          elif (penalti == True) & (falta == True):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-           msg = f'*Penâltis e cobranças de falta incluídos'
+           msg = f'*Pênaltis e cobranças de falta incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
          arte.save(f'content/quadro_{grafico}_{jogador}.png',quality=95,facecolor='#2C2B2B')
@@ -2088,7 +2088,7 @@ if choice == 'Gráficos jogadores (Total)':
         draw.text((430,2540),msg, fill='white',spacing= 30,font=font) 
          
         font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-        msg = f'*Penâltis, cobranças de falta e gol contra não incluídos'
+        msg = f'*Pênaltis, cobranças de falta e gol contra não incluídos'
         draw = ImageDraw.Draw(arte)
         draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
         arte.save(f'content/quadro_{grafico}_{jogador}.png',quality=95,facecolor='#2C2B2B')
@@ -3431,7 +3431,7 @@ if choice == 'Gráficos times (Partida)':
        draw.text((430,2540),msg, fill='white',spacing= 30,font=font) 
       
        font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-       msg = f'*Penâltis, cobranças de falta e gol contra não incluídos'
+       msg = f'*Pênaltis, cobranças de falta e gol contra não incluídos'
        draw = ImageDraw.Draw(arte)
        draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
        arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
@@ -3568,7 +3568,7 @@ if choice == 'Gráficos times (Partida)':
          draw.text((920,2450),msg, fill='white',spacing= 30,font=font)
          if (penalti == False) & (falta == False):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-           msg = f'*Penâltis e cobranças de falta não incluídos'
+           msg = f'*Pênaltis e cobranças de falta não incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
          elif (penalti == True) & (falta == False):
@@ -3578,12 +3578,12 @@ if choice == 'Gráficos times (Partida)':
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
          elif (penalti == False) & (falta == True):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-           msg = f'*Cobranças de falta não incluídos'
+           msg = f'*Pênaltis não incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
          elif (penalti == True) & (falta == True):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-           msg = f'*Penâltis e cobranças de falta incluídos'
+           msg = f'*Pênaltis e cobranças de falta incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
          arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
