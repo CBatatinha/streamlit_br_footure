@@ -55,7 +55,7 @@ if choice == 'Home':
                 'Navegue pelas abas no menu para obter os gráficos de interesse.  \n'
                 'Temporada 2021 tem até a 4° rodada.  \n'
                 'Euro já disponível.  \n'
-                '**Obs: Finalizações,Dribles e Conduções tá online ** 
+                '**Obs: Finalizações,Dribles e Conduções tá online **  \n'
                 '**Obs: Em breve um guia das visualizações estará aqui disponível ** ')
 
 org_2020= "https://drive.google.com/file/d/1-14BD_oWbQhuT3fNiC5P3cwJjqsAkX7S/view?usp=sharing"
