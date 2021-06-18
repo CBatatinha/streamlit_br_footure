@@ -106,7 +106,9 @@ if choice == 'Gráficos jogadores (Partida)':
    with nav2:
         away_team=st.selectbox('Time de fora',sorted(list(df['awayteam'].unique())))
    match=df[(df['hometeam']==home_team)&(df['awayteam']==away_team)].reset_index(drop=True)
-   jogador=st.selectbox('Escolha o jogador',sorted(list(match['name'].unique())))
+   mylist=list(match['name'].unique())
+   lista_limpa=[x for x in mylist if pd.isnull(x) == False]
+   jogador=st.selectbox('Escolha o jogador',sorted(lista_limpa))
    df_jogador=match[(match['name']==jogador)].reset_index(drop=True)
    lista_graficos=['Heatmap','Recepções','Passes','Ações Defensivas','Passes mais frequentes','Finalizações','Dribles','Conduções']
    grafico=st.selectbox('Escolha o gráfico',sorted(lista_graficos))
@@ -1290,7 +1292,9 @@ if choice == 'Gráficos jogadores (Total)':
    time_unico=list(set(home) | set(away))
    team=st.selectbox('Escolha o time',sorted(time_unico))
    match=df[((df['hometeam']==team) & (df['hometeamid']==df.teamId)) | ((df['awayteam']==team) & (df['awayteamid']==df.teamId))].reset_index(drop=True)
-   jogador=st.selectbox('Escolha o jogador',sorted(list(match['name'].unique())))
+   mylist=list(match['name'].unique())
+   lista_limpa=[x for x in mylist if pd.isnull(x) == False]
+   jogador=st.selectbox('Escolha o jogador',sorted(lista_limpa))
    df_jogador=match[(match['name']==jogador)].reset_index(drop=True)
    lista_graficos=['Heatmap','Recepções','Passes','Ações Defensivas','Passes mais frequentes','Sonar Inverso de chutes','Finalizações',
                    'Dribles']
