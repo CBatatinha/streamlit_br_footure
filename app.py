@@ -3368,7 +3368,7 @@ if choice == 'Gráficos times (Partida)':
        fot = fot.copy()
        arte.paste(fot,(1870,1880),fot)
 
-       times_csv=pd.read_csv('/content/drive/MyDrive/Footure/_times-id (whoscored) - times-id - _times-id (whoscored) - times-id.csv')
+       times_csv=pd.read_csv('csvs/_times-id (whoscored) - times-id - _times-id (whoscored) - times-id.csv')
        logo_url = times_csv[times_csv['Time'] == team].reset_index(drop=True)['Logo'][0]
        try:
          r = requests.get(logo_url)
