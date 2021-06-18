@@ -3270,7 +3270,7 @@ if choice == 'Gráficos times (Partida)':
          actions = pd.concat([actions,dribbles], ignore_index=True, sort=False)
          actions = actions.sort_values(['period_value','action_id']).reset_index(drop=True)
          actions['action_id'] = range(len(actions))
-         return actions
+#          return actions
      gamedf=match
      match['name'] = gamedf['name'].fillna(value='')
      match['action_id'] = range(len(gamedf))
@@ -3311,7 +3311,7 @@ if choice == 'Gráficos times (Partida)':
        arte.paste(im,(100,400))
 
        font = ImageFont.truetype('Camber/Camber-Bd.ttf',150)
-       msg = f'{grafico}'
+       msg = f'{lista_carry}'
        draw = ImageDraw.Draw(arte)
        w, h = draw.textsize(msg,spacing=20,font=font)
        draw.text((330,100),msg, fill='white',spacing= 20,font=font)
@@ -3340,7 +3340,7 @@ if choice == 'Gráficos times (Partida)':
          dist2=errado['distance'].sum()
          dist_total=round(dist1+dist2,1)
          font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
-         msg = f'{team}: {acerto}/{total}  Distância percorrida {dist_total} m '
+         msg = f'{team}: {acerto}/{total}  Distância percorrida: {dist_total} m '
          draw = ImageDraw.Draw(arte)
          w, h = draw.textsize(msg,spacing=20,font=font)
          draw.text((330,500),msg, fill='white',spacing= 20,font=font)
