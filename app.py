@@ -2852,8 +2852,18 @@ if choice == 'Gráficos times (Partida)':
     passe_errado=pass1[(pass1['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
     passes(passe_certo,passe_errado)
   if grafico == 'Entradas na Área':
-    def box_entry(df):
-      passdf = df[(df.events.isin(['Pass','cross']))&
+    escanteio=st.checkbox('Escanteio')
+    falta=st.checkbox('Escanteio')
+    def box_entry(df,escanteio=False,falta=False):
+      lista_escanteio=[]
+      lista_falta=[]
+      if escanteio == True:
+         lista_escanteio=['corner_crossed','corner_short']
+      if falta == True:
+         lista_falta=['freekick_crossed','freekick_short']
+      lista_base=['Pass','cross']
+      lista_final=lista_base+lista_escanteio+lista_falta
+      passdf = df[(df.events.isin(lista_final))&
          (df.outcomeType_displayName=='Successful')].reset_index(drop=True)
       insideboxendx = passdf.endX>=88.5
       insideboxstartx = passdf.x>=88.5
@@ -2913,11 +2923,28 @@ if choice == 'Gráficos times (Partida)':
       w, h = draw.textsize(msg,spacing=20,font=font)
       draw.text((330,500),msg, fill='white',spacing= 20,font=font)
 
-
-      font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-      msg = f'*Apenas considerando passes simples e cruzamentos'
-      draw = ImageDraw.Draw(arte)
-      draw.text((330,2450),msg, fill='white',spacing= 30,font=font)
+      if (escanteio == True) & (falta == False):
+         font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+         msg = f'*Considerando passes simples,cruzamentos e escanteios'
+         draw = ImageDraw.Draw(arte)
+         draw.text((330,2450),msg, fill='white',spacing= 30,font=font)
+         font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+      if (escanteio == False) & (falta == True):
+         font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+         msg = f'*Considerando passes simples,cruzamentos e faltas'
+         draw = ImageDraw.Draw(arte)
+         draw.text((330,2450),msg, fill='white',spacing= 30,font=font)
+         font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+      if (escanteio == True) & (falta == True):
+         font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+         msg = f'*Considerando passes simples,cruzamentos,escanteios e faltas'
+         draw = ImageDraw.Draw(arte)
+         draw.text((330,2450),msg, fill='white',spacing= 30,font=font)
+         font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+      else:
+         msg = f'*Apenas considerando passes simples e cruzamentos'
+         draw = ImageDraw.Draw(arte)
+         draw.text((330,2450),msg, fill='white',spacing= 30,font=font)
 
       fot =Image.open('Logos/Copy of pro_branco.png')
       w,h = fot.size
@@ -2949,7 +2976,7 @@ if choice == 'Gráficos times (Partida)':
       arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
       st.image(f'content/quadro_{grafico}_{team}.png')
       st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
-    box_entry(df_team)
+    box_entry(df_team,escanteio,falta)
   if grafico == 'Retomadas de Bola':
     def recovery(df):
       recover = df[(df.events.isin(['BallRecovery']))&
