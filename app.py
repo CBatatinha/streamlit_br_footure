@@ -107,7 +107,7 @@ if choice == 'Gráficos jogadores (Partida)':
    match=df[(df['hometeam']==home_team)&(df['awayteam']==away_team)].reset_index(drop=True)
    jogador=st.selectbox('Escolha o jogador',list(match['name'].unique()))
    df_jogador=match[(match['name']==jogador)].reset_index(drop=True)
-   lista_graficos=['Heatmap','Recepções','Passes','Ações Defensivas','Passes mais frequentes','Finalizações','Dribles']
+   lista_graficos=['Heatmap','Recepções','Passes','Ações Defensivas','Passes mais frequentes','Finalizações','Dribles','Conduções']
    grafico=st.selectbox('Escolha o gráfico',lista_graficos)
    if grafico == 'Heatmap':
       def heatmap(df):
