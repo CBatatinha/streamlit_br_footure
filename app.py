@@ -985,150 +985,150 @@ if choice == 'Gráficos jogadores (Partida)':
        st.markdown(get_binary_file_downloader_html(f'content/quadro_{lista_carry}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
   # #%-------------------------------------------------------------------------
 
-  jogador_carry=gameactions[(gameactions['name']==jogador)].reset_index(drop=True)
+     jogador_carry=gameactions[(gameactions['name']==jogador)].reset_index(drop=True)
 
-  if 'Conduções com Chute' in lista_carry:
-    # #Chute
-    drible_certo=jogador_carry[(jogador_carry['events']=='Shot')&(jogador_carry['outcome']=='Successful')].reset_index(drop=True)
-    drible_errado=jogador_carry[(jogador_carry['events']=='Shot')&(jogador_carry['outcome']=='Unsuccessful')].reset_index(drop=True)
-    dcx=drible_certo['x'].to_list()
-    dcy=drible_certo['y'].to_list()
-    dex=drible_errado['x'].to_list()
-    dey=drible_errado['y'].to_list()
-    carry_certo=jogador_carry[(jogador_carry['events']=='Carry')&(jogador_carry['distance']>=5)&((jogador_carry['endX'].isin(dcx))&(jogador_carry['endY'].isin(dcy)))].reset_index(drop=True)
-    carry_errado=jogador_carry[(jogador_carry['events']=='Carry')&(jogador_carry['distance']>=5)&((jogador_carry['endX'].isin(dex))&(jogador_carry['endY'].isin(dey)))].reset_index(drop=True)
-    carry(carry_certo,carry_errado)
+     if 'Conduções com Chute' in lista_carry:
+       # #Chute
+       drible_certo=jogador_carry[(jogador_carry['events']=='Shot')&(jogador_carry['outcome']=='Successful')].reset_index(drop=True)
+       drible_errado=jogador_carry[(jogador_carry['events']=='Shot')&(jogador_carry['outcome']=='Unsuccessful')].reset_index(drop=True)
+       dcx=drible_certo['x'].to_list()
+       dcy=drible_certo['y'].to_list()
+       dex=drible_errado['x'].to_list()
+       dey=drible_errado['y'].to_list()
+       carry_certo=jogador_carry[(jogador_carry['events']=='Carry')&(jogador_carry['distance']>=5)&((jogador_carry['endX'].isin(dcx))&(jogador_carry['endY'].isin(dcy)))].reset_index(drop=True)
+       carry_errado=jogador_carry[(jogador_carry['events']=='Carry')&(jogador_carry['distance']>=5)&((jogador_carry['endX'].isin(dex))&(jogador_carry['endY'].isin(dey)))].reset_index(drop=True)
+       carry(carry_certo,carry_errado)
 
-  if 'Conduções com Drible' in lista_carry:
-    # #Drible
-    drible_certo=jogador_carry[(jogador_carry['events']=='TakeOn')&(jogador_carry['outcome']=='Successful')].reset_index(drop=True)
-    drible_errado=jogador_carry[(jogador_carry['events']=='TakeOn')&(jogador_carry['outcome']=='Unsuccessful')].reset_index(drop=True)
-    dcx=drible_certo['x'].to_list()
-    dcy=drible_certo['y'].to_list()
-    dex=drible_errado['x'].to_list()
-    dey=drible_errado['y'].to_list()
-    carry_certo=team_carry[(jogador_carry['events']=='Carry')&(jogador_carry['distance']>=5)&((jogador_carry['endX'].isin(dcx))&(jogador_carry['endY'].isin(dcy)))].reset_index(drop=True)
-    carry_errado=team_carry[(jogador_carry['events']=='Carry')&(jogador_carry['distance']>=5)&((jogador_carry['endX'].isin(dex))&(jogador_carry['endY'].isin(dey)))].reset_index(drop=True)
-    carry(carry_certo,carry_errado)
+     if 'Conduções com Drible' in lista_carry:
+       # #Drible
+       drible_certo=jogador_carry[(jogador_carry['events']=='TakeOn')&(jogador_carry['outcome']=='Successful')].reset_index(drop=True)
+       drible_errado=jogador_carry[(jogador_carry['events']=='TakeOn')&(jogador_carry['outcome']=='Unsuccessful')].reset_index(drop=True)
+       dcx=drible_certo['x'].to_list()
+       dcy=drible_certo['y'].to_list()
+       dex=drible_errado['x'].to_list()
+       dey=drible_errado['y'].to_list()
+       carry_certo=team_carry[(jogador_carry['events']=='Carry')&(jogador_carry['distance']>=5)&((jogador_carry['endX'].isin(dcx))&(jogador_carry['endY'].isin(dcy)))].reset_index(drop=True)
+       carry_errado=team_carry[(jogador_carry['events']=='Carry')&(jogador_carry['distance']>=5)&((jogador_carry['endX'].isin(dex))&(jogador_carry['endY'].isin(dey)))].reset_index(drop=True)
+       carry(carry_certo,carry_errado)
 
-#   if 'Conduções com Falta Sofrida' in lista_carry:
-#     # #Falta
-#     drible_certo=team_carry[(team_carry['events']=='Foul')&(team_carry['outcome']=='Successful')].reset_index(drop=True)
-#     drible_errado=team_carry[(team_carry['events']=='Foul')&(team_carry['outcome']=='Successful')].reset_index(drop=True)
-#     dcx=drible_certo['x'].to_list()
-#     dcy=drible_certo['y'].to_list()
-#     dex=drible_errado['x'].to_list()
-#     dey=drible_errado['y'].to_list()
-#     carry_certo=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dcx))&(team_carry['endY'].isin(dcy)))].reset_index(drop=True)
-#     carry_errado=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dex))&(team_carry['endY'].isin(dey)))].reset_index(drop=True)
-#     carry(carry_certo,carry_errado,True)
+   #   if 'Conduções com Falta Sofrida' in lista_carry:
+   #     # #Falta
+   #     drible_certo=team_carry[(team_carry['events']=='Foul')&(team_carry['outcome']=='Successful')].reset_index(drop=True)
+   #     drible_errado=team_carry[(team_carry['events']=='Foul')&(team_carry['outcome']=='Successful')].reset_index(drop=True)
+   #     dcx=drible_certo['x'].to_list()
+   #     dcy=drible_certo['y'].to_list()
+   #     dex=drible_errado['x'].to_list()
+   #     dey=drible_errado['y'].to_list()
+   #     carry_certo=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dcx))&(team_carry['endY'].isin(dcy)))].reset_index(drop=True)
+   #     carry_errado=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dex))&(team_carry['endY'].isin(dey)))].reset_index(drop=True)
+   #     carry(carry_certo,carry_errado,True)
 
-  if 'Conduções Progressivas' in lista_carry:
-    #Progressivo
-    df_carry=jogador_carry[(jogador_carry['events']=='Carry')&(jogador_carry['distance']>=5)].reset_index(drop=True)
-    df_carry['dist1'] = np.sqrt((105-df_carry.x)**2 + (34-df_carry.y)**2)
-    df_carry['dist2'] = np.sqrt((105-df_carry.endX)**2 + (34-df_carry.endY)**2)
-    df_carry['distdiff'] = df_carry['dist1'] - df_carry['dist2']
-    prog1 = df_carry.query("(x<52.5)&(endX<52.5)&(distdiff>=30)")
-    prog2 = df_carry.query("(x<52.5)&(endX>52.5)&(distdiff>=15)")
-    prog3 = df_carry.query("(x>52.5)&(endX>52.5)&(distdiff>=10)")
-    prog1 = prog1.append(prog2)
-    prog1 = prog1.append(prog3)
-    carry(prog1,prog1,True)
-  if grafico == 'Dribles':
-     drible_certo=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Successful')].reset_index(drop=True)
-     drible_errado=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
-     cor_fundo = '#2c2b2b'
-     fig, ax = plt.subplots(figsize=(15,10))
-     pitch = Pitch(pitch_type='uefa', figsize=(15,10),pitch_color=cor_fundo,
-                      stripe=False, line_zorder=2)
-     pitch.draw(ax=ax)
-     zo=12
-     plt.scatter(data=drible_certo, x='x',y='y',color='#00FF79',zorder=zo+1,s=300,alpha=0.9,hatch='//')
-     plt.scatter(data=drible_errado, x='x',y='y',color='#FD2B2C',zorder=zo+1,s=300,alpha=0.9,hatch='//')
-     plt.savefig(f'content/drible_{team}.png',dpi=300,facecolor=cor_fundo)
-     im = Image.open(f'content/drible_{team}.png')
-     cor_fundo = '#2c2b2b'
-     tamanho_arte = (3000, 2740)
-     arte = Image.new('RGB',tamanho_arte,cor_fundo)
-     W,H = arte.size
-     im = im.rotate(90,expand=5)
-     w,h= im.size
-     im = im.resize((int(w/2),int(h/2)))
-     im = im.copy()
-     w,h= im.size
-     arte.paste(im,(100,400))
+     if 'Conduções Progressivas' in lista_carry:
+       #Progressivo
+       df_carry=jogador_carry[(jogador_carry['events']=='Carry')&(jogador_carry['distance']>=5)].reset_index(drop=True)
+       df_carry['dist1'] = np.sqrt((105-df_carry.x)**2 + (34-df_carry.y)**2)
+       df_carry['dist2'] = np.sqrt((105-df_carry.endX)**2 + (34-df_carry.endY)**2)
+       df_carry['distdiff'] = df_carry['dist1'] - df_carry['dist2']
+       prog1 = df_carry.query("(x<52.5)&(endX<52.5)&(distdiff>=30)")
+       prog2 = df_carry.query("(x<52.5)&(endX>52.5)&(distdiff>=15)")
+       prog3 = df_carry.query("(x>52.5)&(endX>52.5)&(distdiff>=10)")
+       prog1 = prog1.append(prog2)
+       prog1 = prog1.append(prog3)
+       carry(prog1,prog1,True)
+     if grafico == 'Dribles':
+        drible_certo=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Successful')].reset_index(drop=True)
+        drible_errado=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
+        cor_fundo = '#2c2b2b'
+        fig, ax = plt.subplots(figsize=(15,10))
+        pitch = Pitch(pitch_type='uefa', figsize=(15,10),pitch_color=cor_fundo,
+                         stripe=False, line_zorder=2)
+        pitch.draw(ax=ax)
+        zo=12
+        plt.scatter(data=drible_certo, x='x',y='y',color='#00FF79',zorder=zo+1,s=300,alpha=0.9,hatch='//')
+        plt.scatter(data=drible_errado, x='x',y='y',color='#FD2B2C',zorder=zo+1,s=300,alpha=0.9,hatch='//')
+        plt.savefig(f'content/drible_{team}.png',dpi=300,facecolor=cor_fundo)
+        im = Image.open(f'content/drible_{team}.png')
+        cor_fundo = '#2c2b2b'
+        tamanho_arte = (3000, 2740)
+        arte = Image.new('RGB',tamanho_arte,cor_fundo)
+        W,H = arte.size
+        im = im.rotate(90,expand=5)
+        w,h= im.size
+        im = im.resize((int(w/2),int(h/2)))
+        im = im.copy()
+        w,h= im.size
+        arte.paste(im,(100,400))
 
-     font = ImageFont.truetype('Camber/Camber-Bd.ttf',150)
-     msg = f'{grafico}'
-     draw = ImageDraw.Draw(arte)
-     w, h = draw.textsize(msg,spacing=20,font=font)
-     draw.text((330,100),msg, fill='white',spacing= 20,font=font)
-      
-     font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
-     msg = f'{home_team}- {away_team}'
-     draw = ImageDraw.Draw(arte)
-     w, h = draw.textsize(msg,spacing=20,font=font)
-     draw.text((330,300),msg, fill='white',spacing= 20,font=font)
+        font = ImageFont.truetype('Camber/Camber-Bd.ttf',150)
+        msg = f'{grafico}'
+        draw = ImageDraw.Draw(arte)
+        w, h = draw.textsize(msg,spacing=20,font=font)
+        draw.text((330,100),msg, fill='white',spacing= 20,font=font)
 
-     acerto=len(drible_certo)
-     total=(len(drible_certo)+len(drible_errado))
-     font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
-     msg = f'{team}: {acerto}/{total}'
-     draw = ImageDraw.Draw(arte)
-     w, h = draw.textsize(msg,spacing=20,font=font)
-     draw.text((330,500),msg, fill='white',spacing= 20,font=font)
+        font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
+        msg = f'{home_team}- {away_team}'
+        draw = ImageDraw.Draw(arte)
+        w, h = draw.textsize(msg,spacing=20,font=font)
+        draw.text((330,300),msg, fill='white',spacing= 20,font=font)
 
-     im = Image.open('Arquivos/legenda-acerto-erro.png')
-     w,h = im.size
-     im = im.resize((int(w/5),int(h/5)))
-     im = im.copy()
-     arte.paste(im,(330,2350))
+        acerto=len(drible_certo)
+        total=(len(drible_certo)+len(drible_errado))
+        font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
+        msg = f'{team}: {acerto}/{total}'
+        draw = ImageDraw.Draw(arte)
+        w, h = draw.textsize(msg,spacing=20,font=font)
+        draw.text((330,500),msg, fill='white',spacing= 20,font=font)
 
-     font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-     msg = f'Certo'
-     draw = ImageDraw.Draw(arte)
-     draw.text((600,2400),msg, fill='white',spacing= 30,font=font)
+        im = Image.open('Arquivos/legenda-acerto-erro.png')
+        w,h = im.size
+        im = im.resize((int(w/5),int(h/5)))
+        im = im.copy()
+        arte.paste(im,(330,2350))
 
-
-     font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-     msg = f'Errado'
-     draw = ImageDraw.Draw(arte)
-     draw.text((920,2400),msg, fill='white',spacing= 30,font=font)
-
-     fot =Image.open('Logos/Copy of pro_branco.png')
-     w,h = fot.size
-     fot = fot.resize((int(w/1.5),int(h/1.5)))
-     fot = fot.copy()
-     arte.paste(fot,(1870,1880),fot)
-
-  
-
-     times_csv=pd.read_csv('csvs/_times-id (whoscored) - times-id - _times-id (whoscored) - times-id.csv')
-     logo_url = times_csv[times_csv['Time'] == team].reset_index(drop=True)['Logo'][0]
-     try:
-       r = requests.get(logo_url)
-       im_bt = r.content
-       image_file = io.BytesIO(im_bt)
-       im = Image.open(image_file)
-       w,h = im.size
-       im = im.resize((int(w*2.5),int(h*2.5)))
-       im = im.copy()
-       arte.paste(im,(2500,100),im)
-     except:
-       r = requests.get(logo_url)
-       im_bt = r.content
-       image_file = io.BytesIO(im_bt)
-       im = Image.open(image_file)
-       w,h = im.size
-       im = im.resize((int(w*2.5),int(h*2.5)))
-       im = im.copy()
-       arte.paste(im,(2500,100))
+        font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+        msg = f'Certo'
+        draw = ImageDraw.Draw(arte)
+        draw.text((600,2400),msg, fill='white',spacing= 30,font=font)
 
 
-     arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
-     st.image(f'content/quadro_{grafico}_{team}.png')
-     st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
+        font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+        msg = f'Errado'
+        draw = ImageDraw.Draw(arte)
+        draw.text((920,2400),msg, fill='white',spacing= 30,font=font)
+
+        fot =Image.open('Logos/Copy of pro_branco.png')
+        w,h = fot.size
+        fot = fot.resize((int(w/1.5),int(h/1.5)))
+        fot = fot.copy()
+        arte.paste(fot,(1870,1880),fot)
+
+
+
+        times_csv=pd.read_csv('csvs/_times-id (whoscored) - times-id - _times-id (whoscored) - times-id.csv')
+        logo_url = times_csv[times_csv['Time'] == team].reset_index(drop=True)['Logo'][0]
+        try:
+          r = requests.get(logo_url)
+          im_bt = r.content
+          image_file = io.BytesIO(im_bt)
+          im = Image.open(image_file)
+          w,h = im.size
+          im = im.resize((int(w*2.5),int(h*2.5)))
+          im = im.copy()
+          arte.paste(im,(2500,100),im)
+        except:
+          r = requests.get(logo_url)
+          im_bt = r.content
+          image_file = io.BytesIO(im_bt)
+          im = Image.open(image_file)
+          w,h = im.size
+          im = im.resize((int(w*2.5),int(h*2.5)))
+          im = im.copy()
+          arte.paste(im,(2500,100))
+
+
+        arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
+        st.image(f'content/quadro_{grafico}_{team}.png')
+        st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
    if grafico == 'Passes mais frequentes':
       df_passe_plot= df_jogador[(df_jogador.events.isin(['Pass','cross']))&
          (df_jogador.outcomeType_displayName=='Successful')].reset_index(drop=True)
