@@ -1000,8 +1000,8 @@ if choice == 'Gráficos jogadores (Partida)':
        carry(carry_certo,carry_errado,True)
      if 'Conduções com Chute' in lista_carry:
        # #Chute
-       drible_certo=jogador_carry[(jogador_carry['events']=='Shot')&(jogador_carry['outcome']=='Successful')].reset_index(drop=True)
-       drible_errado=jogador_carry[(jogador_carry['events']=='Shot')&(jogador_carry['outcome']=='Unsuccessful')].reset_index(drop=True)
+       drible_certo=jogador_carry[(jogador_carry['events']=='Shot')&(jogador_carry['type_displayName'].isin(['Goal','SavedShot','ShotOnPost']))].reset_index(drop=True)
+       drible_errado=jogador_carry[(jogador_carry['events']=='Shot')&(jogador_carry['type_displayName']=='MissedShots')].reset_index(drop=True)
        dcx=drible_certo['x'].to_list()
        dcy=drible_certo['y'].to_list()
        dex=drible_errado['x'].to_list()
@@ -3776,8 +3776,8 @@ if choice == 'Gráficos times (Partida)':
 
      if 'Conduções com Chute' in lista_carry:
        # #Chute
-       drible_certo=team_carry[(team_carry['events']=='Shot')&(team_carry['outcome']=='Successful')].reset_index(drop=True)
-       drible_errado=team_carry[(team_carry['events']=='Shot')&(team_carry['outcome']=='Unsuccessful')].reset_index(drop=True)
+       drible_certo=team_carry[(team_carry['events']=='Shot')&(team_carry['type_displayName'].isin(['Goal','SavedShot','ShotOnPost']))].reset_index(drop=True)
+       drible_errado=team_carry[(team_carry['events']=='Shot')&(team_carry['type_displayName']=='MissedShots')].reset_index(drop=True)
        dcx=drible_certo['x'].to_list()
        dcy=drible_certo['y'].to_list()
        dex=drible_errado['x'].to_list()
