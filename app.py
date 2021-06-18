@@ -791,17 +791,17 @@ if choice == 'Gráficos jogadores (Partida)':
            msg = f'*Penâltis e cobranças de falta não incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
-         if (penalti == True) & (falta == False):
+         elif (penalti == True) & (falta == False):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
            msg = f'*Cobranças de falta não incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
-         if (penalti == False) & (falta == True):
+         elif (penalti == False) & (falta == True):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
            msg = f'*Cobranças de falta não incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
-         if (penalti == True) & (falta == True):
+         elif (penalti == True) & (falta == True):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
            msg = f'*Penâltis e cobranças de falta incluídos'
            draw = ImageDraw.Draw(arte)
@@ -1943,17 +1943,17 @@ if choice == 'Gráficos jogadores (Total)':
            msg = f'*Penâltis e cobranças de falta não incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
-         if (penalti == True) & (falta == False):
+         elif (penalti == True) & (falta == False):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
            msg = f'*Cobranças de falta não incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
-         if (penalti == False) & (falta == True):
+         elif (penalti == False) & (falta == True):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
            msg = f'*Cobranças de falta não incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
-         if (penalti == True) & (falta == True):
+         elif (penalti == True) & (falta == True):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
            msg = f'*Penâltis e cobranças de falta incluídos'
            draw = ImageDraw.Draw(arte)
@@ -2932,13 +2932,13 @@ if choice == 'Gráficos times (Partida)':
          draw = ImageDraw.Draw(arte)
          draw.text((330,2450),msg, fill='white',spacing= 30,font=font)
          font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-      if (escanteio == False) & (falta == True):
+      elif (escanteio == False) & (falta == True):
          font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
          msg = f'*Considerando passes simples,cruzamentos e faltas'
          draw = ImageDraw.Draw(arte)
          draw.text((330,2450),msg, fill='white',spacing= 30,font=font)
          font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-      if (escanteio == True) & (falta == True):
+      elif (escanteio == True) & (falta == True):
          font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
          msg = f'*Considerando passes simples,cruzamentos,escanteios e faltas'
          draw = ImageDraw.Draw(arte)
@@ -3571,17 +3571,17 @@ if choice == 'Gráficos times (Partida)':
            msg = f'*Penâltis e cobranças de falta não incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
-         if (penalti == True) & (falta == False):
+         elif (penalti == True) & (falta == False):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
            msg = f'*Cobranças de falta não incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
-         if (penalti == False) & (falta == True):
+         elif (penalti == False) & (falta == True):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
            msg = f'*Cobranças de falta não incluídos'
            draw = ImageDraw.Draw(arte)
            draw.text((430,2640),msg, fill='white',spacing= 30,font=font)
-         if (penalti == True) & (falta == True):
+         elif (penalti == True) & (falta == True):
            font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
            msg = f'*Penâltis e cobranças de falta incluídos'
            draw = ImageDraw.Draw(arte)
