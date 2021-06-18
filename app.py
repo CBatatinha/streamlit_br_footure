@@ -3216,100 +3216,100 @@ if choice == 'Gráficos times (Partida)':
          st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{team}.png', 'Imagem'), unsafe_allow_html=True)
       chutes(df_team,penalti,falta) 
   
-   if grafico == 'Dribles':
-      drible_certo=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Successful')].reset_index(drop=True)
-      ddrible_errado=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
-      cor_fundo = '#2c2b2b'
-      fig, ax = plt.subplots(figsize=(15,10))
-      pitch = Pitch(pitch_type='uefa', figsize=(15,10),pitch_color=cor_fundo,
+  if grafico == 'Dribles':
+     drible_certo=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Successful')].reset_index(drop=True)
+     ddrible_errado=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
+     cor_fundo = '#2c2b2b'
+     fig, ax = plt.subplots(figsize=(15,10))
+     pitch = Pitch(pitch_type='uefa', figsize=(15,10),pitch_color=cor_fundo,
                       stripe=False, line_zorder=2)
-      pitch.draw(ax=ax)
-      zo=12
-      plt.scatter(data=drible_certo, x='x',y='y',color='#00FF79',zorder=zo+1,s=300,alpha=0.9,hatch='//')
-      plt.scatter(data=drible_errado, x='x',y='y',color='#FD2B2C',zorder=zo+1,s=300,alpha=0.9,hatch='//')
-      plt.savefig(f'content/drible_{team}.png',dpi=300,facecolor=cor_fundo)
-      im = Image.open(f'content/drible_{team}.png')
-      cor_fundo = '#2c2b2b'
-      tamanho_arte = (3000, 2740)
-      arte = Image.new('RGB',tamanho_arte,cor_fundo)
-      W,H = arte.size
-      im = im.rotate(90,expand=5)
-      w,h= im.size
-      im = im.resize((int(w/2),int(h/2)))
-      im = im.copy()
-      w,h= im.size
-      arte.paste(im,(100,400))
+     pitch.draw(ax=ax)
+     zo=12
+     plt.scatter(data=drible_certo, x='x',y='y',color='#00FF79',zorder=zo+1,s=300,alpha=0.9,hatch='//')
+     plt.scatter(data=drible_errado, x='x',y='y',color='#FD2B2C',zorder=zo+1,s=300,alpha=0.9,hatch='//')
+     plt.savefig(f'content/drible_{team}.png',dpi=300,facecolor=cor_fundo)
+     im = Image.open(f'content/drible_{team}.png')
+     cor_fundo = '#2c2b2b'
+     tamanho_arte = (3000, 2740)
+     arte = Image.new('RGB',tamanho_arte,cor_fundo)
+     W,H = arte.size
+     im = im.rotate(90,expand=5)
+     w,h= im.size
+     im = im.resize((int(w/2),int(h/2)))
+     im = im.copy()
+     w,h= im.size
+     arte.paste(im,(100,400))
 
-      font = ImageFont.truetype('Camber/Camber-Bd.ttf',150)
-      msg = f'{grafico}'
-      draw = ImageDraw.Draw(arte)
-      w, h = draw.textsize(msg,spacing=20,font=font)
-      draw.text((330,100),msg, fill='white',spacing= 20,font=font)
+     font = ImageFont.truetype('Camber/Camber-Bd.ttf',150)
+     msg = f'{grafico}'
+     draw = ImageDraw.Draw(arte)
+     w, h = draw.textsize(msg,spacing=20,font=font)
+     draw.text((330,100),msg, fill='white',spacing= 20,font=font)
+      
+     font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
+     msg = f'{home_team}- {away_team}'
+     draw = ImageDraw.Draw(arte)
+     w, h = draw.textsize(msg,spacing=20,font=font)
+     draw.text((330,300),msg, fill='white',spacing= 20,font=font)
 
-      font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
-      msg = f'{home_team}- {away_team}'
-      draw = ImageDraw.Draw(arte)
-      w, h = draw.textsize(msg,spacing=20,font=font)
-      draw.text((330,300),msg, fill='white',spacing= 20,font=font)
+     acerto=len(drible_certo)
+     total=(len(drible_certo)+len(drible_errado))
+     font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
+     msg = f'{team}: {acerto}/{total}'
+     draw = ImageDraw.Draw(arte)
+     w, h = draw.textsize(msg,spacing=20,font=font)
+     draw.text((330,500),msg, fill='white',spacing= 20,font=font)
 
-      acerto=len(drible_certo)
-      total=(len(drible_certo)+len(drible_errado))
-      font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
-      msg = f'{team}: {acerto}/{total}'
-      draw = ImageDraw.Draw(arte)
-      w, h = draw.textsize(msg,spacing=20,font=font)
-      draw.text((330,500),msg, fill='white',spacing= 20,font=font)
+     im = Image.open('Arquivos/legenda-acerto-erro.png')
+     w,h = im.size
+     im = im.resize((int(w/5),int(h/5)))
+     im = im.copy()
+     arte.paste(im,(330,2350))
 
-      im = Image.open('Arquivos/legenda-acerto-erro.png')
-      w,h = im.size
-      im = im.resize((int(w/5),int(h/5)))
-      im = im.copy()
-      arte.paste(im,(330,2350))
-
-      font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-      msg = f'Certo'
-      draw = ImageDraw.Draw(arte)
-      draw.text((600,2400),msg, fill='white',spacing= 30,font=font)
+     font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+     msg = f'Certo'
+     draw = ImageDraw.Draw(arte)
+     draw.text((600,2400),msg, fill='white',spacing= 30,font=font)
 
 
-      font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
-      msg = f'Errado'
-      draw = ImageDraw.Draw(arte)
-      draw.text((920,2400),msg, fill='white',spacing= 30,font=font)
+     font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
+     msg = f'Errado'
+     draw = ImageDraw.Draw(arte)
+     draw.text((920,2400),msg, fill='white',spacing= 30,font=font)
 
-      fot =Image.open('Logos/Copy of pro_branco.png')
-      w,h = fot.size
-      fot = fot.resize((int(w/1.5),int(h/1.5)))
-      fot = fot.copy()
-      arte.paste(fot,(1870,1880),fot)
+     fot =Image.open('Logos/Copy of pro_branco.png')
+     w,h = fot.size
+     fot = fot.resize((int(w/1.5),int(h/1.5)))
+     fot = fot.copy()
+     arte.paste(fot,(1870,1880),fot)
 
   
 
-      times_csv=pd.read_csv('csvs/_times-id (whoscored) - times-id - _times-id (whoscored) - times-id.csv')
-      logo_url = times_csv[times_csv['Time'] == team].reset_index(drop=True)['Logo'][0]
-      try:
-        r = requests.get(logo_url)
-        im_bt = r.content
-        image_file = io.BytesIO(im_bt)
-        im = Image.open(image_file)
-        w,h = im.size
-        im = im.resize((int(w*2.5),int(h*2.5)))
-        im = im.copy()
-        arte.paste(im,(2500,100),im)
-      except:
-        r = requests.get(logo_url)
-        im_bt = r.content
-        image_file = io.BytesIO(im_bt)
-        im = Image.open(image_file)
-        w,h = im.size
-        im = im.resize((int(w*2.5),int(h*2.5)))
-        im = im.copy()
-        arte.paste(im,(2500,100))
+     times_csv=pd.read_csv('csvs/_times-id (whoscored) - times-id - _times-id (whoscored) - times-id.csv')
+     logo_url = times_csv[times_csv['Time'] == team].reset_index(drop=True)['Logo'][0]
+     try:
+       r = requests.get(logo_url)
+       im_bt = r.content
+       image_file = io.BytesIO(im_bt)
+       im = Image.open(image_file)
+       w,h = im.size
+       im = im.resize((int(w*2.5),int(h*2.5)))
+       im = im.copy()
+       arte.paste(im,(2500,100),im)
+     except:
+       r = requests.get(logo_url)
+       im_bt = r.content
+       image_file = io.BytesIO(im_bt)
+       im = Image.open(image_file)
+       w,h = im.size
+       im = im.resize((int(w*2.5),int(h*2.5)))
+       im = im.copy()
+       arte.paste(im,(2500,100))
 
 
-      arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
-      st.image(f'content/quadro_{grafico}_{team}.png')
-      st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
+     arte.save(f'content/quadro_{grafico}_{team}.png',quality=95,facecolor='#2C2B2B')
+     st.image(f'content/quadro_{grafico}_{team}.png')
+     st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
   if grafico == 'PPDA':
       def PPDAcalculator(Df,min1,min2):
         home = Df[(Df.teamId==Df.hometeamid)&(Df.expandedMinute>=min1)&
