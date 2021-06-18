@@ -2852,8 +2852,11 @@ if choice == 'Gráficos times (Partida)':
     passe_errado=pass1[(pass1['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
     passes(passe_certo,passe_errado)
   if grafico == 'Entradas na Área':
-    escanteio=st.checkbox('Escanteio')
-    falta=st.checkbox('Escanteio')
+    col1,col2=st.beta_columns(2)
+    with col1:
+      escanteio=st.checkbox('Escanteio')
+    with col2:
+      falta=st.checkbox('Falta')
     def box_entry(df,escanteio=False,falta=False):
       lista_escanteio=[]
       lista_falta=[]
