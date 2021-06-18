@@ -3429,7 +3429,7 @@ if choice == 'Gráficos times (Partida)':
     dey=drible_errado['y'].to_list()
     carry_certo=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dcx))&(team_carry['endY'].isin(dcy)))].reset_index(drop=True)
     carry_errado=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dex))&(team_carry['endY'].isin(dey)))].reset_index(drop=True)
-    carry(carry_certo,carry_errado)
+    carry(carry_certo,carry_errado,True)
 
   if 'Conduções Progressivas' in lista_carry:
     #Progressivo
