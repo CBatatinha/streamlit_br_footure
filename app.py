@@ -551,7 +551,7 @@ if choice == 'Gráficos jogadores (Partida)':
    
    if grafico == 'Dribles':
       drible_certo=df_jogador[(df_jogador['events']=='TakeOn')&(df_jogador['outcomeType_displayName']=='Successful')].reset_index(drop=True)
-      ddrible_errado=df_jogador[(df_jogador['events']=='TakeOn')&(df_jogador['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
+      drible_errado=df_jogador[(df_jogador['events']=='TakeOn')&(df_jogador['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
       cor_fundo = '#2c2b2b'
       fig, ax = plt.subplots(figsize=(15,10))
       pitch = Pitch(pitch_type='uefa', figsize=(15,10),pitch_color=cor_fundo,
@@ -1377,7 +1377,7 @@ if choice == 'Gráficos jogadores (Total)':
    
    if grafico == 'Dribles':
       drible_certo=df_jogador[(df_jogador['events']=='TakeOn')&(df_jogador['outcomeType_displayName']=='Successful')].reset_index(drop=True)
-      ddrible_errado=df_jogador[(df_jogador['events']=='TakeOn')&(df_jogador['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
+      drible_errado=df_jogador[(df_jogador['events']=='TakeOn')&(df_jogador['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
       cor_fundo = '#2c2b2b'
       fig, ax = plt.subplots(figsize=(15,10))
       pitch = Pitch(pitch_type='uefa', figsize=(15,10),pitch_color=cor_fundo,
@@ -3218,7 +3218,7 @@ if choice == 'Gráficos times (Partida)':
   
   if grafico == 'Dribles':
      drible_certo=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Successful')].reset_index(drop=True)
-     ddrible_errado=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
+     drible_errado=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
      cor_fundo = '#2c2b2b'
      fig, ax = plt.subplots(figsize=(15,10))
      pitch = Pitch(pitch_type='uefa', figsize=(15,10),pitch_color=cor_fundo,
