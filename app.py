@@ -452,10 +452,13 @@ if choice == 'Gráficos jogadores (Partida)':
                       stripe=False, line_zorder=2)
       pitch.draw(ax=ax)
       zo=12
-      defense = defesa_certo[(np.abs(stats.zscore(defesa_certo[['x','y']])) < .75)]
-      defpoints = defense[['x','y']].values
-      hull = ConvexHull(defense[['x','y']])
+#       defense = defesa_certo[(np.abs(stats.zscore(defesa_certo[['x','y']])) < .75)]
+#       defpoints = defense[['x','y']].values
+#       hull = ConvexHull(defense[['x','y']])
       if cobertura == True:
+          defense = defesa_certo[(np.abs(stats.zscore(defesa_certo[['x','y']])) < .75)]
+          defpoints = defense[['x','y']].values
+          hull = ConvexHull(defense[['x','y']])
           for simplex in hull.simplices:
           #Draw a black line between each
               plt.plot(defpoints[simplex, 0], defpoints[simplex, 1], 'r-',color='#00FF79')
@@ -1616,10 +1619,13 @@ if choice == 'Gráficos jogadores (Total)':
                       stripe=False, line_zorder=2)
       pitch.draw(ax=ax)
       zo=12
-      defense = defesa_certo[(np.abs(stats.zscore(defesa_certo[['x','y']])) < .75)]
-      defpoints = defense[['x','y']].values
-      hull = ConvexHull(defense[['x','y']])
+#       defense = defesa_certo[(np.abs(stats.zscore(defesa_certo[['x','y']])) < .75)]
+#       defpoints = defense[['x','y']].values
+#       hull = ConvexHull(defense[['x','y']])
       if cobertura == True:
+          defense = defesa_certo[(np.abs(stats.zscore(defesa_certo[['x','y']])) < .75)]
+          defpoints = defense[['x','y']].values
+          hull = ConvexHull(defense[['x','y']])
           for simplex in hull.simplices:
           #Draw a black line between each
               plt.plot(defpoints[simplex, 0], defpoints[simplex, 1], 'r-',color='#00FF79')
@@ -3050,10 +3056,13 @@ if choice == 'Gráficos times (Partida)':
                     stripe=False, line_zorder=2)
     pitch.draw(ax=ax)
     zo=12
-    defense = defesa_certo[(np.abs(stats.zscore(defesa_certo[['x','y']])) < .75)]
-    defpoints = defense[['x','y']].values
-    hull = ConvexHull(defense[['x','y']])
+#     defense = defesa_certo[(np.abs(stats.zscore(defesa_certo[['x','y']])) < .75)]
+#     defpoints = defense[['x','y']].values
+#     hull = ConvexHull(defense[['x','y']])
     if cobertura == True:
+        defense = defesa_certo[(np.abs(stats.zscore(defesa_certo[['x','y']])) < .75)]
+        defpoints = defense[['x','y']].values
+        hull = ConvexHull(defense[['x','y']])
         for simplex in hull.simplices:
         #Draw a black line between each
             plt.plot(defpoints[simplex, 0], defpoints[simplex, 1], 'r-',color='#00FF79')
