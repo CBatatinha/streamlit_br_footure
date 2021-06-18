@@ -3767,61 +3767,61 @@ if choice == 'Gráficos times (Partida)':
        st.markdown(get_binary_file_downloader_html(f'content/quadro_{lista_carry}_{team}.png', 'Imagem'), unsafe_allow_html=True)
   # #%-------------------------------------------------------------------------
 
-  team_carry=gameactions[((gameactions['hometeam']==team) & (gameactions['hometeamid']==gameactions.teamId)) | ((gameactions['awayteam']==team) & (gameactions['awayteamid']==gameactions.teamId))].reset_index(drop=True)
-  if 'Conduções Simples' in lista_carry:
-  # #Totais
-    carry_certo=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)].reset_index(drop=True)
-    carry_errado=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)].reset_index(drop=True)
-    carry(carry_certo,carry_errado,True)
-   
-  if 'Conduções com Chute' in lista_carry:
-    # #Chute
-    drible_certo=team_carry[(team_carry['events']=='Shot')&(team_carry['outcome']=='Successful')].reset_index(drop=True)
-    drible_errado=team_carry[(team_carry['events']=='Shot')&(team_carry['outcome']=='Unsuccessful')].reset_index(drop=True)
-    dcx=drible_certo['x'].to_list()
-    dcy=drible_certo['y'].to_list()
-    dex=drible_errado['x'].to_list()
-    dey=drible_errado['y'].to_list()
-    carry_certo=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dcx))&(team_carry['endY'].isin(dcy)))].reset_index(drop=True)
-    carry_errado=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dex))&(team_carry['endY'].isin(dey)))].reset_index(drop=True)
-    carry(carry_certo,carry_errado)
+     team_carry=gameactions[((gameactions['hometeam']==team) & (gameactions['hometeamid']==gameactions.teamId)) | ((gameactions['awayteam']==team) & (gameactions['awayteamid']==gameactions.teamId))].reset_index(drop=True)
+     if 'Conduções Simples' in lista_carry:
+     # #Totais
+       carry_certo=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)].reset_index(drop=True)
+       carry_errado=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)].reset_index(drop=True)
+       carry(carry_certo,carry_errado,True)
 
-  if 'Conduções com Drible' in lista_carry:
-    # #Drible
-    drible_certo=team_carry[(team_carry['events']=='TakeOn')&(team_carry['outcome']=='Successful')].reset_index(drop=True)
-    drible_errado=team_carry[(team_carry['events']=='TakeOn')&(team_carry['outcome']=='Unsuccessful')].reset_index(drop=True)
-    dcx=drible_certo['x'].to_list()
-    dcy=drible_certo['y'].to_list()
-    dex=drible_errado['x'].to_list()
-    dey=drible_errado['y'].to_list()
-    carry_certo=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dcx))&(team_carry['endY'].isin(dcy)))].reset_index(drop=True)
-    carry_errado=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dex))&(team_carry['endY'].isin(dey)))].reset_index(drop=True)
-    carry(carry_certo,carry_errado)
+     if 'Conduções com Chute' in lista_carry:
+       # #Chute
+       drible_certo=team_carry[(team_carry['events']=='Shot')&(team_carry['outcome']=='Successful')].reset_index(drop=True)
+       drible_errado=team_carry[(team_carry['events']=='Shot')&(team_carry['outcome']=='Unsuccessful')].reset_index(drop=True)
+       dcx=drible_certo['x'].to_list()
+       dcy=drible_certo['y'].to_list()
+       dex=drible_errado['x'].to_list()
+       dey=drible_errado['y'].to_list()
+       carry_certo=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dcx))&(team_carry['endY'].isin(dcy)))].reset_index(drop=True)
+       carry_errado=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dex))&(team_carry['endY'].isin(dey)))].reset_index(drop=True)
+       carry(carry_certo,carry_errado)
 
-#   if 'Conduções com Falta Sofrida' in lista_carry:
-#     # #Falta
-#     drible_certo=team_carry[(team_carry['events']=='Foul')&(team_carry['outcome']=='Successful')].reset_index(drop=True)
-#     drible_errado=team_carry[(team_carry['events']=='Foul')&(team_carry['outcome']=='Successful')].reset_index(drop=True)
-#     dcx=drible_certo['x'].to_list()
-#     dcy=drible_certo['y'].to_list()
-#     dex=drible_errado['x'].to_list()
-#     dey=drible_errado['y'].to_list()
-#     carry_certo=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dcx))&(team_carry['endY'].isin(dcy)))].reset_index(drop=True)
-#     carry_errado=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dex))&(team_carry['endY'].isin(dey)))].reset_index(drop=True)
-#     carry(carry_certo,carry_errado,True)
+     if 'Conduções com Drible' in lista_carry:
+       # #Drible
+       drible_certo=team_carry[(team_carry['events']=='TakeOn')&(team_carry['outcome']=='Successful')].reset_index(drop=True)
+       drible_errado=team_carry[(team_carry['events']=='TakeOn')&(team_carry['outcome']=='Unsuccessful')].reset_index(drop=True)
+       dcx=drible_certo['x'].to_list()
+       dcy=drible_certo['y'].to_list()
+       dex=drible_errado['x'].to_list()
+       dey=drible_errado['y'].to_list()
+       carry_certo=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dcx))&(team_carry['endY'].isin(dcy)))].reset_index(drop=True)
+       carry_errado=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dex))&(team_carry['endY'].isin(dey)))].reset_index(drop=True)
+       carry(carry_certo,carry_errado)
 
-  if 'Conduções Progressivas' in lista_carry:
-    #Progressivo
-    df_carry=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)].reset_index(drop=True)
-    df_carry['dist1'] = np.sqrt((105-df_carry.x)**2 + (34-df_carry.y)**2)
-    df_carry['dist2'] = np.sqrt((105-df_carry.endX)**2 + (34-df_carry.endY)**2)
-    df_carry['distdiff'] = df_carry['dist1'] - df_carry['dist2']
-    prog1 = df_carry.query("(x<52.5)&(endX<52.5)&(distdiff>=30)")
-    prog2 = df_carry.query("(x<52.5)&(endX>52.5)&(distdiff>=15)")
-    prog3 = df_carry.query("(x>52.5)&(endX>52.5)&(distdiff>=10)")
-    prog1 = prog1.append(prog2)
-    prog1 = prog1.append(prog3)
-    carry(prog1,prog1,True)
+   #   if 'Conduções com Falta Sofrida' in lista_carry:
+   #     # #Falta
+   #     drible_certo=team_carry[(team_carry['events']=='Foul')&(team_carry['outcome']=='Successful')].reset_index(drop=True)
+   #     drible_errado=team_carry[(team_carry['events']=='Foul')&(team_carry['outcome']=='Successful')].reset_index(drop=True)
+   #     dcx=drible_certo['x'].to_list()
+   #     dcy=drible_certo['y'].to_list()
+   #     dex=drible_errado['x'].to_list()
+   #     dey=drible_errado['y'].to_list()
+   #     carry_certo=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dcx))&(team_carry['endY'].isin(dcy)))].reset_index(drop=True)
+   #     carry_errado=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)&((team_carry['endX'].isin(dex))&(team_carry['endY'].isin(dey)))].reset_index(drop=True)
+   #     carry(carry_certo,carry_errado,True)
+
+     if 'Conduções Progressivas' in lista_carry:
+       #Progressivo
+       df_carry=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)].reset_index(drop=True)
+       df_carry['dist1'] = np.sqrt((105-df_carry.x)**2 + (34-df_carry.y)**2)
+       df_carry['dist2'] = np.sqrt((105-df_carry.endX)**2 + (34-df_carry.endY)**2)
+       df_carry['distdiff'] = df_carry['dist1'] - df_carry['dist2']
+       prog1 = df_carry.query("(x<52.5)&(endX<52.5)&(distdiff>=30)")
+       prog2 = df_carry.query("(x<52.5)&(endX>52.5)&(distdiff>=15)")
+       prog3 = df_carry.query("(x>52.5)&(endX>52.5)&(distdiff>=10)")
+       prog1 = prog1.append(prog2)
+       prog1 = prog1.append(prog3)
+       carry(prog1,prog1,True)
   if grafico == 'Dribles':
      drible_certo=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Successful')].reset_index(drop=True)
      drible_errado=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
