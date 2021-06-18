@@ -47,7 +47,7 @@ import gdown
 import base64
 import os
 #------------------------------------------------------------------------------------------------------- 
-st.title('Footure Brasileirão v1.2')
+st.title('Footure Brasileirão v2.0')
 menu=['Home','Gráficos jogadores (Partida)','Gráficos jogadores (Total)','Gráficos times (Partida)']
 choice=st.sidebar.selectbox('Menu',menu)
 if choice == 'Home':
@@ -55,7 +55,8 @@ if choice == 'Home':
                 'Navegue pelas abas no menu para obter os gráficos de interesse.  \n'
                 'Temporada 2021 tem até a 4° rodada.  \n'
                 'Euro já disponível.  \n'
-                '**Obs: Finalizações tá online ** ')
+                '**Obs: Finalizações,Dribles e Conduções tá online ** 
+                '**Obs: Em breve um guia das visualizações estará aqui disponível ** ')
 
 org_2020= "https://drive.google.com/file/d/1-14BD_oWbQhuT3fNiC5P3cwJjqsAkX7S/view?usp=sharing"
 file_id_1= org_2020.split('/')[-2]
@@ -105,10 +106,10 @@ if choice == 'Gráficos jogadores (Partida)':
    with nav2:
         away_team=st.selectbox('Time de fora',sorted(list(df['awayteam'].unique())))
    match=df[(df['hometeam']==home_team)&(df['awayteam']==away_team)].reset_index(drop=True)
-   jogador=st.selectbox('Escolha o jogador',list(match['name'].unique()))
+   jogador=st.selectbox('Escolha o jogador',sorted(list(match['name'].unique())))
    df_jogador=match[(match['name']==jogador)].reset_index(drop=True)
    lista_graficos=['Heatmap','Recepções','Passes','Ações Defensivas','Passes mais frequentes','Finalizações','Dribles','Conduções']
-   grafico=st.selectbox('Escolha o gráfico',lista_graficos)
+   grafico=st.selectbox('Escolha o gráfico',sorted(lista_graficos))
    if grafico == 'Heatmap':
       def heatmap(df):
         heatmap=df[df['isTouch']==True].reset_index(drop=True)
@@ -1289,11 +1290,11 @@ if choice == 'Gráficos jogadores (Total)':
    time_unico=list(set(home) | set(away))
    team=st.selectbox('Escolha o time',sorted(time_unico))
    match=df[((df['hometeam']==team) & (df['hometeamid']==df.teamId)) | ((df['awayteam']==team) & (df['awayteamid']==df.teamId))].reset_index(drop=True)
-   jogador=st.selectbox('Escolha o jogador',list(match['name'].unique()))
+   jogador=st.selectbox('Escolha o jogador',sorted(list(match['name'].unique())))
    df_jogador=match[(match['name']==jogador)].reset_index(drop=True)
    lista_graficos=['Heatmap','Recepções','Passes','Ações Defensivas','Passes mais frequentes','Sonar Inverso de chutes','Finalizações',
                    'Dribles']
-   grafico=st.selectbox('Escolha o gráfico',lista_graficos)
+   grafico=st.selectbox('Escolha o gráfico',sorted(lista_graficos))
    if grafico == 'Heatmap':
       def heatmap(df):
         heatmap=df[df['isTouch']==True].reset_index(drop=True)
@@ -2234,12 +2235,12 @@ if choice == 'Gráficos times (Partida)':
   with nav2:
       away_team=st.selectbox('Time de fora',sorted(list(df['awayteam'].unique())))
   match=df[(df['hometeam']==home_team)&(df['awayteam']==away_team)].reset_index(drop=True)
-  team=st.selectbox('Escolha o time',[home_team,away_team])
+  team=st.selectbox('Escolha o time',sorted([home_team,away_team]))
   df_team=match[((match['hometeam']==team) & (match['hometeamid']==match.teamId)) | ((match['awayteam']==team) & (match['awayteamid']==match.teamId))].reset_index(drop=True)
   lista_graficos=['Mapa de Passes','Posição Defensiva','Cruzamentos','Progressivos','Ações Defensivas','Passes mais frequentes',
                   'Entradas na Área','PPDA','Posse','Retomadas de Bola','Sonar Inverso de chutes','Finalizações','Dribles',
                   'Conduções']
-  grafico=st.selectbox('Escolha o gráfico',lista_graficos)
+  grafico=st.selectbox('Escolha o gráfico',sorted(lista_graficos))
   if grafico == 'Mapa de Passes':
     def mapa_de_passes(df):
       subs = df[df['type_displayName']=='SubstitutionOff']
