@@ -1560,7 +1560,7 @@ if choice == 'Gráficos jogadores (Total)':
 
           arte.save(f'content/quadro_{lista_passes}_{jogador}.png',quality=95,facecolor='#2C2B2B')
           st.image(f'content/quadro_{lista_passes}_{jogador}.png')
-          st.markdown(get_binary_file_downloader_html(f'content/quadro_{lista_passe}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
+          st.markdown(get_binary_file_downloader_html(f'content/quadro_{lista_passes}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
       if 'Simples' in lista_passes:
           passe_certo=df_jogador[(df_jogador['type_displayName']=='Pass')&(df_jogador['events']=='Pass')&(df_jogador['outcomeType_displayName']=='Successful')].reset_index(drop=True)
           passe_errado=df_jogador[(df_jogador['type_displayName']=='Pass')&(df_jogador['events']=='Pass')&(df_jogador['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
