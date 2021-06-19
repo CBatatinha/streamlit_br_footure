@@ -992,6 +992,8 @@ if choice == 'Gráficos jogadores (Partida)':
   # #%-------------------------------------------------------------------------
 
      jogador_carry=gameactions[(gameactions['name']==jogador)].reset_index(drop=True)
+     descarte=jogador_carry[(jogador_carry['endX']<jogador_carry['x'])&(jogador_carry['distance']>=50)].index
+     jogador_carry=jogador_carry.drop(descarte)
      
      if 'Conduções Simples' in lista_carry:
        # #Totais
@@ -3768,6 +3770,8 @@ if choice == 'Gráficos times (Partida)':
   # #%-------------------------------------------------------------------------
 
      team_carry=gameactions[((gameactions['hometeam']==team) & (gameactions['hometeamid']==gameactions.teamId)) | ((gameactions['awayteam']==team) & (gameactions['awayteamid']==gameactions.teamId))].reset_index(drop=True)
+     descarte=team_carry[(team_carry['endX']<team_carry['x'])&(team_carry['distance']>=50)].index
+     team_carry=team_carry.drop(descarte)
      if 'Conduções Simples' in lista_carry:
      # #Totais
        carry_certo=team_carry[(team_carry['events']=='Carry')&(team_carry['distance']>=5)].reset_index(drop=True)
