@@ -1020,8 +1020,8 @@ if choice == 'Gráficos jogadores (Partida)':
        dcy=drible_certo['y'].to_list()
        dex=drible_errado['x'].to_list()
        dey=drible_errado['y'].to_list()
-       carry_certo=team_carry[(jogador_carry['events']=='Carry')&(jogador_carry['distance']>=5)&((jogador_carry['endX'].isin(dcx))&(jogador_carry['endY'].isin(dcy)))].reset_index(drop=True)
-       carry_errado=team_carry[(jogador_carry['events']=='Carry')&(jogador_carry['distance']>=5)&((jogador_carry['endX'].isin(dex))&(jogador_carry['endY'].isin(dey)))].reset_index(drop=True)
+       carry_certo=jogador_carry[(jogador_carry['events']=='Carry')&(jogador_carry['distance']>=5)&((jogador_carry['endX'].isin(dcx))&(jogador_carry['endY'].isin(dcy)))].reset_index(drop=True)
+       carry_errado=jogador_carry[(jogador_carry['events']=='Carry')&(jogador_carry['distance']>=5)&((jogador_carry['endX'].isin(dex))&(jogador_carry['endY'].isin(dey)))].reset_index(drop=True)
        carry(carry_certo,carry_errado)
 
    #   if 'Conduções com Falta Sofrida' in lista_carry:
