@@ -1302,7 +1302,7 @@ if choice == 'Gráficos jogadores (Total)':
    jogador=st.selectbox('Escolha o jogador',sorted(lista_limpa))
    df_jogador=match[(match['name']==jogador)].reset_index(drop=True)
    lista_graficos=['Heatmap','Recepções','Passes','Ações Defensivas','Passes mais frequentes','Sonar Inverso de chutes','Finalizações',
-                   'Dribles']
+                   'Dribles','Recepções mais frequentes']
    grafico=st.selectbox('Escolha o gráfico',sorted(lista_graficos))
    if grafico == 'Heatmap':
       def heatmap(df):
@@ -2175,6 +2175,131 @@ if choice == 'Gráficos jogadores (Total)':
 
       font = ImageFont.truetype('Camber/Camber-Bd.ttf',150)
       msg = f'Cluster de passes'
+      draw = ImageDraw.Draw(arte)
+      w, h = draw.textsize(msg,spacing=20,font=font)
+      draw.text((330,100),msg, fill='white',spacing= 20,font=font)
+
+      font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
+      msg = f'{team}'
+      draw = ImageDraw.Draw(arte)
+      w, h = draw.textsize(msg,spacing=20,font=font)
+      draw.text((330,300),msg, fill='white',spacing= 20,font=font)
+
+      font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
+      msg = f'{jogador}'
+      draw = ImageDraw.Draw(arte)
+      w, h = draw.textsize(msg,spacing=20,font=font)
+      draw.text((330,500),msg, fill='white',spacing= 20,font=font)
+
+      fot =Image.open('Logos/Copy of pro_branco.png')
+      w,h = fot.size
+      fot = fot.resize((int(w/1.5),int(h/1.5)))
+      fot = fot.copy()
+      arte.paste(fot,(1870,1880),fot)
+
+      times_csv=pd.read_csv('csvs/_times-id (whoscored) - times-id - _times-id (whoscored) - times-id.csv')
+      logo_url = times_csv[times_csv['Time'] == team].reset_index(drop=True)['Logo'][0]
+      try:
+        r = requests.get(logo_url)
+        im_bt = r.content
+        image_file = io.BytesIO(im_bt)
+        im = Image.open(image_file)
+        w,h = im.size
+        im = im.resize((int(w*2.5),int(h*2.5)))
+        im = im.copy()
+        arte.paste(im,(2500,100),im)
+      except:
+        r = requests.get(logo_url)
+        im_bt = r.content
+        image_file = io.BytesIO(im_bt)
+        im = Image.open(image_file)
+        w,h = im.size
+        im = im.resize((int(w*2.5),int(h*2.5)))
+        im = im.copy()
+        arte.paste(im,(2500,100))
+
+      arte.save(f'content/quadro_{grafico}_{jogador}.png',quality=95,facecolor='#2C2B2B')
+      st.image(f'content/quadro_{grafico}_{jogador}.png')
+      st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
+   if grafico == 'Recepções mais frequentes':
+      df_jogador=match[(match['receiver']==jogador)].reset_index(drop=True)
+      df_passe_plot= df_jogador[(df_jogador.events.isin(['Pass','cross']))&
+         (df_jogador.outcomeType_displayName=='Successful')].reset_index(drop=True)
+      df_passe_plot=df_passe_plot[['x','y','endX','endY']]
+      valores = df_passe_plot.values
+      passes_total = len(df_passe_plot)
+      max_cluster = int(len(df_passe_plot)/8)
+      min_cluster = int(len(df_passe_plot)/15)
+      dic_geral_clusters = []
+      df_passe = df_passe_plot
+
+      dic_sill = {}
+      for i in range(min_cluster, max_cluster):
+        km = KMeans(n_clusters=i)
+        km.fit(valores)
+        label = km.predict(valores)
+        sill = silhouette_score(valores,label)
+        dic_sill.update({i:sill})
+
+      df_sill = pd.DataFrame(dic_sill,index=[0]).transpose().reset_index()
+      n_cluster = df_sill.sort_values(0,ascending=False).reset_index()['index'][0]
+      valor =  df_sill.sort_values(0,ascending=False).reset_index()[0][0]
+      print(f'{n_cluster}:{valor}')
+      dic_geral_clusters.append({'metodo':'kmeans','n_cluster':'n_cluster','acerto':valor})
+
+      km = KMeans(
+          n_clusters=n_cluster, init='random',
+          n_init=1, max_iter=300, 
+          tol=1e-04, random_state=0
+      )
+      y_km = km.fit_predict(valores)
+
+      # cor_fundo='#2C2B2B'
+      df_passe['cluster'] = y_km
+      df_passe['quantidade'] = 0
+      cluster = df_passe.groupby('cluster')['quantidade'].count().reset_index().sort_values('quantidade',ascending=False).reset_index(drop=True)
+      lista_cluster = list(cluster['cluster'])[0:3]
+      df_plot = df_passe[df_passe['cluster'].isin(lista_cluster)].reset_index(drop=True)
+      # df_plot
+      cor_fundo = '#2c2b2b'
+      fig, ax = plt.subplots(figsize=(15,10))
+      pitch = Pitch(pitch_type='uefa', figsize=(15,10),pitch_color=cor_fundo,
+                      stripe=False, line_zorder=1)
+      pitch.draw(ax=ax)
+      def plot_scatter_df(df,cor,zo):
+        pitch.scatter(df.endX, df.endY, s=200, edgecolors=cor,lw=2, c=cor_fundo, zorder=zo+1, ax=ax)
+        # plt.scatter(data=df, x='to_x',y='to_y',color=cor,zorder=zo+1,label='df',edgecolors='white',s=200)
+        for linha in range(len(df)):
+          x_inicial = df['x'][linha]
+          y_inicial = df['y'][linha]
+          x_final = df['endX'][linha]
+          y_final = df['endY'][linha]
+          lc1 = pitch.lines(x_inicial, y_inicial,
+                        x_final, y_final,
+                        lw=5, transparent=True, comet=True,
+                        color=cor, ax=ax,zorder=zo)
+      
+      lista_cor = ['#FF4E63','#8D9713','#00A6FF']
+      for clus,cor in zip(lista_cluster,lista_cor):
+        df = (df_plot[df_plot['cluster'] == clus].reset_index())
+        df['cor'] = cor 
+        plot_scatter_df(df,cor,2)
+      plt.show()
+      plt.savefig(f'content/cluster_{jogador}.png',dpi=300,facecolor=cor_fundo)
+      im = Image.open(f'content/cluster_{jogador}.png')
+      cor_fundo = '#2c2b2b'
+      tamanho_arte = (3000, 2740)
+      arte = Image.new('RGB',tamanho_arte,cor_fundo)
+      W,H = arte.size
+      im = im.rotate(90,expand=5)
+      w,h= im.size
+      im = im.resize((int(w/2),int(h/2)))
+      im = im.copy()
+      w,h= im.size
+      arte.paste(im,(100,400))
+
+      font = ImageFont.truetype('Camber/Camber-Bd.ttf',150)
+      msg = f'Cluster de Recepções'
       draw = ImageDraw.Draw(arte)
       w, h = draw.textsize(msg,spacing=20,font=font)
       draw.text((330,100),msg, fill='white',spacing= 20,font=font)
