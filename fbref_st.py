@@ -137,7 +137,7 @@ def tabela_chute(df):
     df['distance']=((df['endX'] - df['x'])**2 + (df['endY'] - df['y'])**2)**0.5
     gols=df[df['type_displayName']=='Goal'].reset_index(drop=True)
     chutes=df[df['events']=='Shot'].reset_index(drop=True)
-    chutes_no_alvo=chutes[(chutes['type_displayName'].isin(['SavedShot','ShotOnPost']))]
+    chutes_no_alvo=chutes[(chutes['type_displayName'].isin(['SavedShot','ShotOnPost','Goal']))]
     faltas_diretas=df[(df['events']=='Freekick')].reset_index(drop=True)
     penaltis_feitos=df[(df['events']=='Penalty')&(df['type_displayName']=='Goal')].reset_index(drop=True)
     penaltis_tentados=df[(df['events']=='Penalty')&(df['type_displayName']!='Goal')].reset_index(drop=True)
