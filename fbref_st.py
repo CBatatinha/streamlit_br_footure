@@ -278,7 +278,9 @@ def tabela_posse(df):
         carry_total=carry_func(match)
         li.append(carry_total)
     carry_df = pd.concat(li, axis=0, ignore_index=True)
-    conduções=carry_df[(carry_df['events']=='Carry')].reset_index(drop=True)
+    conduções=carry_df[(carry_df['events']=='Carry')&(carry_df['distance']>=5)].reset_index(drop=True)
+    descarte=conduções[(conduções['endX']<conduções['x'])&(conduções['distance']>=50)].index
+    conduções=conduções.drop(descarte)
     conduções_terço_final=conduções.query("(endX>70)").reset_index(drop=True)
     conduções['dist1'] = np.sqrt((105-conduções.x)**2 + (34-conduções.y)**2)
     conduções['dist2'] = np.sqrt((105-conduções.endX)**2 + (34-conduções.endY)**2)
