@@ -4171,8 +4171,7 @@ if choice == 'Gráficos times (Partida)':
        prog1 = prog1.append(prog3)
        carry(prog1,prog1,True)
   if grafico == 'Dribles':
-     drible_certo=
-     .reset_index(drop=True)
+     drible_certo=f_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Successful')].reset_index(drop=True)
      drible_errado=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
      cor_fundo = '#2c2b2b'
      fig, ax = plt.subplots(figsize=(15,10))
