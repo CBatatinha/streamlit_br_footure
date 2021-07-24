@@ -46,16 +46,17 @@ from sklearn.metrics import silhouette_score
 import gdown
 import base64
 import os
+from fbref_st import *
 #-------------------------------------------------------------------------------------------------------
-st.title('Footure Brasileirão v2.0')
-menu=['Home','Gráficos jogadores (Partida)','Gráficos jogadores (Total)','Gráficos times (Partida)']
+st.title('Footure Brasileirão v3.0')
+menu=['Home','Gráficos jogadores (Partida)','Gráficos jogadores (Total)','Gráficos times (Partida)','Tabelas']
 choice=st.sidebar.selectbox('Menu',menu)
 if choice == 'Home':
    st.markdown('Ferramenta criada pelo departamento de análise de dados do Footure PRO para visualizações  \n'
                 'Navegue pelas abas no menu para obter os gráficos de interesse.  \n'
-                'Temporada 2021 tem até a 4° rodada.  \n'
+                'Temporada 2021 tem até a 12° rodada.  \n'
                 'Euro já disponível.  \n'
-                '**Obs: Finalizações,Dribles e Conduções tá online **  \n'
+                '**Obs: Tabelas com stats jogadores online, em breve guia indicando as métricas **  \n'
                 '**Obs: Em breve um guia das visualizações estará aqui disponível ** ')
 
 org_2020= "https://drive.google.com/file/d/1-14BD_oWbQhuT3fNiC5P3cwJjqsAkX7S/view?usp=sharing"
@@ -4170,7 +4171,8 @@ if choice == 'Gráficos times (Partida)':
        prog1 = prog1.append(prog3)
        carry(prog1,prog1,True)
   if grafico == 'Dribles':
-     drible_certo=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Successful')].reset_index(drop=True)
+     drible_certo=
+     .reset_index(drop=True)
      drible_errado=df_team[(df_team['events']=='TakeOn')&(df_team['outcomeType_displayName']=='Unsuccessful')].reset_index(drop=True)
      cor_fundo = '#2c2b2b'
      fig, ax = plt.subplots(figsize=(15,10))
@@ -4528,3 +4530,50 @@ if choice == 'Gráficos times (Partida)':
         st.image(f'content/quadro_{grafico}_{home_team}_{away_team}.png')
         st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{home_team}_{away_team}.png', 'Imagem'), unsafe_allow_html=True)
     possplotter(match)
+if choice == 'Tabelas':
+    st.subheader('Plote os stats dos jogadores no campeonato')
+    # with st.form(key='my_form'):
+    lista_temporada=['2020','2021','Euro 2021']
+    temporada=st.selectbox('Selecione a temporada',lista_temporada)
+    if temporada == '2020':
+       df = pd.read_csv('br2020.csv',encoding = "utf-8-sig")
+    if temporada == '2021':
+       df = pd.read_csv('br2021.csv',encoding = "utf-8-sig")
+    if temporada == '2021':
+       df = pd.read_csv('br2021.csv',encoding = "utf-8-sig")
+    if temporada == 'Euro 2021':
+       df = pd.read_csv('euro2021.csv',encoding = "utf-8-sig")
+       teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
+                    'Italy':'Itália','Switzerland':'Suíça','Turkey':'Turquia','Wales':'Gales','Belgium':'Bélgica','Denmark':'Dinamarca',
+                    'Finland':'Finlândia','Russia':'Rússia','Netherlands':'Holanda','North Macedonia':'Macedônia do norte',
+                    'Ukraine':'Ucrânia','Poland':'Polônia','Slovakia':'Eslováquia','Spain':'Espanha','Sweden':'Suécia',
+                    'Croatia':'Croácia','Czech Republic':'Rep. Tcheca','England':'Inglaterra','Scotland':'Escócia',
+                    'France':'França','Germany':'Alemanha','Hungary':'Hungria','Austria':'Áustria','Portugal':'Portugal'}
+       df['hometeam']=df['hometeam'].map(teams_dict)
+       df['awayteam']=df['awayteam'].map(teams_dict)
+    lista_tables=['Chutes','Passes','Defesa','Posse']
+    table=st.selectbox('Escolha a tabela',sorted(lista_tables))
+    per_ninety=st.checkbox('Transformas stats por 90')
+    # minimo_ninety=st.checkbox('Filtrar Mínimo por 90?')
+    if table == 'Chutes':
+        t1=tabela_chute(df)
+    if table == 'Passes':
+        t1=tabela_passes(df)
+    if table == 'Defesa':
+        t1=tabela_defesa(df)
+    if table == 'Posse':
+        t1=tabela_posse(df)
+    t1=t1[t1['90']>0].reset_index(drop=True)
+    lista_metricas=t1.columns[4:]
+    if per_ninety==True:
+        for item in lista_metricas:
+            t1[item]=t1[item]/t1['90']
+    min=float(t1['90'].min())
+    max=float(t1['90'].max())
+    valor_minimo=st.slider('Selecione o mínimo de partidas',min_value=min,max_value=max)
+    sleep(10)
+    t1=t1[t1['90']>=valor_minimo].reset_index(drop=True)
+    st.dataframe(t1)
+    nomes=list(t1.name.unique())
+    jog_nome=st.multiselect('Digite os atletas a filtrar',nomes)
+    st.dataframe(t1[t1['name'].isin(jog_nome)].reset_index(drop=True))
