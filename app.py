@@ -295,9 +295,9 @@ if choice == 'Gráficos jogadores (Partida)':
           # origem=st.selectbox('Escolha a origem',variables)
           # origem=slider_range[0]
           if 'Defesa' in origem:
-              start='(x<=30)'
+              start='(x<=35)'
           if 'Meio' in origem:
-              start='(x>30)&(x<=70)'
+              start='(x>35)&(x<=70)'
           if 'Ataque' in origem:
               start='(x>70)'
           if 'Todas' in origem:
@@ -305,9 +305,9 @@ if choice == 'Gráficos jogadores (Partida)':
           # destino=st.selectbox('Escolha o destino',variables)
           # destino=slider_range[1]
           if 'Defesa' in destino:
-              end='(endX<=30)'
+              end='(endX<=35)'
           if 'Meio' in destino:
-              end='(endX>30)&(endX<=70)'
+              end='(endX>35)&(endX<=70)'
           if 'Ataque' in destino:
               end='(endX>70)'
           if 'Todas' in destino:
@@ -1585,9 +1585,9 @@ if choice == 'Gráficos jogadores (Total)':
           # origem=st.selectbox('Escolha a origem',variables)
           # origem=slider_range[0]
           if 'Defesa' in origem:
-              start='(x<=30)'
+              start='(x<=35)'
           if 'Meio' in origem:
-              start='(x>30)&(x<=70)'
+              start='(x>35)&(x<=70)'
           if 'Ataque' in origem:
               start='(x>70)'
           if 'Todas' in origem:
