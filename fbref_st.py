@@ -272,7 +272,7 @@ def tabela_defesa(df):
     df_defesa=df_defesa.fillna(0)
     aux=tabela_opp_touch(df)
     dict_opp=aux.set_index('team').to_dict()['total_opp_touch']
-    df_defesa['toques oponentes']=df_defesa['team'].map(teams_dict)
+    df_defesa['toques oponentes']=df_defesa['team'].map(dict_opp)
     df_defesa['adj desarmes ganhos']=round(df_defesa['desarmes_ganhos']/(df_defesa['toques oponentes']/1000),3)
     df_defesa['adj interceptações']=round(df_defesa['interceptações']/(df_defesa['toques oponentes']/1000),3)
     df_defesa['adj cortes']=round(df_defesa['cortes']/(df_defesa['toques oponentes']/1000),3)
