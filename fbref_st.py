@@ -134,7 +134,6 @@ def tabela_opp_touch(df):
     df['home_opp_touch']=np.where(((df['isTouch']==True)&(df['team']==df['awayteam'])), 1,  0)
     df['away_opp_touch']=np.where(((df['isTouch']==True)&(df['team']==df['hometeam'])), 1,  0)
     df['opp_touch']=df['home_opp_touch']+df['away_opp_touch']
-    filter1[filter1['team']=='Inglaterra'][['away_opp_touch']].value_counts()
     h_opp=df.groupby(['hometeam'])['home_opp_touch'].sum().reset_index().rename(columns={'hometeam':'team'})
     a_opp=df.groupby(['awayteam'])['away_opp_touch'].sum().reset_index().rename(columns={'awayteam':'team'})
     opp_touch=h_opp.merge(a_opp,how='outer', on=['team'])
