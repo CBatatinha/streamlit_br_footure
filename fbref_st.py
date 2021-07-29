@@ -257,7 +257,7 @@ def tabela_defesa(df):
     duelos_aereos_ganho=df[(df['type_displayName']=='Aerial')&(df['outcomeType_displayName']=='Successful')].reset_index(drop=True)
     duelos_aereos_total=df[(df['type_displayName']=='Aerial')].reset_index(drop=True)
     lista_data=[desarmes,desarmes_ganhos,desarmes_defesa,desarmes_meio,
-                desarmes_ataque,desarmes_vs_dribles,desarmes_vs_dribles_ganhos,
+                desarmes_ataque,desarmes_vs_dribles,
                 interceptações,bloqueios,cortes,duelos_aereos_ganho,duelos_aereos_total]
     df_defesa=df_minute
     for df_ in lista_data:
