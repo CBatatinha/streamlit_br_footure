@@ -17,3 +17,4 @@ matplotlib-venn==0.11.6
 scipy==1.4.1
 mplsoccer==1.0.5
 gdown==3.6.4
+pyarrow==3.0.0
