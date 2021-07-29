@@ -130,6 +130,17 @@ def tabela_minute(df):
     df_minute=df_minute.rename(columns={'time_played':'minutos'})
     df_minute['90']=round(df_minute['minutos']/90,2)
     return df_minute
+def tabela_opp_touch(df):
+    df['home_opp_touch']=np.where(((df['isTouch']==True)&(df['team']==df['awayteam'])), 1,  0)
+    df['away_opp_touch']=np.where(((df['isTouch']==True)&(df['team']==df['hometeam'])), 1,  0)
+    df['opp_touch']=df['home_opp_touch']+df['away_opp_touch']
+    filter1[filter1['team']=='Inglaterra'][['away_opp_touch']].value_counts()
+    h_opp=df.groupby(['hometeam'])['home_opp_touch'].sum().reset_index().rename(columns={'hometeam':'team'})
+    a_opp=df.groupby(['awayteam'])['away_opp_touch'].sum().reset_index().rename(columns={'awayteam':'team'})
+    opp_touch=h_opp.merge(a_opp,how='outer', on=['team'])
+    opp_touch['total_opp_touch']=opp_touch['home_opp_touch']+opp_touch['away_opp_touch']
+    return opp_touch
+
 #Shots
 def tabela_chute(df):
     df_minute=tabela_minute(df)
@@ -260,6 +271,14 @@ def tabela_defesa(df):
     first_name.extend(lista_titulos)
     df_defesa=df_defesa.set_axis(first_name,axis='columns')
     df_defesa=df_defesa.fillna(0)
+    aux=tabela_opp_touch(df)
+    dict_opp=aux.set_index('team').to_dict()['total_opp_touch']
+    df_defesa['toques oponentes']=df_defesa['team'].map(teams_dict)
+    df_defesa['adj desarmes ganhos']=round(df_defesa['desarmes_ganhos']/(df_defesa['toques oponentes']/1000),3)
+    df_defesa['adj interceptações']=round(df_defesa['interceptações']/(df_defesa['toques oponentes']/1000),3)
+    df_defesa['adj cortes']=round(df_defesa['cortes']/(df_defesa['toques oponentes']/1000),3)
+    df_defesa['adj bloqueios']=round(df_defesa['bloqueios']/(df_defesa['toques oponentes']/1000),3)
+    df_defesa['adj duelos aereos ganhos']=round(df_defesa['duelos_aereos_ganho']/(df_defesa['toques oponentes']/1000),3)
     return df_defesa
 #-----------------------------------------------------------------------------
 #Posse
