@@ -49,14 +49,14 @@ import os
 from fbref_st import *
 from data_call import *
 #-------------------------------------------------------------------------------------------------------
-st.title('Footure Brasileirão v3.0')
+st.title('Footure Ligas v3.1')
 menu=['Home','Gráficos jogadores (Partida)','Gráficos jogadores (Total)','Gráficos times (Partida)','Tabelas']
 choice=st.sidebar.selectbox('Menu',menu)
 if choice == 'Home':
    st.markdown('Ferramenta criada pelo departamento de análise de dados do Footure PRO para visualizações  \n'
                 'Navegue pelas abas no menu para obter os gráficos de interesse.  \n'
-                'Temporada 2021 tem até a 12° rodada.  \n'
-                'Euro já disponível.  \n'
+                'Temporada 2021 tem até a 15° rodada.  \n'
+                'Francês já disponível.  \n'
                 '**Obs: Tabelas com stats jogadores online, em breve guia indicando as métricas **  \n'
                 '**Obs: Em breve um guia das visualizações estará aqui disponível ** ')
 

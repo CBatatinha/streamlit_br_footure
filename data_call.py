@@ -5,8 +5,6 @@ def fr_2021():
     file_id_fr_21= org_fr_21.split('/')[-2]
     url_fr_21='https://drive.google.com/uc?export=download&id=' + file_id_fr_21
     gdown.download(url_fr_21,'fr21.csv',quiet=True)
-
-
 def br_2013():
     org_2013= "https://drive.google.com/file/d/1trZi60j-rhxeJqbdXHgwbBDSIdnluP6A/view?usp=sharing"
     file_id_2013= org_2013.split('/')[-2]
