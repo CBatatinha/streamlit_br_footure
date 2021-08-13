@@ -48,15 +48,16 @@ import base64
 import os
 from fbref_st import *
 from data_call import *
+from utils import *
 #-------------------------------------------------------------------------------------------------------
-st.title('Footure Ligas v3.1')
+st.title('Footure Ligas v3.2')
 menu=['Home','Gráficos jogadores (Partida)','Gráficos jogadores (Total)','Gráficos times (Partida)','Tabelas']
 choice=st.sidebar.selectbox('Menu',menu)
 if choice == 'Home':
    st.markdown('Ferramenta criada pelo departamento de análise de dados do Footure PRO para visualizações  \n'
                 'Navegue pelas abas no menu para obter os gráficos de interesse.  \n'
                 'Temporada 2021 tem até a 15° rodada.  \n'
-                'Francês já disponível.  \n'
+                'Francês,Inglês,Alemão,Espanhol já disponível.  \n'
                 '**Obs: Tabelas com stats jogadores online, em breve guia indicando as métricas **  \n'
                 '**Obs: Em breve um guia das visualizações estará aqui disponível ** ')
 
@@ -69,7 +70,7 @@ def get_binary_file_downloader_html(bin_file, file_label='File'):
 
 if choice == 'Gráficos jogadores (Partida)':
    st.subheader('Plote os gráficos individuais dos jogadores em uma partida do campeonato')
-   lista_temporada=['Brasil 2021','Brasil 2020','Francês']
+   lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol']
    temporada=st.selectbox('Selecione a temporada',lista_temporada)
    if temporada == 'Brasil 2020':
       br_2020()
@@ -80,6 +81,15 @@ if choice == 'Gráficos jogadores (Partida)':
    if temporada == 'Francês':
       fr_2021()
       df = pd.read_csv('fr21.csv',encoding = "utf-8-sig")
+   if temporada == 'Alemão':
+      ger_2021()
+      df = pd.read_csv('ger21.csv',encoding = "utf-8-sig")
+   if temporada == 'Inglês':
+      eng_2021()
+      df = pd.read_csv('eng21.csv',encoding = "utf-8-sig")
+   if temporada == 'Espanhol':
+      sp_2021()
+      df = pd.read_csv('sp21.csv',encoding = "utf-8-sig")
    # if temporada == 'Euro 2021':
    #    df = pd.read_csv('euro2021.csv',encoding = "utf-8-sig")
    #    teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
@@ -1372,8 +1382,7 @@ if choice == 'Gráficos jogadores (Partida)':
       st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
 if choice == 'Gráficos jogadores (Total)':
    st.subheader('Plote os gráficos individuais dos jogadores em todas as partidas')
-   st.subheader('Plote os gráficos individuais dos jogadores em uma partida do campeonato')
-   lista_temporada=['Brasil 2021','Brasil 2020','Francês']
+   lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol']
    temporada=st.selectbox('Selecione a temporada',lista_temporada)
    if temporada == 'Brasil 2020':
       br_2020()
@@ -1384,6 +1393,15 @@ if choice == 'Gráficos jogadores (Total)':
    if temporada == 'Francês':
       fr_2021()
       df = pd.read_csv('fr21.csv',encoding = "utf-8-sig")
+   if temporada == 'Alemão':
+      ger_2021()
+      df = pd.read_csv('ger21.csv',encoding = "utf-8-sig")
+   if temporada == 'Inglês':
+      eng_2021()
+      df = pd.read_csv('eng21.csv',encoding = "utf-8-sig")
+   if temporada == 'Espanhol':
+      sp_2021()
+      df = pd.read_csv('sp21.csv',encoding = "utf-8-sig")
    # if temporada == 'Euro 2021':
    #    df = pd.read_csv('euro2021.csv',encoding = "utf-8-sig")
    #    teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
@@ -2560,9 +2578,7 @@ if choice == 'Gráficos jogadores (Total)':
       st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
 if choice == 'Gráficos times (Partida)':
   st.subheader('Plote os gráficos do time em uma partida do campeonato')
-  lista_temporada=['2020','2021','Euro 2021']
-  temporada=st.selectbox('Selecione a temporada',lista_temporada)
-  lista_temporada=['Brasil 2021','Brasil 2020','Francês']
+  lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol']
   temporada=st.selectbox('Selecione a temporada',lista_temporada)
   if temporada == 'Brasil 2020':
      br_2020()
@@ -2573,6 +2589,16 @@ if choice == 'Gráficos times (Partida)':
   if temporada == 'Francês':
      fr_2021()
      df = pd.read_csv('fr21.csv',encoding = "utf-8-sig")
+  if temporada == 'Alemão':
+     ger_2021()
+     df = pd.read_csv('ger21.csv',encoding = "utf-8-sig")
+  if temporada == 'Inglês':
+     eng_2021()
+     df = pd.read_csv('eng21.csv',encoding = "utf-8-sig")
+  if temporada == 'Espanhol':
+     sp_2021()
+     df = pd.read_csv('sp21.csv',encoding = "utf-8-sig")
+
   # if temporada == 'Euro 2021':
   #    df = pd.read_csv('euro2021.csv',encoding = "utf-8-sig")
   #    teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
@@ -2593,7 +2619,7 @@ if choice == 'Gráficos times (Partida)':
   df_team=match[((match['hometeam']==team) & (match['hometeamid']==match.teamId)) | ((match['awayteam']==team) & (match['awayteamid']==match.teamId))].reset_index(drop=True)
   lista_graficos=['Mapa de Passes','Posição Defensiva','Cruzamentos','Progressivos','Ações Defensivas','Passes mais frequentes',
                   'Entradas na Área','PPDA','Posse','Retomadas de Bola','Sonar Inverso de chutes','Finalizações','Dribles',
-                  'Conduções']
+                  'Conduções','Sumário partida']
   grafico=st.selectbox('Escolha o gráfico',sorted(lista_graficos))
   if grafico == 'Mapa de Passes':
     def mapa_de_passes(df):
@@ -4527,6 +4553,8 @@ if choice == 'Gráficos times (Partida)':
         st.image(f'content/quadro_{grafico}_{home_team}_{away_team}.png')
         st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{home_team}_{away_team}.png', 'Imagem'), unsafe_allow_html=True)
     possplotter(match)
+  if grafico == 'Sumário partida':
+      summary_plot(match,home_team,away_team)
 if choice == 'Tabelas':
     st.subheader('Plote os stats dos jogadores no campeonato')
     # with st.form(key='my_form'):

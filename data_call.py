@@ -5,6 +5,21 @@ def fr_2021():
     file_id_fr_21= org_fr_21.split('/')[-2]
     url_fr_21='https://drive.google.com/uc?export=download&id=' + file_id_fr_21
     gdown.download(url_fr_21,'fr21.csv',quiet=True)
+def eng_2021():
+    org_eng_21= "https://drive.google.com/file/d/1icftI5N8awO8_UfbF0q-8VYUOE881ZSZ/view?usp=sharing"
+    file_id_eng_21= org_eng_21.split('/')[-2]
+    url_eng_21='https://drive.google.com/uc?export=download&id=' + file_id_eng_21
+    gdown.download(url_eng_21,'eng21.csv',quiet=True)
+def sp_2021():
+    org_sp_21= "https://drive.google.com/file/d/1-0BybgxZO-JCZj-L0arlmBxesS2Ce4bq/view?usp=sharing"
+    file_id_sp_21= org_sp_21.split('/')[-2]
+    url_sp_21='https://drive.google.com/uc?export=download&id=' + file_id_sp_21
+    gdown.download(url_sp_21,'sp21.csv',quiet=True)
+def ger_2021():
+    org_ger_21= "https://drive.google.com/file/d/1EI41lLnYS9UgubaGrfUKB1amj6MdR9Ef/view?usp=sharing"
+    file_id_ger_21= org_ger_21.split('/')[-2]
+    url_ger_21='https://drive.google.com/uc?export=download&id=' + file_id_ger_21
+    gdown.download(url_ger_21,'ger21.csv',quiet=True)
 def br_2013():
     org_2013= "https://drive.google.com/file/d/1trZi60j-rhxeJqbdXHgwbBDSIdnluP6A/view?usp=sharing"
     file_id_2013= org_2013.split('/')[-2]
