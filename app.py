@@ -392,7 +392,8 @@ if choice == 'Gráficos jogadores (Partida)':
               fot = fot.resize((int(w/1.5),int(h/1.5)))
               fot = fot.copy()
               arte.paste(fot,(1870,1880),fot)
-
+              
+              df2=df2.append(df1).reset_index(drop=True)
               alvos=df2.groupby(['receiver'])['outcome'].count().reset_index().sort_values(by='outcome',ascending=False)
 
               if len(alvos)<3:
