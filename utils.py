@@ -153,8 +153,8 @@ def binnings(Df,f):
     return Df
 def xTplotter(Df):
     df = Df.copy()
-    df_events = df.query("(events in ['Pass','cross'])&\
-                            (outcomeType_displayName in 'Successful')")
+    df_events = df.query("(events in ['Pass','cross','carry'])&\
+                            (outcome in 'Successful')")
     df_xt = binnings(df_events,f).reset_index(drop=True)
     return df_xt
 
@@ -195,17 +195,17 @@ def ppda_media(df):
     return(h_media,a_media)
 
 def summary_plot(df,home_team,away_team):
-    df=carry_func(df)
-    df=gamestate(df)
-    home_df=df[df['hometeam']==df.team].reset_index(drop=True)
-    away_df = df[df['awayteam']==df.team].reset_index(drop=True)
+    df_final=carry_func(df)
+    df_final=gamestate(df_final)
+    home_df=df_final[df_final['hometeam']==df_final.team].reset_index(drop=True)
+    away_df=df_final[df_final['awayteam']==df_final.team].reset_index(drop=True)
     bar_stats=['Gols','Finalizações','Finalizações no alvo','Posse','Dominio Territorial',
                 'PPDA','Perigo gerado (xT)','Retomadas de bola','Entradas na área']
-    home_stats=[df['h_goal'].max(),shot_calculator(home_df)[1],shot_calculator(home_df)[0],
-                posse_media(df)[0],ft_media(df)[0],ppda_media(df)[0],xt_calculator(df)[0],
+    home_stats=[df_final['h_goal'].max(),shot_calculator(home_df)[1],shot_calculator(home_df)[0],
+                posse_media(df)[0],ft_media(df)[0],ppda_media(df)[0],xt_calculator(df_final)[0],
                 recover_calculator(home_df),entry_calculator(home_df)]
-    away_stats=[df['a_goal'].max(),shot_calculator(away_df)[1],shot_calculator(away_df)[0],
-                posse_media(df)[1],ft_media(df)[1],ppda_media(df)[1],xt_calculator(df)[1],
+    away_stats=[df_final['a_goal'].max(),shot_calculator(away_df)[1],shot_calculator(away_df)[0],
+                posse_media(df)[1],ft_media(df)[1],ppda_media(df)[1],xt_calculator(df_final)[1],
                 recover_calculator(away_df),entry_calculator(away_df)]
     total=[x + y for x, y in zip(home_stats, away_stats)]
     home_per=[(x/y)*100 for x, y in zip(home_stats, total)]
