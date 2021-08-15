@@ -162,6 +162,7 @@ def xt_calculator(df):
     match=xTplotter(df)
     descarte=match[(match['endX']<match['x'])&(match['distance']>=50)].index
     match=match.drop(descarte)
+    match=match[match['xt_value']>0].reset_index(drop=True)
     homemoves=match[match['hometeam']==match.team].reset_index(drop=True)
     awaymoves = match[match['awayteam']==match.team].reset_index(drop=True)
     homemoves['xt_cumu'] = homemoves.xt_value.cumsum()
