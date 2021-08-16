@@ -21,6 +21,8 @@ from PIL import ImageOps
 from fbref_st import *
 import base64
 import os
+import requests as requests
+import io
 
 def get_binary_file_downloader_html(bin_file, file_label='File'):
     with open(bin_file, 'rb') as f:
@@ -263,30 +265,30 @@ def summary_plot(df,home_team,away_team):
     msg = f'Sumário da partida'
     draw = ImageDraw.Draw(arte)
     w, h = draw.textsize(msg,spacing=20,font=font)
-    draw.text((900,100),msg, fill='white',spacing= 20,font=font)
+    draw.text((900,50),msg, fill='white',spacing= 20,font=font)
 
     font = ImageFont.truetype('Camber/Camber-Rg.ttf',60)
     msg = f'{home_team} - {away_team}'
     draw = ImageDraw.Draw(arte)
     w, h = draw.textsize(msg,spacing=20,font=font)
-    draw.text((900,400),msg, fill='white',spacing= 20,font=font)
+    draw.text((900,250),msg, fill='white',spacing= 20,font=font)
 
     im = Image.open('Arquivos/legenda-linha.png')
     w,h = im.size
     im = im.resize((int(w/5),int(h/5)))
     im = im.copy()
-    arte.paste(im,(1200,600))
+    arte.paste(im,(1200,700))
 
     font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
     msg = f'Mandante'
     draw = ImageDraw.Draw(arte)
-    draw.text((1400,640),msg, fill='white',spacing= 30,font=font)
+    draw.text((1400,740),msg, fill='white',spacing= 30,font=font)
 
 
     font = ImageFont.truetype('Camber/Camber-RgItalic.ttf',40)
     msg = f'Visitante'
     draw = ImageDraw.Draw(arte)
-    draw.text((1770,640),msg, fill='white',spacing= 30,font=font)
+    draw.text((1770,740),msg, fill='white',spacing= 30,font=font)
 
 
     fot =Image.open('Logos/Copy of pro_branco.png')
@@ -294,6 +296,44 @@ def summary_plot(df,home_team,away_team):
     fot = fot.resize((int(w/2),int(h/2)))
     fot = fot.copy()
     arte.paste(fot,(1300,2300),fot)
+
+    times_csv=pd.read_csv('csvs/_times-id (whoscored) - times-id - _times-id (whoscored) - times-id.csv')
+    logo_url_h = times_csv[times_csv['Time'] == home_team].reset_index(drop=True)['Logo'][0]
+    logo_url_a = times_csv[times_csv['Time'] == away_team].reset_index(drop=True)['Logo'][0]
+    try:
+      r = requests.get(logo_url_h)
+      im_bt = r.content
+      image_file = io.BytesIO(im_bt)
+      im = Image.open(image_file)
+      w,h = im.size
+      im = im.resize((int(w*1.5),int(h*1.5)))
+      im = im.copy()
+      arte.paste(im,(1280,400),im)
+      r = requests.get(logo_url_a)
+      im_bt = r.content
+      image_file = io.BytesIO(im_bt)
+      im = Image.open(image_file)
+      w,h = im.size
+      im = im.resize((int(w*1.5),int(h*1.5)))
+      im = im.copy()
+      arte.paste(im,(1680,400),im)
+    except:
+      r = requests.get(logo_url_h)
+      im_bt = r.content
+      image_file = io.BytesIO(im_bt)
+      im = Image.open(image_file)
+      w,h = im.size
+      im = im.resize((int(w*1.5),int(h*1.5)))
+      im = im.copy()
+      arte.paste(im,(1280,400))
+      r = requests.get(logo_url_a)
+      im_bt = r.content
+      image_file = io.BytesIO(im_bt)
+      im = Image.open(image_file)
+      w,h = im.size
+      im = im.resize((int(w*1.5),int(h*1.5)))
+      im = im.copy()
+      arte.paste(im,(1680,400))
     arte.save(f'content/quadro_summary_{home_team}_{away_team}.png',quality=95,facecolor='#2C2B2B')
     st.image(f'content/quadro_summary_{home_team}_{away_team}.png')
     st.markdown(get_binary_file_downloader_html(f'content/quadro_summary_{home_team}_{away_team}.png', 'Imagem'), unsafe_allow_html=True)
