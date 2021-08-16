@@ -304,7 +304,7 @@ def summary_plot(df,home_team,away_team):
       r = requests.get(logo_url_h)
       im_bt = r.content
       image_file = io.BytesIO(im_bt)
-      im = Image.open(image_file)
+      im = Image.open(image_file).convert('RGBA')
       w,h = im.size
       im = im.resize((int(w*1.5),int(h*1.5)))
       im = im.copy()
@@ -312,7 +312,7 @@ def summary_plot(df,home_team,away_team):
       r = requests.get(logo_url_a)
       im_bt = r.content
       image_file = io.BytesIO(im_bt)
-      im = Image.open(image_file)
+      im = Image.open(image_file).convert('RGBA')
       w,h = im.size
       im = im.resize((int(w*1.5),int(h*1.5)))
       im = im.copy()
@@ -321,7 +321,7 @@ def summary_plot(df,home_team,away_team):
       r = requests.get(logo_url_h)
       im_bt = r.content
       image_file = io.BytesIO(im_bt)
-      im = Image.open(image_file)
+      im = Image.open(image_file).convert('RGBA')
       w,h = im.size
       im = im.resize((int(w*1.5),int(h*1.5)))
       im = im.copy()
@@ -329,7 +329,7 @@ def summary_plot(df,home_team,away_team):
       r = requests.get(logo_url_a)
       im_bt = r.content
       image_file = io.BytesIO(im_bt)
-      im = Image.open(image_file)
+      im = Image.open(image_file).convert('RGBA')
       w,h = im.size
       im = im.resize((int(w*1.5),int(h*1.5)))
       im = im.copy()
