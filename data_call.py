@@ -20,6 +20,11 @@ def ger_2021():
     file_id_ger_21= org_ger_21.split('/')[-2]
     url_ger_21='https://drive.google.com/uc?export=download&id=' + file_id_ger_21
     gdown.download(url_ger_21,'ger21.csv',quiet=True)
+def ita_2021():
+    org_ita_21= "https://drive.google.com/file/d/1HKM_8ohc-Z5un1hCPohgDHKJmBxNUOkk/view?usp=sharing"
+    file_id_ita_21= org_ita_21.split('/')[-2]
+    url_ita_21='https://drive.google.com/uc?export=download&id=' + file_id_ita_21
+    gdown.download(url_ita_21,'it21.csv',quiet=True)
 def br_2013():
     org_2013= "https://drive.google.com/file/d/1trZi60j-rhxeJqbdXHgwbBDSIdnluP6A/view?usp=sharing"
     file_id_2013= org_2013.split('/')[-2]

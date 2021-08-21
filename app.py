@@ -70,7 +70,7 @@ def get_binary_file_downloader_html(bin_file, file_label='File'):
 
 if choice == 'Gráficos jogadores (Partida)':
    st.subheader('Plote os gráficos individuais dos jogadores em uma partida do campeonato')
-   lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol']
+   lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol','Italiano']
    temporada=st.selectbox('Selecione a temporada',lista_temporada)
    if temporada == 'Brasil 2020':
       br_2020()
@@ -90,6 +90,9 @@ if choice == 'Gráficos jogadores (Partida)':
    if temporada == 'Espanhol':
       sp_2021()
       df = pd.read_csv('sp21.csv',encoding = "utf-8-sig")
+   if temporada == 'Italiano':
+      ita_2021()
+      df = pd.read_csv('it21.csv',encoding = "utf-8-sig")
    # if temporada == 'Euro 2021':
    #    df = pd.read_csv('euro2021.csv',encoding = "utf-8-sig")
    #    teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
@@ -1383,7 +1386,7 @@ if choice == 'Gráficos jogadores (Partida)':
       st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
 if choice == 'Gráficos jogadores (Total)':
    st.subheader('Plote os gráficos individuais dos jogadores em todas as partidas')
-   lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol']
+   lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol','Italiano']
    temporada=st.selectbox('Selecione a temporada',lista_temporada)
    if temporada == 'Brasil 2020':
       br_2020()
@@ -1403,6 +1406,9 @@ if choice == 'Gráficos jogadores (Total)':
    if temporada == 'Espanhol':
       sp_2021()
       df = pd.read_csv('sp21.csv',encoding = "utf-8-sig")
+   if temporada == 'Italiano':
+      ita_2021()
+      df = pd.read_csv('it21.csv',encoding = "utf-8-sig")
    # if temporada == 'Euro 2021':
    #    df = pd.read_csv('euro2021.csv',encoding = "utf-8-sig")
    #    teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
@@ -2579,7 +2585,7 @@ if choice == 'Gráficos jogadores (Total)':
       st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
 if choice == 'Gráficos times (Partida)':
   st.subheader('Plote os gráficos do time em uma partida do campeonato')
-  lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol']
+  lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol','Italiano']
   temporada=st.selectbox('Selecione a temporada',lista_temporada)
   if temporada == 'Brasil 2020':
      br_2020()
@@ -2599,6 +2605,9 @@ if choice == 'Gráficos times (Partida)':
   if temporada == 'Espanhol':
      sp_2021()
      df = pd.read_csv('sp21.csv',encoding = "utf-8-sig")
+  if temporada == 'Italiano':
+     ita_2021()
+     df = pd.read_csv('it21.csv',encoding = "utf-8-sig")
 
   # if temporada == 'Euro 2021':
   #    df = pd.read_csv('euro2021.csv',encoding = "utf-8-sig")
@@ -4558,22 +4567,29 @@ if choice == 'Gráficos times (Partida)':
       summary_plot(match,home_team,away_team)
 if choice == 'Tabelas':
     st.subheader('Plote os stats dos jogadores no campeonato')
-    # with st.form(key='my_form'):
-    org_2013= "https://drive.google.com/file/d/1trZi60j-rhxeJqbdXHgwbBDSIdnluP6A/view?usp=sharing"
-    file_id_2013= org_2013.split('/')[-2]
-    url_2013='https://drive.google.com/uc?export=download&id=' + file_id_2013
-    gdown.download(url_2013,'br2013.csv',quiet=True)
-    lista_temporada=['Brasil 2021','Brasil 2020','Francês']
+    lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol','Italiano']
     temporada=st.selectbox('Selecione a temporada',lista_temporada)
     if temporada == 'Brasil 2020':
-        br_2020()
-        df = pd.read_csv('br2020.csv',encoding = "utf-8-sig")
+       br_2020()
+       df = pd.read_csv('br2020.csv',encoding = "utf-8-sig")
     if temporada == 'Brasil 2021':
-        br_2021()
-        df = pd.read_csv('br2021.csv',encoding = "utf-8-sig")
+       br_2021()
+       df = pd.read_csv('br2021.csv',encoding = "utf-8-sig")
     if temporada == 'Francês':
-        fr_2021()
-        df = pd.read_csv('fr21.csv',encoding = "utf-8-sig")
+       fr_2021()
+       df = pd.read_csv('fr21.csv',encoding = "utf-8-sig")
+    if temporada == 'Alemão':
+       ger_2021()
+       df = pd.read_csv('ger21.csv',encoding = "utf-8-sig")
+    if temporada == 'Inglês':
+       eng_2021()
+       df = pd.read_csv('eng21.csv',encoding = "utf-8-sig")
+    if temporada == 'Espanhol':
+       sp_2021()
+       df = pd.read_csv('sp21.csv',encoding = "utf-8-sig")
+    if temporada == 'Italiano':
+       ita_2021()
+       df = pd.read_csv('it21.csv',encoding = "utf-8-sig")
      # if temporada == 'Euro 2021':
      #    df = pd.read_csv('euro2021.csv',encoding = "utf-8-sig")
      #    teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
