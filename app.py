@@ -93,6 +93,9 @@ if choice == 'Gráficos jogadores (Partida)':
    if temporada == 'Italiano':
       ita_2021()
       df = pd.read_csv('it21.csv',encoding = "utf-8-sig")
+   if temporada == 'UCL':
+      ucl_2021()
+      df = pd.read_csv('ucl21.csv',encoding = "utf-8-sig")
    # if temporada == 'Euro 2021':
    #    df = pd.read_csv('euro2021.csv',encoding = "utf-8-sig")
    #    teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
@@ -1409,6 +1412,9 @@ if choice == 'Gráficos jogadores (Total)':
    if temporada == 'Italiano':
       ita_2021()
       df = pd.read_csv('it21.csv',encoding = "utf-8-sig")
+   if temporada == 'UCL':
+      ucl_2021()
+      df = pd.read_csv('ucl21.csv',encoding = "utf-8-sig")
    # if temporada == 'Euro 2021':
    #    df = pd.read_csv('euro2021.csv',encoding = "utf-8-sig")
    #    teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
@@ -2608,7 +2614,9 @@ if choice == 'Gráficos times (Partida)':
   if temporada == 'Italiano':
      ita_2021()
      df = pd.read_csv('it21.csv',encoding = "utf-8-sig")
-
+  if temporada == 'UCL':
+     ucl_2021()
+     df = pd.read_csv('ucl21.csv',encoding = "utf-8-sig")
   # if temporada == 'Euro 2021':
   #    df = pd.read_csv('euro2021.csv',encoding = "utf-8-sig")
   #    teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',
@@ -4590,6 +4598,9 @@ if choice == 'Tabelas':
     if temporada == 'Italiano':
        ita_2021()
        df = pd.read_csv('it21.csv',encoding = "utf-8-sig")
+    if temporada == 'UCL':
+       ucl_2021()
+       df = pd.read_csv('ucl21.csv',encoding = "utf-8-sig")
      # if temporada == 'Euro 2021':
      #    df = pd.read_csv('euro2021.csv',encoding = "utf-8-sig")
      #    teams_dict= {'Brazil':'Brasil','Paraguay':'Paraguai','Uruguay':'Uruguai','Colombia':'Colômbia','Ecuador':'Equador',

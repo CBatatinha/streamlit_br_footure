@@ -1,5 +1,11 @@
 import gdown
 
+def ucl_2021():
+    org_ucl_21= "https://drive.google.com/file/d/1jIoT2-cNzlGMKnXQ_MlNe2vlDf9UF_vN/view?usp=sharing"
+    file_id_ucl_21= org_ucl_21.split('/')[-2]
+    url_ucl_21='https://drive.google.com/uc?export=download&id=' + file_id_ucl_21
+    gdown.download(url_ucl_21,'ucl21.csv',quiet=True)
+
 def fr_2021():
     org_fr_21= "https://drive.google.com/file/d/1QEXE-CkLQCO8FNx2eeNYNOOmpZr2nqPA/view?usp=sharing"
     file_id_fr_21= org_fr_21.split('/')[-2]
