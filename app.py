@@ -56,8 +56,8 @@ choice=st.sidebar.selectbox('Menu',menu)
 if choice == 'Home':
    st.markdown('Ferramenta criada pelo departamento de análise de dados do Footure PRO para visualizações  \n'
                 'Navegue pelas abas no menu para obter os gráficos de interesse.  \n'
-                'Temporada 2021 tem até a 15° rodada.  \n'
-                'Francês,Inglês,Alemão,Espanhol já disponível.  \n'
+                'Temporada 2021 tem até a 20° rodada.  \n'
+                'Europeus já disponíveis.  \n'
                 '**Obs: Tabelas com stats jogadores online, em breve guia indicando as métricas **  \n'
                 '**Obs: Em breve um guia das visualizações estará aqui disponível ** ')
 
@@ -70,7 +70,7 @@ def get_binary_file_downloader_html(bin_file, file_label='File'):
 
 if choice == 'Gráficos jogadores (Partida)':
    st.subheader('Plote os gráficos individuais dos jogadores em uma partida do campeonato')
-   lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol','Italiano']
+   lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol','Italiano','UCL']
    temporada=st.selectbox('Selecione a temporada',lista_temporada)
    if temporada == 'Brasil 2020':
       br_2020()
@@ -1389,7 +1389,7 @@ if choice == 'Gráficos jogadores (Partida)':
       st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
 if choice == 'Gráficos jogadores (Total)':
    st.subheader('Plote os gráficos individuais dos jogadores em todas as partidas')
-   lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol','Italiano']
+   lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol','Italiano','UCL']
    temporada=st.selectbox('Selecione a temporada',lista_temporada)
    if temporada == 'Brasil 2020':
       br_2020()
@@ -2591,7 +2591,7 @@ if choice == 'Gráficos jogadores (Total)':
       st.markdown(get_binary_file_downloader_html(f'content/quadro_{grafico}_{jogador}.png', 'Imagem'), unsafe_allow_html=True)
 if choice == 'Gráficos times (Partida)':
   st.subheader('Plote os gráficos do time em uma partida do campeonato')
-  lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol','Italiano']
+  lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol','Italiano','UCL']
   temporada=st.selectbox('Selecione a temporada',lista_temporada)
   if temporada == 'Brasil 2020':
      br_2020()
@@ -4575,7 +4575,7 @@ if choice == 'Gráficos times (Partida)':
       summary_plot(match,home_team,away_team)
 if choice == 'Tabelas':
     st.subheader('Plote os stats dos jogadores no campeonato')
-    lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol','Italiano']
+    lista_temporada=['Brasil 2021','Brasil 2020','Alemão','Inglês','Francês','Espanhol','Italiano','UCL']
     temporada=st.selectbox('Selecione a temporada',lista_temporada)
     if temporada == 'Brasil 2020':
        br_2020()
